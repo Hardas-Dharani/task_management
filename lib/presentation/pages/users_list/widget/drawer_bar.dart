@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:task_management/app/services/local_storage.dart';
 import 'package:task_management/components/custom_text_component.dart';
 import 'package:task_management/routes/app_routes.dart';
 import 'package:task_management/utils/styles.dart';
 
-import '../../../../app/services/local_storage.dart';
 import '../../../../components/earning_chart.dart';
 
-class CustomDrawerTeacher extends StatelessWidget {
-  const CustomDrawerTeacher({super.key});
+class CustomAdminDrawer extends StatelessWidget {
+  const CustomAdminDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,27 +19,22 @@ class CustomDrawerTeacher extends StatelessWidget {
         backgroundColor: Styles.black,
         child: ListView(
           children: [
-            UserAccountsDrawerHeader(
+            const UserAccountsDrawerHeader(
               accountName: CustomTextWidget(
-                text: Get.find<LocalStorageService>().loginModel!.user!.name ??
-                    "",
+                text: "admin",
                 color: Styles.white,
               ),
               accountEmail: CustomTextWidget(
-                text: Get.find<LocalStorageService>().loginModel!.user!.email ??
-                    "",
+                text: "admin@gmail.com",
                 color: Styles.white,
               ),
               currentAccountPicture: CircleAvatar(
-                backgroundImage: NetworkImage(Get.find<LocalStorageService>()
-                        .loginModel!
-                        .user!
-                        .imageUrl ??
+                backgroundImage: NetworkImage(
                     "https://upload.wikimedia.org/wikipedia/commons/b/bc/Unknown_person.jpg"),
                 // Replace with your image
                 radius: 30.0,
               ),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(20),
                   bottomLeft: Radius.circular(20),
@@ -52,31 +47,17 @@ class CustomDrawerTeacher extends StatelessWidget {
                 color: Styles.orangeYellow,
               ),
               title: const CustomTextWidget(
-                text: "Profile",
+                text: "Users",
                 color: Styles.white,
               ),
               onTap: () {
                 Get.back();
-                Get.to(const LineChartSample1());
-                // Get.toNamed(Routes.teacherProfile);
-                // Handle item 1 tap
-              },
-            ),
-            ListTile(
-              leading: const Icon(
-                Icons.message_rounded,
-                color: Styles.orangeYellow,
-              ),
-              title: const CustomTextWidget(
-                text: "Message",
-                color: Styles.white,
-              ),
-              onTap: () {
                 Get.back();
-                Get.toNamed(Routes.chats);
+
                 // Handle item 1 tap
               },
             ),
+
             ListTile(
               leading: const Icon(
                 Icons.settings,
@@ -88,6 +69,20 @@ class CustomDrawerTeacher extends StatelessWidget {
               ),
               onTap: () {
                 Get.toNamed(Routes.settings);
+                // Handle item 1 tap
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.contact_page_outlined,
+                color: Styles.orangeYellow,
+              ),
+              title: const CustomTextWidget(
+                text: "Statistics",
+                color: Styles.white,
+              ),
+              onTap: () {
+                Get.to(const LineChartSample1());
                 // Handle item 1 tap
               },
             ),

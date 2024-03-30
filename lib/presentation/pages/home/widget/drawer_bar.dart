@@ -55,6 +55,7 @@ class CustomDrawer extends StatelessWidget {
               ),
               onTap: () {
                 Get.back();
+
                 Get.toNamed(Routes.createProfile);
                 // Handle item 1 tap
               },
@@ -84,6 +85,7 @@ class CustomDrawer extends StatelessWidget {
                 color: Styles.white,
               ),
               onTap: () {
+                Get.toNamed(Routes.settings);
                 // Handle item 1 tap
               },
             ),

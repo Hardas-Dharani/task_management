@@ -12,6 +12,7 @@ class Routes {
   static String get booking => '/booking';
 
   static String get bookingDetail => '/bookingDetail';
+  static String get userList => '/userList';
 
   static String get bookingDetailPro => '/bookingDetailPro';
   static String get bookingPro => '/bookingPro';

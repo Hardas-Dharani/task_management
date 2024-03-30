@@ -16,6 +16,8 @@ import 'package:task_management/presentation/pages/task_detail/task_detail_scree
 import 'package:task_management/presentation/pages/teacher_home/binding/home_binding.dart';
 import 'package:task_management/presentation/pages/teacher_profile/binding/teacher_profile_binding.dart';
 import 'package:task_management/presentation/pages/teacher_profile/teacher_profile_screen.dart';
+import 'package:task_management/presentation/pages/users_list/binding/user_list_binding.dart';
+import 'package:task_management/presentation/pages/users_list/user_list_screen.dart';
 import 'package:task_management/presentation/pages/welcome_page/binding/welcome_binding.dart';
 import 'package:task_management/presentation/pages/welcome_page/welcome_screen.dart';
 
@@ -81,7 +83,7 @@ class RoutingModule {
       page: () => const CreateProfileScreen(),
       binding: CreateProfileBinding(),
     ),
-       GetPage(
+    GetPage(
       name: Routes.requestDetail,
       page: () => const RequestDetailScreen(),
       binding: RequestDetailBinding(),
@@ -90,6 +92,11 @@ class RoutingModule {
       name: Routes.teacherProfile,
       page: () => const TeacherProfileScreen(),
       binding: TeacherProfileBinding(),
+    ),
+    GetPage(
+      name: Routes.userList,
+      page: () => const UserListScreen(),
+      binding: UserListBinding(),
     ),
     GetPage(
       name: Routes.submitProposal,

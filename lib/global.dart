@@ -9,7 +9,7 @@ void darkStatusBar() {
     statusBarBrightness: Brightness.light,
   ));
 }
-
+ 
 void lightStatusBar() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.white,
