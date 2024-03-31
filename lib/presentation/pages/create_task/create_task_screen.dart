@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:task_management/components/custom_text_component.dart';
 
@@ -242,6 +243,39 @@ class CreateTaskScreen extends GetView<CreateTaskController> {
                                   borderRadius: 9,
                                 ),
                                 const SizedBox(height: 20),
+                                const CustomTextWidget(
+                                  text: "Word Count",
+                                  color: Styles.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                const SizedBox(height: 20),
+                                CustomTextField(
+                                  maxLines: 1,
+                                  fillColor: Styles.greyLight.withOpacity(0.10),
+                                  focusColor: Styles.white,
+                                  hint: "Word Count",
+                                  inputFormat: [
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
+                                  hintFontSize: 16,
+                                  suffixIcon: IconButton(
+                                      onPressed: () {
+                                        controller.selectDate(context);
+                                      },
+                                      icon: const Icon(
+                                        Icons.calendar_today,
+                                        color: Styles.black,
+                                      )),
+                                  hintColor: Styles.solidGrey,
+                                  textInputType: TextInputType.number,
+                                  txtController: controller.wordCountText,
+                                  textInputAction: TextInputAction.next,
+                                  // node: controller.focusCpassword,
+                                  onTap: () {},
+                                  padding: 17,
+                                  borderRadius: 9,
+                                ),
+                                const SizedBox(height: 20),
                               ],
                             ),
 
@@ -305,8 +339,8 @@ class CreateTaskScreen extends GetView<CreateTaskController> {
                               onTap: () {
                                 if (controller.signupFormKey.currentState!
                                     .validate()) {
-                                  Get.to(const ShareFriendDetailScreen());
-                                  // controller.createTask();
+                                  // Get.to(const ShareFriendDetailScreen());
+                                  controller.createTask();
                                 }
                               },
                             ),

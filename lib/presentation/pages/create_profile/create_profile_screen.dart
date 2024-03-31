@@ -18,6 +18,7 @@ class CreateProfileScreen extends GetView<CreateProfileController> {
     return GetBuilder<CreateProfileController>(
       init: CreateProfileController(),
       initState: (v) {
+        controller.getProfileDetail();
         // controller.selectedCountryCode = Get.arguments["selectedCountryCode"];
       },
       builder: (_) {
@@ -53,9 +54,10 @@ class CreateProfileScreen extends GetView<CreateProfileController> {
                             Stack(
                               alignment: Alignment.bottomRight,
                               children: [
-                                const CircleAvatar(
+                                CircleAvatar(
                                   radius: 50,
-                                  backgroundImage: NetworkImage(
+                                  backgroundImage: NetworkImage(controller
+                                          .profileModelData.data!.imageUrl ??
                                       "https://upload.wikimedia.org/wikipedia/commons/b/bc/Unknown_person.jpg"),
                                 ),
                                 Container(
@@ -205,37 +207,6 @@ class CreateProfileScreen extends GetView<CreateProfileController> {
                                       ),
                                     )
                                   ],
-                                ),
-                                const SizedBox(height: 20),
-                                CustomTextField(
-                                  textFieldColor:
-                                      controller.focusNumber.hasFocus
-                                          ? Styles.black
-                                          : Styles.white,
-                                  maxLines: 1,
-                                  fillColor: controller.focusNumber.hasFocus
-                                      ? Styles.white
-                                      : Styles.greyLight.withOpacity(0.10),
-                                  focusColor: controller.focusNumber.hasFocus
-                                      ? Styles.orangeYellow
-                                      : Styles.white,
-                                  hint: "Collage",
-                                  hintFontSize: 16,
-                                  suffixIcon: IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        Icons.calendar_today,
-                                        color: Styles.white,
-                                      )),
-                                  hintColor: Styles.solidGrey,
-                                  textInputType: TextInputType.text,
-                                  txtController:
-                                      controller.collageTextEditingController,
-                                  textInputAction: TextInputAction.next,
-                                  node: controller.focusNumber,
-                                  onTap: () {},
-                                  padding: 17,
-                                  borderRadius: 9,
                                 ),
                                 const SizedBox(height: 20),
                                 CustomTextField(

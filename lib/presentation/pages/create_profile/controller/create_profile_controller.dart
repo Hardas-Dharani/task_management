@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:task_management/data/models/login_model.dart';
+import 'package:task_management/data/repositories/task_repository.dart';
 
 import '../../../../app/services/local_storage.dart';
 import '../../../../app/services/shared_preferance_constants.dart';
+import '../../../../data/models/profile_model.dart';
 import '../../../../data/repositories/auth_repository.dart';
 import '../../../../utils/custom_snack_bar.dart';
 import '../../../../utils/loader.dart';
@@ -47,6 +49,8 @@ class CreateProfileController extends GetxController {
   final String _password = '';
 
   Country country = Country();
+
+  ProfileModel profileModelData = ProfileModel();
 
   String get email => _email;
 
@@ -95,6 +99,33 @@ class CreateProfileController extends GetxController {
 
   bool getPasswordVisiblity() {
     return _passwordVisible;
+  }
+
+  Future<void> getProfileDetail() async {
+    try {
+      LoadingDialog.show();
+      final result = await TaskRepositoryIml().getAllTeacher("profile");
+
+      if (result['data'] != null) {
+        profileModelData = ProfileModel.fromJson(result);
+        nameTextEditingController.text = profileModelData.data!.name!;
+        fullNameTextEditingController.text = profileModelData.data!.username!;
+        emailTextEditingController.text = profileModelData.data!.email!;
+        aboutTextEditingController.text = profileModelData.data!.aboutMe!;
+        buttonClicked = profileModelData.data!.gender!.toLowerCase() == "male"
+            ? "Male"
+            : "Female";
+        LoadingDialog.hide();
+      } else {
+        ToastComponent().showToast(result['message']);
+        LoadingDialog.hide();
+      }
+    } catch (e) {
+      print(e.toString());
+      ToastComponent().showToast("Sign in getting server error");
+      LoadingDialog.hide();
+    }
+    update();
   }
 
   getRememberMe() {

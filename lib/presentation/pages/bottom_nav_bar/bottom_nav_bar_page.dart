@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:task_management/presentation/pages/chat/chat_screen.dart';
-import 'package:task_management/presentation/pages/chat/controller/chat_controller.dart';
 
 import '../../../utils/styles.dart';
 import '../home/controller/home_controller.dart';
@@ -97,8 +95,9 @@ class BottomNavBarScreen extends GetView<BottomNavBarController> {
       case BottomNavigationItem.booking:
         return Container();
       case BottomNavigationItem.saved:
-        Get.put(ChatController());
-        return const ChatScreen();
+        return Container();
+      // Get.put(ChatController());
+      // return const ChatScreen();
       case BottomNavigationItem.menu:
         return Container();
       default:

@@ -221,11 +221,11 @@ class SignInScreen extends GetView<SigninController> {
                                   },
                                 ),
                                 const SizedBox(height: 19),
-                                const CustomTextWidget(
-                                  text: "Forget Password?",
-                                  color: Styles.orangeYellow,
-                                  fontSize: 12,
-                                ),
+                                // const CustomTextWidget(
+                                //   text: "Forget Password?",
+                                //   color: Styles.orangeYellow,
+                                //   fontSize: 12,
+                                // ),
                                 const SizedBox(height: 23),
                                 Row(
                                   children: [

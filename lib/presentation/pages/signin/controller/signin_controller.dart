@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:google_sign_in/google_sign_in.dart';
 import 'package:task_management/data/models/login_model.dart';
 
 import '../../../../app/services/local_storage.dart';
@@ -18,7 +18,7 @@ class SigninController extends GetxController {
   TextEditingController passwordTextEditingController = TextEditingController();
   final signinFormKey = GlobalKey<FormState>();
   // Social Login
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  // final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   FocusNode focusEmail = FocusNode();
   FocusNode focusPassword = FocusNode();
@@ -166,35 +166,35 @@ class SigninController extends GetxController {
     // }
   }
 
-  Future<void> signInWithGoogle(BuildContext context) async {
-    try {
-      LoadingDialog.show();
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      if (googleUser != null) {
-        final GoogleSignInAuthentication googleAuth =
-            await googleUser.authentication;
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        );
-        final UserCredential authResult =
-            await _auth.signInWithCredential(credential);
-        // final User? user = authResult.user;
-        if (kDebugMode) {
-          // print('google login $user');
-        }
-        _googleSignIn.signOut();
-        LoadingDialog.hide();
+  // Future<void> signInWithGoogle(BuildContext context) async {
+  //   try {
+  //     LoadingDialog.show();
+  //     final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+  //     if (googleUser != null) {
+  //       final GoogleSignInAuthentication googleAuth =
+  //           await googleUser.authentication;
+  //       final AuthCredential credential = GoogleAuthProvider.credential(
+  //         accessToken: googleAuth.accessToken,
+  //         idToken: googleAuth.idToken,
+  //       );
+  //       final UserCredential authResult =
+  //           await _auth.signInWithCredential(credential);
+  //       // final User? user = authResult.user;
+  //       if (kDebugMode) {
+  //         // print('google login $user');
+  //       }
+  //       _googleSignIn.signOut();
+  //       LoadingDialog.hide();
 
-        LoadingDialog.hide();
-        ToastComponent().showToast('User cancelled login');
-      }
-    } catch (e) {
-      LoadingDialog.hide();
-      if (kDebugMode) {
-        print('catch ${e.toString()}');
-      }
-      ToastComponent().showToast(e.toString());
-    }
-  }
+  //       LoadingDialog.hide();
+  //       ToastComponent().showToast('User cancelled login');
+  //     }
+  //   } catch (e) {
+  //     LoadingDialog.hide();
+  //     if (kDebugMode) {
+  //       print('catch ${e.toString()}');
+  //     }
+  //     ToastComponent().showToast(e.toString());
+  //   }
+  // }
 }

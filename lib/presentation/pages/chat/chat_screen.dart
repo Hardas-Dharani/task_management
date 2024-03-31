@@ -1,236 +1,147 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+// import 'package:flutter/material.dart';
+// import 'package:get/get.dart';
 
-import '../../../components/custom_appbar_component.dart';
-import '../../../components/custom_text_component.dart';
-import '../../../components/custom_textfield_component.dart';
-import '../../../components/main_scaffold_component.dart';
-import '../../../components/svg_icons_components.dart';
-import '../../../routes/app_routes.dart';
-import '../../../utils/styles.dart';
-import 'controller/chat_controller.dart';
+// import '../../../components/custom_text_component.dart';
+// import '../../../components/main_scaffold_component.dart';
+// import '../../../data/models/user_firebase.dart';
+// import '../../../utils/styles.dart';
+// import 'controller/chat_controller.dart';
+// import 'widget/chat_list.dart';
+// import 'widget/message.dart';
 
-class ChatScreen extends GetView<ChatController> {
-  const ChatScreen({super.key});
+// class ChatScreen extends GetView<ChatController> {
+//   const ChatScreen({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        Get.back();
-        return true;
-      },
-      child: MainScaffold(
-        backgroundColor: Styles.black,
-        appBar: CustomAppBar(
-          title: 'Message',
-          leading: true,
-          bgColor: Styles.black, titleColor: Styles.white,
-          backButtonColor: Styles.black,
-          // centerTitle: false,
-          onLeadingPress: () {
-            Get.back();
-          },
-        ),
-        body: GetBuilder<ChatController>(builder: (context) {
-          return DefaultTabController(
-            length: 2,
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: Styles.screenPadding),
-                  child: CustomTextField(
-                    maxLines: 1,
-                    cursorColor: Styles.solidGrey,
-                    fillColor: Styles.greyLight3,
-                    hint: "Search",
-                    focusColor: Styles.solidGrey,
-                    hintColor: Styles.black.withOpacity(0.4),
-                    textInputType: TextInputType.name,
-                    txtController: controller.searchTextEditingController,
-                    textInputAction: TextInputAction.next,
-                    node: controller.focusSearch,
-                    onTap: () {},
-                    prefixIcon: const Padding(
-                      padding: EdgeInsets.all(2.0),
-                      child: SvgIconComponent(
-                          icon: "search_2x.svg", color: Styles.solidGrey),
-                    ),
-                    borderRadius: 9,
-                  ),
-                ),
-                const SizedBox(height: 30),
-                Container(
-                  color: Styles.black,
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: Styles.screenPadding),
-                  child: ListView.separated(
-                    itemCount: 3,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (
-                      context,
-                      index,
-                    ) {
-                      return chatTile(
-                        name: 'Justin Levin',
-                        lastMessage: 'Hello there..',
-                        unread: index,
-                        time: index == 0 ? "40mins" : "Jul 23, 08:00 PM",
-                        // time: '4${index}mins',
-                        isOnline: index == 1,
-                        isQuote: false,
-                        isVerified: index == 1,
-                        image:
-                            'https://media.istockphoto.com/id/1483322758/photo/man-fasten-metal-profile-frame-to-the-wall-for-draywall-bulkhead.webp?b=1&s=170667a&w=0&k=20&c=AE86ltSi7GmoSswzGmr813hZkTIyjg8QxNn2TRORiYE=',
-                      );
-                    },
-                    separatorBuilder: (
-                      context,
-                      index,
-                    ) {
-                      return const Divider(
-                        color: Styles.greyLight,
-                        height: 20,
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-          );
-        }),
-      ),
-    );
-  }
+//   @override
+//   Widget build(BuildContext context) {
+//     return GetBuilder<ChatController>(
+//       initState: (v) {},
+//       builder: (_) {
+//         return MainScaffold(
+//           backgroundColor: Styles.black,
+//           extendBehindAppBar: true,
+//           appBar: Padding(
+//             padding: const EdgeInsets.symmetric(horizontal: 10),
+//             child: AppBar(
+//               forceMaterialTransparency: true,
+//               elevation: 0,
+//               backgroundColor: Colors.transparent,
+//               leading: IconButton(
+//                 onPressed: () {
+//                   // final scaffoldState = Scaffold.of(context);
+//                   // scaffoldState.openDrawer();
+//                 },
+//                 icon: Image.asset(
+//                   "assets/images/icons/menu_icon.png",
+//                   color: Styles.white,
+//                   width: 24,
+//                   height: 24,
+//                 ),
+//               ),
+//               actions: const [],
+//             ),
+//           ),
+//           body: Container(
+//             child: Column(
+//               children: [
+//                 const SizedBox(height: 90),
+//                 const Center(
+//                   child: Column(
+//                     children: [
+//                       // Image.asset(
+//                       //   "assets/images/icons/chat_yellow.png",
+//                       //   width: 38,
+//                       //   height: 38,
+//                       // ),
+//                       SizedBox(height: 10),
+//                       Padding(
+//                         padding: EdgeInsets.symmetric(horizontal: 30),
+//                         child: CustomTextWidget(
+//                           textAlign: TextAlign.center,
+//                           text: "Your recent\nconversation",
+//                           fontSize: 26,
+//                           fontWeight: FontWeight.bold,
+//                           color: Styles.white,
+//                         ),
+//                       )
+//                     ],
+//                   ),
+//                 ),
+//                 const SizedBox(height: 24),
+//                 Expanded(
+//                   child: Container(
+//                     padding: const EdgeInsets.only(bottom: 80),
+//                     decoration: const BoxDecoration(
+//                       color: Styles.white,
+//                       borderRadius: BorderRadius.only(
+//                         topLeft: Radius.circular(30),
+//                         topRight: Radius.circular(30),
+//                       ),
+//                     ),
+//                     child: StreamBuilder<List<UserFireBaseModel>>(
+//                       stream: controller.usersStream,
+//                       builder: (context, snapshot) {
+//                         if (snapshot.connectionState ==
+//                             ConnectionState.waiting) {
+//                           return const Center(
+//                               child: CircularProgressIndicator());
+//                         } else if (snapshot.hasError || snapshot.data == null) {
+//                           return const Center(
+//                               child: CustomTextWidget(
+//                                   text: "No chat available", fontSize: 18));
+//                         } else {
+//                           final users = snapshot.data!;
+//                           if (users.isEmpty) {
+//                             return const Center(
+//                                 child: CustomTextWidget(
+//                                     text: "No chat available", fontSize: 18));
+//                           }
+//                           return ListView.separated(
+//                             separatorBuilder: (context, index) =>
+//                                 const SizedBox(height: 20),
+//                             itemCount: users.length,
+//                             padding: const EdgeInsets.symmetric(
+//                                 horizontal: 20, vertical: 30),
+//                             itemBuilder: (context, index) {
+//                               String id = controller.generateChatId(
+//                                 users[index].id,
+//                                 "2",
+//                               );
 
-  Widget chatTile(
-      {required String name,
-      required String time,
-      required String lastMessage,
-      required int unread,
-      required String image,
-      required bool isQuote,
-      bool isVerified = false,
-      required bool isOnline}) {
-    return ListTile(
-      onTap: () {
-        Get.toNamed(
-          Routes.chatting,
-          arguments: {
-            'image':
-                'https://media.istockphoto.com/id/1483322758/photo/man-fasten-metal-profile-frame-to-the-wall-for-draywall-bulkhead.webp?b=1&s=170667a&w=0&k=20&c=AE86ltSi7GmoSswzGmr813hZkTIyjg8QxNn2TRORiYE=',
-            'name': name,
-            'role': 'Plumber',
-            'isVerified': isVerified,
-            'isQuote': isQuote,
-          },
-        );
-      },
-      contentPadding: EdgeInsets.zero,
-      leading: SizedBox(
-        height: Get.height * 50 / 812,
-        width: Get.width * 50 / 375,
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            CircleAvatar(
-              backgroundColor: Colors.orange,
-              radius: 25,
-              backgroundImage: NetworkImage(image),
-            ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Container(
-                padding: const EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: isOnline ? Styles.green : Styles.greySilver,
-                  border: Border.all(
-                    width: 1,
-                    color: Colors.white,
-                  ),
-                ),
-                child: const Text(''),
-              ),
-            ),
-          ],
-        ),
-      ),
-      title: Padding(
-        padding: const EdgeInsets.only(bottom: 12),
-        child: Row(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  Flexible(
-                    child: CustomTextWidget(
-                      text: name,
-                      fontSize: 14,
-                      color: Styles.white,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  if (isVerified)
-                    const SizedBox(
-                      width: 10,
-                    ),
-                  if (isVerified)
-                    const SvgIconComponent(icon: 'verified_new.svg'),
-                ],
-              ),
-            ),
-            Text(time,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Styles.solidGrey.withOpacity(0.6),
-                )),
-            // CustomText(
-            //   text: controller.chatHomeModel?.data?.groupList?[index].messageTime!,
-            //   fontSize: 12,
-            //   fontWeight: FontWeight.w600,
-            //   color: AppColors.containerGreyColor2
-            //       .withOpacity(0.6),
-            // ),
-          ],
-        ),
-      ),
-      subtitle: Padding(
-        padding: const EdgeInsets.only(bottom: 5),
-        child: Row(
-          children: [
-            Expanded(
-              child: CustomTextWidget(
-                text: lastMessage,
-                fontSize: 12,
-                color: Styles.solidGrey,
-              ),
-            ),
-            // const Spacer(),
-            (unread) == 0
-                ? const SizedBox()
-                : Container(
-                    alignment: Alignment.center,
-                    height: Get.height * 20 / 812,
-                    width: Get.width * 20 / 375,
-                    decoration: const BoxDecoration(
-                        color: Styles.red, shape: BoxShape.circle),
-                    child: CustomTextWidget(
-                      text: unread.toString(),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w800,
-                      textAlign: TextAlign.center,
-                      color: Styles.white,
-                    ),
-                  )
-          ],
-        ),
-      ),
-    );
-  }
-}
+//                               return GestureDetector(
+//                                 behavior: HitTestBehavior.opaque,
+//                                 onTap: () {
+//                                   Get.to(() => MessageWidgetScreen(
+//                                       userFireBaseModel: users[index]));
+//                                 },
+//                                 child: ChatListWidget(
+//                                   messageCount: users[index]
+//                                           .newMessageCount?[id]
+//                                           ?.toString() ??
+//                                       "",
+//                                   expired: false,
+//                                   title: (users[index].name ?? "")
+//                                               .split(' ')
+//                                               .length >
+//                                           1
+//                                       ? (users[index].name ?? "").split(' ')[1]
+//                                       : (users[index].name ?? ""),
+//                                   image: users[index].profilePictureUrl,
+//                                   subtitle: users[index].lastMessage?[id] ?? "",
+//                                 ),
+//                               );
+//                             },
+//                           );
+//                         }
+//                       },
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }

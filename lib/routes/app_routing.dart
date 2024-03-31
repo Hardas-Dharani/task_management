@@ -25,8 +25,6 @@ import '../presentation/pages/bottom_nav_bar/binding/bottom_nav_bar_binding.dart
 import '../presentation/pages/bottom_nav_bar/bottom_nav_bar_page.dart';
 import '../presentation/pages/change_password/binding/change_pass_binding.dart';
 import '../presentation/pages/change_password/change_pass_screen.dart';
-import '../presentation/pages/chat/binding/chat_binding.dart';
-import '../presentation/pages/chat/chat_screen.dart';
 import '../presentation/pages/chatting/binding/chatting_binding.dart';
 import '../presentation/pages/edit_profile/binding/edit_profile_binding.dart';
 import '../presentation/pages/edit_profile/edit_profile_screen.dart';
@@ -170,11 +168,11 @@ class RoutingModule {
       binding: CreateEducationBinding(),
     ),
 
-    GetPage(
-      name: Routes.chats,
-      page: () => const ChatScreen(),
-      binding: ChatBinding(),
-    ),
+    // GetPage(
+    //   name: Routes.chats,
+    //   page: () => const ChatScreen(),
+    //   binding: ChatBinding(),
+    // ),
     GetPage(
       name: Routes.chatting,
       page: () => const ChattingScreen(),

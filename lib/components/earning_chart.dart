@@ -224,11 +224,11 @@ class _LineChart extends StatelessWidget {
         ],
       );
 
-  LineTouchData get lineTouchData1 => LineTouchData(
+  LineTouchData get lineTouchData1 => const LineTouchData(
         handleBuiltInTouches: true,
         touchTooltipData: LineTouchTooltipData(
-          tooltipBgColor: Colors.blueGrey.withOpacity(0.8),
-        ),
+            // tooltipBgColor: Colors.blueGrey.withOpacity(0.8),
+            ),
       );
 
   LineTouchData get lineTouchData2 => const LineTouchData(

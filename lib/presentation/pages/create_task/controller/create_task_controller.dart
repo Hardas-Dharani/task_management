@@ -5,9 +5,11 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:task_management/data/models/login_model.dart';
+import 'package:task_management/presentation/pages/create_task/widget/share_user.dart';
 
 import '../../../../app/services/local_storage.dart';
 import '../../../../app/services/shared_preferance_constants.dart';
+import '../../../../data/models/get_all_teacher.dart';
 import '../../../../data/repositories/task_repository.dart';
 import '../../../../utils/custom_snack_bar.dart';
 import '../../../../utils/loader.dart';
@@ -16,6 +18,7 @@ import '../../../../utils/toast_component.dart';
 class CreateTaskController extends GetxController {
   TextEditingController projectTextEditingController = TextEditingController();
   TextEditingController titleTextEditingController = TextEditingController();
+  TextEditingController wordCountText = TextEditingController();
   TextEditingController descriptionTextEditingController =
       TextEditingController();
   TextEditingController startDateTextEditingController =
@@ -58,6 +61,8 @@ class CreateTaskController extends GetxController {
 
   final DateFormat _dateFormat = DateFormat('yyyy-MM-dd');
 
+  GetAllTeacher getAllTeachersModel = GetAllTeacher();
+
   String get email => _email;
 
   String get password => _password;
@@ -77,18 +82,16 @@ class CreateTaskController extends GetxController {
       LoadingDialog.show();
       final result = await TaskRepositoryIml().createTask({
         "title": titleTextEditingController.text,
-        "budget": "\$${0}",
+        "word_count": wordCountText.text,
         "end_date": endDateTextEditingController.text,
         "start_date": startDateTextEditingController.text,
         "description": descriptionTextEditingController.text,
-        "skills": "Content"
       });
 
       if (result['data'] != null) {
         ToastComponent().showToast("Task Createed");
         LoadingDialog.hide();
-        Get.back();
-        Get.back();
+        Get.to(const ShareFriendDetailScreen());
       } else {
         ToastComponent().showToast(result['message']);
         LoadingDialog.hide();
@@ -109,6 +112,49 @@ class CreateTaskController extends GetxController {
     } else {
       CustomSnackBar.show('No Image picked');
     }
+  }
+
+  Future<void> getAllTeacher() async {
+    try {
+      LoadingDialog.show();
+      final result = await TaskRepositoryIml().getAllTeacher("all-teachers");
+
+      if (result['data'] != null) {
+        // ToastComponent().showToast("Task Createed");
+        LoadingDialog.hide();
+        getAllTeachersModel = GetAllTeacher.fromJson(result);
+      } else {
+        ToastComponent().showToast(result['message']);
+        LoadingDialog.hide();
+      }
+    } catch (e) {
+      print(e.toString());
+      ToastComponent().showToast("Sign in getting server error");
+      LoadingDialog.hide();
+    }
+    update();
+  }
+
+  Future<void> sendRequestData(Map<String,dynamic> data) async {
+    try {
+      LoadingDialog.show();
+      final result =
+          await TaskRepositoryIml().postData(data, "task-request");
+
+      if (result['data'] != null) {
+        // ToastComponent().showToast("Task Createed");
+        LoadingDialog.hide();
+        getAllTeachersModel = GetAllTeacher.fromJson(result);
+      } else {
+        ToastComponent().showToast(result['message']);
+        LoadingDialog.hide();
+      }
+    } catch (e) {
+      print(e.toString());
+      ToastComponent().showToast("Sign in getting server error");
+      LoadingDialog.hide();
+    }
+    update();
   }
 
   bool getPasswordVisiblity() {

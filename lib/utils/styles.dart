@@ -161,6 +161,7 @@ class Styles {
       ),
     ],
   );
+
   static BoxDecoration blackDecoration = BoxDecoration(
     color: Styles.metal,
     boxShadow: [
@@ -172,7 +173,6 @@ class Styles {
       )
     ],
   );
-
   static LinearGradient linearMetal = LinearGradient(
     colors: Styles.metalGradientColor,
     begin: Alignment.topCenter,
@@ -187,7 +187,9 @@ class Styles {
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
   );
+
   static const double screenPadding = 24;
+
   String formatRelativeTime(String timestamp) {
     DateTime postTime = DateTime.parse(timestamp).toLocal();
     DateTime currentTime = DateTime.now();
@@ -206,6 +208,37 @@ class Styles {
     } else {
       // If more than a week, display the actual date
       return 'posted on ${DateFormat('MMMM dd, yyyy').format(postTime)}';
+    }
+  }
+
+  static int calculateTimeDifference(DateTime dateTime) {
+    final DateTime now = DateTime.now();
+    final Duration difference = dateTime.difference(now);
+    return difference.inSeconds.abs();
+  }
+
+  static String formatOnlyTime(DateTime dateTime) {
+    final int timeDifferenceInSeconds = calculateTimeDifference(dateTime);
+
+    if (timeDifferenceInSeconds <= 120) {
+      // If within 2 minutes, return "Just now"
+      return "Just now";
+    } else if (timeDifferenceInSeconds < 86400) {
+      // If within 24 hours (but more than 2 minutes), return the relative time like "X minutes ago" or "X hours ago"
+      if (timeDifferenceInSeconds < 3600) {
+        // Less than 1 hour, return "X minutes ago"
+        final int minutesAgo = (timeDifferenceInSeconds / 60).floor();
+        return "$minutesAgo mins ago";
+      } else {
+        // 1 hour or more, return "X hours ago"
+        final int hoursAgo = (timeDifferenceInSeconds / 3600).floor();
+        return "$hoursAgo hours ago";
+      }
+    } else {
+      // If more than 24 hours, return the formatted date-time
+      final DateFormat formatter = DateFormat('hh:mm a');
+      final String formattedDateTime = formatter.format(dateTime);
+      return formattedDateTime;
     }
   }
 

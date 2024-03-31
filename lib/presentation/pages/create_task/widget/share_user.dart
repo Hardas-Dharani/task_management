@@ -8,8 +8,8 @@ import '../../../../components/main_scaffold_component.dart';
 import '../controller/create_task_controller.dart';
 
 class ShareFriendDetailScreen extends GetView<CreateTaskController> {
-  const ShareFriendDetailScreen({super.key});
-
+  final String? id;
+  const ShareFriendDetailScreen({super.key, this.id});
   @override
   Widget build(BuildContext context) {
     return MainScaffold(
@@ -41,73 +41,83 @@ class ShareFriendDetailScreen extends GetView<CreateTaskController> {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Column(
                 children: [
-                  ListView.separated(
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(
-                          height: 20,
-                        );
-                      },
-                      shrinkWrap: true,
-                      itemCount: 2,
-                      itemBuilder: (context, index) {
-                        return Row(
-                          children: [
-                            const CircleAvatar(
-                              radius: 25,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            const Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CustomTextWidget(
-                                    text: "Patrcia",
-                                    color: Styles.white,
-                                  ),
-                                  CustomTextWidget(
-                                    text:
-                                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-                                    color: Styles.white,
-                                    fontSize: 7,
-                                  )
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Get.back();
-                                Get.back();
-                                Get.back();
-                              },
-                              behavior: HitTestBehavior.opaque,
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 3),
-                                decoration: const BoxDecoration(
-                                    color: Styles.orangeYellow,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20))),
-                                child: const CustomTextWidget(
-                                  text: "Send",
-                                  fontSize: 10,
+                  controller.getAllTeachersModel.data == null
+                      ? const SizedBox()
+                      : ListView.separated(
+                          separatorBuilder: (context, index) {
+                            return const SizedBox(
+                              height: 20,
+                            );
+                          },
+                          shrinkWrap: true,
+                          itemCount:
+                              controller.getAllTeachersModel.data!.length,
+                          itemBuilder: (context, index) {
+                            return Row(
+                              children: [
+                                const CircleAvatar(
+                                  radius: 25,
                                 ),
-                              ),
-                            ),
-                            // const SizedBox(
-                            //   width: 5,
-                            // ),
-                            // const CustomTextWidget(
-                            //   text: "Ignore",
-                            //   color: Color(0xffACACAC),
-                            // )
-                          ],
-                        );
-                      })
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      CustomTextWidget(
+                                        text: controller.getAllTeachersModel
+                                                .data![index].name ??
+                                            "",
+                                        color: Styles.white,
+                                      ),
+                                      CustomTextWidget(
+                                        text: controller.getAllTeachersModel
+                                                .data![index].aboutMe ??
+                                            "",
+                                        color: Styles.white,
+                                        fontSize: 7,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                GestureDetector(
+                                  onTap: () async {
+                                    await controller.sendRequestData({
+                                      "task_id": id,
+                                      "teacher_id": controller
+                                          .getAllTeachersModel.data![index].id
+                                          .toString()
+                                    });
+                                  },
+                                  behavior: HitTestBehavior.opaque,
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 3),
+                                    decoration: const BoxDecoration(
+                                        color: Styles.orangeYellow,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(20))),
+                                    child: const CustomTextWidget(
+                                      text: "Send",
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                ),
+                                // const SizedBox(
+                                //   width: 5,
+                                // ),
+                                // const CustomTextWidget(
+                                //   text: "Ignore",
+                                //   color: Color(0xffACACAC),
+                                // )
+                              ],
+                            );
+                          })
                 ],
               ));
         },

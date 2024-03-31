@@ -218,18 +218,18 @@ class TeacherProfileScreen extends GetView<TeacherProfileController> {
                                           ),
                                         ],
                                       ),
-                                Container(
-                                  padding: const EdgeInsets.all(3),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      border: Border.all(
-                                          color: Styles.orangeYellow)),
-                                  child: const Icon(
-                                    Icons.edit,
-                                    size: 16,
-                                    color: Styles.orangeYellow,
-                                  ),
-                                )
+                                // Container(
+                                //   padding: const EdgeInsets.all(3),
+                                //   decoration: BoxDecoration(
+                                //       borderRadius: BorderRadius.circular(5),
+                                //       border: Border.all(
+                                //           color: Styles.orangeYellow)),
+                                //   child: const Icon(
+                                //     Icons.edit,
+                                //     size: 16,
+                                //     color: Styles.orangeYellow,
+                                //   ),
+                                // )
                               ],
                             ),
                             // const SizedBox(

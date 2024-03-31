@@ -73,11 +73,51 @@ class TaskRepositoryIml extends TaskRepository {
     }
   }
 
-
   @override
   Future<Map<String, dynamic>> deleteTask(String id) async {
     try {
       final response = await TaskAPI.deleteTask(id, "task").request();
+
+      final result = json.decode(response);
+
+      return result;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> fromPostData(
+      Map<String, dynamic> data, String apiPath) async {
+    try {
+      final response = await TaskAPI.fromPostData(data, apiPath).request();
+
+      final result = json.decode(response);
+
+      return result;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> getAllRequestTask(
+      String apiPath, String id) async {
+    try {
+      final response = await TaskAPI.getAllRequestTask(apiPath, id).request();
+
+      final result = json.decode(response);
+
+      return result;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> getAllTeacher(String apiPath) async {
+    try {
+      final response = await TaskAPI.getListTask(apiPath).request();
 
       final result = json.decode(response);
 
@@ -143,6 +183,20 @@ class TaskRepositoryIml extends TaskRepository {
   Future<Map<String, dynamic>> getTaskList() async {
     try {
       final response = await TaskAPI.getListTask("task").request();
+
+      final result = json.decode(response);
+
+      return result;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> postData(
+      Map<String, dynamic> data, String apiPath) async {
+    try {
+      final response = await TaskAPI.postData(data, apiPath).request();
 
       final result = json.decode(response);
 

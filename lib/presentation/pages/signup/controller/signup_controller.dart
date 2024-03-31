@@ -175,7 +175,7 @@ class SignupController extends GetxController {
         "username": userNameTextEditingController.text,
         "password": passwordTextEditingController.text,
         "email": emailTextEditingController.text,
-        "role_id": buttonClicked ? "1" : "2",
+        "role_id": buttonClicked ? "3" : "2",
         "country_id": countryModelData.id.toString(),
         "phone": phoneTextEditingController.text,
       });
