@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:task_management/data/models/task_list_model.dart';
 
-import '../../../../data/models/get_all_task_request.dart';
+import '../../../../data/models/get_all_task_model.dart';
 import '../../../../data/repositories/task_repository.dart';
 import '../../../../utils/loader.dart';
 import '../../../../utils/toast_component.dart';
