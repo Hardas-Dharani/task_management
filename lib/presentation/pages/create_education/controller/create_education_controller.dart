@@ -44,7 +44,7 @@ class CreateEducationController extends GetxController {
 
   final String _password = '';
 
-  Country country = Country();
+  // Country country = Country();
 
   // // Country picker
   // Country? selectedCountryInfo;

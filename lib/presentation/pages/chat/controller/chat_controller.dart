@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:task_management/app/services/local_storage.dart';
 
 import '../../../../data/models/user_firebase.dart';
 import '../../../../data/repositories/chat_repository_impl.dart';
@@ -106,11 +107,11 @@ class ChatController extends GetxController {
     try {
       var chatId = generateChatId(
         a.id,
-        "1",
+        b.id,
       );
       var chatIdb = generateChatId(
         b.id,
-        "1",
+        a.id,
       );
 
       var aLastSeen = a.lastSeen[chatId] ?? 0; // Default to 0 if null
@@ -166,7 +167,8 @@ class ChatController extends GetxController {
     try {
       _usersController.add([]);
 
-      users = await _userRepository.getUsersFromChatMessages("1");
+      users = await _userRepository.getUsersFromChatMessages(
+          Get.find<LocalStorageService>().loginModel!.data!.user!.id.toString());
       try {
         users.sort((a, b) {
           return compareLastSeen(a, b);
@@ -245,13 +247,7 @@ class ChatController extends GetxController {
     final newMessage = ChatMessage(
       sender: senderID,
       type: messageType,
-      text: messageType == MessageType.Text
-          ? text
-          : messageType == MessageType.VideoCalling
-              ? text
-              : messageType == MessageType.VoiceCalling
-                  ? text
-                  : mediaUrl,
+      text: messageType == MessageType.Text ? text : mediaUrl,
       timestamp: DateTime.now(),
       isSent: true,
     );
@@ -259,25 +255,9 @@ class ChatController extends GetxController {
     chatMessages.add(newMessage);
     UserFireBaseModel? senderData = await _userRepository.getUserById(senderID);
     _userRepository.updateLastMessage(
-        senderID,
-        chatId,
-        messageType == MessageType.Text
-            ? text
-            : messageType == MessageType.VideoCalling
-                ? "Video Call"
-                : messageType == MessageType.VoiceCalling
-                    ? "Voice Call"
-                    : "Image");
+        senderID, chatId, messageType == MessageType.Text ? text : "Image");
     _userRepository.updateLastMessageOnly(
-        receiverID,
-        chatId,
-        messageType == MessageType.Text
-            ? text
-            : messageType == MessageType.VideoCalling
-                ? "Video Call"
-                : messageType == MessageType.VoiceCalling
-                    ? "Voice Call"
-                    : "Image");
+        receiverID, chatId, messageType == MessageType.Text ? text : "Image");
 
     await _chatRepository.sendMessage(chatId, senderID, receiverID, text,
         mediaUrl, messageType, senderData, reciverData);

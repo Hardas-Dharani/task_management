@@ -86,6 +86,44 @@ class CreateTaskScreen extends GetView<CreateTaskController> {
                                   padding: 17,
                                   borderRadius: 9,
                                 ),
+                                const SizedBox(height: 20),
+                                const CustomTextWidget(
+                                  text: "Describe Project",
+                                  color: Styles.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                const SizedBox(height: 20),
+                                CustomTextField(
+                                  maxLines: 8,
+                                  fillColor: controller.focusCpassword.hasFocus
+                                      ? Styles.white
+                                      : Styles.greyLight.withOpacity(0.10),
+                                  focusColor: controller.focusCpassword.hasFocus
+                                      ? Styles.orangeYellow
+                                      : Styles.white,
+                                  hint: "Description",
+                                  hintFontSize: 16,
+                                  suffixIcon: IconButton(
+                                      onPressed: () {
+                                        controller.selectDate(context);
+                                      },
+                                      icon: const Icon(
+                                        Icons.calendar_today,
+                                        color: Styles.black,
+                                      )),
+                                  hintColor: Styles.solidGrey,
+                                  textInputType: TextInputType.text,
+                                  minLines: 5,
+                                  txtController: controller
+                                      .descriptionTextEditingController,
+                                  textInputAction: TextInputAction.next,
+                                  node: controller.focusCpassword,
+                                  onTap: () {},
+                                  padding: 17,
+                                  borderRadius: 9,
+                                ),
+                                const SizedBox(height: 20),
+
                                 // const SizedBox(height: 20),
                                 // const CustomTextWidget(
                                 //   text: "Enter your project title",
@@ -115,166 +153,240 @@ class CreateTaskScreen extends GetView<CreateTaskController> {
                                 //   padding: 17,
                                 //   borderRadius: 9,
                                 // ),
-
-                                const SizedBox(height: 20),
                                 const CustomTextWidget(
-                                  text: "Enter time duration",
+                                  text: "Upload your project file",
                                   color: Styles.white,
                                   fontWeight: FontWeight.bold,
                                 ),
                                 const SizedBox(height: 20),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: CustomTextField(
-                                        textFieldColor:
-                                            controller.focusNumber.hasFocus
-                                                ? Styles.black
-                                                : Styles.white,
+                                CustomTextField(
+                                  textFieldColor: Styles.white,
+                                  maxLines: 1,
+                                  fillColor: Styles.greyLight.withOpacity(0.10),
+                                  focusColor: Styles.white,
+                                  hint: "File Upload",
+                                  hintFontSize: 16,
+                                  suffixWidget: IconButton(
+                                      onPressed: () {
+                                        controller.selectFile();
+                                      },
+                                      icon: Image.asset(
+                                        "assets/images/file_upload.png",
+                                        height: 15,
+                                        width: 15,
+                                      )),
+                                  hintColor: Styles.solidGrey,
+                                  textInputType: TextInputType.text,
+                                  // txtController:
+                                  //     controller.startDateTextEditingController,
+                                  textInputAction: TextInputAction.next,
+                                  // node: controller.focusNumber,
+                                  readOnly: true,
+                                  onTap: () {},
+                                  padding: 17,
+                                  borderRadius: 9,
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Wrap(
+                                  spacing: 10.0, // gap between adjacent items
+                                  runSpacing: 10.0, // gap between lines
+                                  children: List.generate(
+                                    controller.listFileSelected
+                                        .length, // number of icons to display
+                                    (index) => const Icon(
+                                      Icons.star,
+                                      size: 50.0,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                const CustomTextWidget(
+                                  text: "When should it be done?",
+                                  color: Styles.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                const SizedBox(height: 20),
+                                CustomTextField(
+                                  textFieldColor:
+                                      controller.focusNumber.hasFocus
+                                          ? Styles.black
+                                          : Styles.white,
+                                  maxLines: 1,
+                                  fillColor: controller.focusNumber.hasFocus
+                                      ? Styles.white
+                                      : Styles.greyLight.withOpacity(0.10),
+                                  focusColor: controller.focusNumber.hasFocus
+                                      ? Styles.orangeYellow
+                                      : Styles.white,
+                                  hint: "MM/DD/YYYY",
+                                  hintFontSize: 16,
+                                  suffixWidget: IconButton(
+                                      onPressed: () {
+                                        controller.selectDate(context);
+                                      },
+                                      icon: const Icon(
+                                        Icons.calendar_today,
+                                        color: Styles.white,
+                                      )),
+                                  hintColor: Styles.solidGrey,
+                                  textInputType: TextInputType.text,
+                                  txtController:
+                                      controller.startDateTextEditingController,
+                                  textInputAction: TextInputAction.next,
+                                  node: controller.focusNumber,
+                                  readOnly: true,
+                                  onTap: () {},
+                                  padding: 17,
+                                  borderRadius: 9,
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+
+                                controller.preRequestModel.data == null
+                                    ? const SizedBox()
+                                    : const CustomTextWidget(
+                                        text: "Type of assignment",
+                                        color: Styles.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                controller.preRequestModel.data == null
+                                    ? const SizedBox()
+                                    : const SizedBox(height: 20),
+                                controller.preRequestModel.data == null
+                                    ? const SizedBox()
+                                    : Container(
+                                        decoration: BoxDecoration(
+                                            color: Styles.greyLight
+                                                .withOpacity(0.10),
+                                            borderRadius:
+                                                BorderRadius.circular(9)),
+                                        child: DropdownButtonFormField(
+                                            decoration: InputDecoration(
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(9),
+                                                  borderSide: BorderSide(
+                                                    width: 0.5,
+                                                    color: Styles.greyLight
+                                                        .withOpacity(0.10),
+                                                    style: BorderStyle.none,
+                                                  ),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(9),
+                                                  borderSide: BorderSide(
+                                                      width: 0.5,
+                                                      color: Styles.greyLight
+                                                          .withOpacity(0.10)),
+                                                ),
+                                                errorBorder: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(9),
+                                                  borderSide: BorderSide(
+                                                      width: 0.5,
+                                                      color: Styles.greyLight
+                                                          .withOpacity(0.10)),
+                                                ),
+                                                focusedErrorBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(9),
+                                                  borderSide: BorderSide(
+                                                      width: 0.5,
+                                                      color: Styles.greyLight
+                                                          .withOpacity(0.10)),
+                                                ),
+                                                disabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(9),
+                                                  borderSide: BorderSide(
+                                                    width: 0.5,
+                                                    color: Styles.greyLight
+                                                        .withOpacity(0.10),
+                                                    style: BorderStyle.none,
+                                                  ),
+                                                ),
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(9),
+                                                  borderSide: BorderSide(
+                                                    width: 0.5,
+                                                    color: Styles.greyLight
+                                                        .withOpacity(0.10),
+                                                  ),
+                                                ),
+                                                fillColor: Styles.greyLight
+                                                    .withOpacity(0.10)),
+                                            value:
+                                                controller.preRequestModelTypes,
+                                            items: controller
+                                                .preRequestModel.data!.types!
+                                                .map((e) => DropdownMenuItem(
+                                                      value: e,
+                                                      child: CustomTextWidget(
+                                                        text: e.title ?? "",
+                                                        color: Styles.solidGrey,
+                                                      ),
+                                                    ))
+                                                .toList(),
+                                            onChanged: (contryModelsData) {
+                                              controller.preRequestModelTypes =
+                                                  contryModelsData!;
+                                              controller.update();
+                                            }),
+                                      ),
+
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                controller.preRequestModelTypes.id == 1
+                                    ? const CustomTextWidget(
+                                        text: "How many words?",
+                                        color: Styles.white,
+                                        fontWeight: FontWeight.bold,
+                                      )
+                                    : const SizedBox.shrink(),
+
+                                controller.preRequestModelTypes.id == 1
+                                    ? const SizedBox(height: 20)
+                                    : const SizedBox.shrink(),
+                                controller.preRequestModelTypes.id == 1
+                                    ? CustomTextField(
                                         maxLines: 1,
                                         fillColor:
-                                            controller.focusNumber.hasFocus
-                                                ? Styles.white
-                                                : Styles.greyLight
-                                                    .withOpacity(0.10),
-                                        focusColor:
-                                            controller.focusNumber.hasFocus
-                                                ? Styles.orangeYellow
-                                                : Styles.white,
-                                        hint: "Start",
+                                            Styles.greyLight.withOpacity(0.10),
+                                        focusColor: Styles.white,
+                                        hint: "Word Count",
+                                        inputFormat: [
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
                                         hintFontSize: 16,
-                                        suffixWidget: IconButton(
+                                        suffixIcon: IconButton(
                                             onPressed: () {
                                               controller.selectDate(context);
                                             },
                                             icon: const Icon(
                                               Icons.calendar_today,
-                                              color: Styles.white,
+                                              color: Styles.black,
                                             )),
                                         hintColor: Styles.solidGrey,
-                                        textInputType: TextInputType.text,
-                                        txtController: controller
-                                            .startDateTextEditingController,
+                                        textInputType: TextInputType.number,
+                                        txtController: controller.wordCountText,
                                         textInputAction: TextInputAction.next,
-                                        node: controller.focusNumber,
-                                        readOnly: true,
+                                        // node: controller.focusCpassword,
                                         onTap: () {},
                                         padding: 17,
                                         borderRadius: 9,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                    Expanded(
-                                      child: CustomTextField(
-                                        textFieldColor:
-                                            controller.focusLanguage.hasFocus
-                                                ? Styles.black
-                                                : Styles.white,
-                                        maxLines: 1,
-                                        fillColor:
-                                            controller.focusLanguage.hasFocus
-                                                ? Styles.white
-                                                : Styles.greyLight
-                                                    .withOpacity(0.10),
-                                        focusColor:
-                                            controller.focusLanguage.hasFocus
-                                                ? Styles.orangeYellow
-                                                : Styles.white,
-                                        hint: "Ending",
-                                        hintFontSize: 16,
-                                        suffixWidget: IconButton(
-                                            onPressed: () {
-                                              controller.selecEndDate(context);
-                                            },
-                                            icon: const Icon(
-                                              Icons.calendar_today,
-                                              color: Styles.white,
-                                            )),
-                                        hintColor: Styles.solidGrey,
-                                        textInputType: TextInputType.text,
-                                        txtController: controller
-                                            .endDateTextEditingController,
-                                        textInputAction: TextInputAction.next,
-                                        node: controller.focusLanguage,
-                                        onTap: () {},
-                                        padding: 17,
-                                        borderRadius: 9,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                const CustomTextWidget(
-                                  text: "Describe Project",
-                                  color: Styles.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                const SizedBox(height: 20),
-                                CustomTextField(
-                                  maxLines: 1,
-                                  fillColor: controller.focusCpassword.hasFocus
-                                      ? Styles.white
-                                      : Styles.greyLight.withOpacity(0.10),
-                                  focusColor: controller.focusCpassword.hasFocus
-                                      ? Styles.orangeYellow
-                                      : Styles.white,
-                                  hint: "Description",
-                                  hintFontSize: 16,
-                                  suffixIcon: IconButton(
-                                      onPressed: () {
-                                        controller.selectDate(context);
-                                      },
-                                      icon: const Icon(
-                                        Icons.calendar_today,
-                                        color: Styles.black,
-                                      )),
-                                  hintColor: Styles.solidGrey,
-                                  textInputType: TextInputType.text,
-                                  txtController: controller
-                                      .descriptionTextEditingController,
-                                  textInputAction: TextInputAction.next,
-                                  node: controller.focusCpassword,
-                                  onTap: () {},
-                                  padding: 17,
-                                  borderRadius: 9,
-                                ),
-                                const SizedBox(height: 20),
-                                const CustomTextWidget(
-                                  text: "Word Count",
-                                  color: Styles.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                const SizedBox(height: 20),
-                                CustomTextField(
-                                  maxLines: 1,
-                                  fillColor: Styles.greyLight.withOpacity(0.10),
-                                  focusColor: Styles.white,
-                                  hint: "Word Count",
-                                  inputFormat: [
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
-                                  hintFontSize: 16,
-                                  suffixIcon: IconButton(
-                                      onPressed: () {
-                                        controller.selectDate(context);
-                                      },
-                                      icon: const Icon(
-                                        Icons.calendar_today,
-                                        color: Styles.black,
-                                      )),
-                                  hintColor: Styles.solidGrey,
-                                  textInputType: TextInputType.number,
-                                  txtController: controller.wordCountText,
-                                  textInputAction: TextInputAction.next,
-                                  // node: controller.focusCpassword,
-                                  onTap: () {},
-                                  padding: 17,
-                                  borderRadius: 9,
-                                ),
+                                      )
+                                    : const SizedBox.shrink(),
                                 const SizedBox(height: 20),
                               ],
                             ),
@@ -337,11 +449,12 @@ class CreateTaskScreen extends GetView<CreateTaskController> {
                               fontColor: Styles.black,
                               fontSize: 16,
                               onTap: () {
-                                if (controller.signupFormKey.currentState!
-                                    .validate()) {
-                                  // Get.to(const ShareFriendDetailScreen());
-                                  controller.createTask();
-                                }
+                                Get.to(const ShareFriendDetailScreen());
+                                // if (controller.signupFormKey.currentState!
+                                //     .validate()) {
+                                //   // Get.to(const ShareFriendDetailScreen());
+                                  
+                                // }
                               },
                             ),
                             const SizedBox(height: 19),

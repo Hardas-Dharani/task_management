@@ -10,7 +10,7 @@ class EducationModelData {
   int? userId;
   String? createdAt;
   String? updatedAt;
-  UserModel? user;
+  User? user;
 
   EducationModelData(
       {this.id,
@@ -34,7 +34,7 @@ class EducationModelData {
     userId = json['user_id'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    user = json['user'] != null ? UserModel.fromJson(json['user']) : null;
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
   }
 
   Map<String, dynamic> toJson() {

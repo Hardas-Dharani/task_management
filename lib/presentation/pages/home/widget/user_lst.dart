@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:task_management/components/custom_appbar_component.dart';
 import 'package:task_management/components/custom_text_component.dart';
-import 'package:task_management/presentation/pages/create_task/widget/preview_task.dart';
 import 'package:task_management/utils/styles.dart';
 
 import '../../../../components/main_scaffold_component.dart';
-import '../controller/create_task_controller.dart';
+import '../controller/home_controller.dart';
 
-class ShareFriendDetailScreen extends GetView<CreateTaskController> {
+class SharePropsalListDetailScreen extends GetView<HomeController> {
   final String? id;
-  const ShareFriendDetailScreen({super.key, this.id});
+  const SharePropsalListDetailScreen({super.key, this.id});
   @override
   Widget build(BuildContext context) {
     return MainScaffold(
@@ -20,7 +19,7 @@ class ShareFriendDetailScreen extends GetView<CreateTaskController> {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: CustomAppBar(
           bgColor: Styles.black,
-          title: "Create Task",
+          title: "Proposal Requests",
           titleColor: Styles.white,
           // trailing: IconButton(
           //     onPressed: () {
@@ -35,34 +34,18 @@ class ShareFriendDetailScreen extends GetView<CreateTaskController> {
           leading: true,
         ),
       ),
-      body: GetBuilder<CreateTaskController>(
-        init: CreateTaskController(),
+      body: GetBuilder<HomeController>(
+        initState: (state) {
+          controller.getAllPropsal(id!);
+        },
         builder: (_) {
-          return Column(
-            children: [
-              const Divider(
-                height: 2,
-                color: Styles.orangeYellow,
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 15),
-                child: CustomTextWidget(
-                  text: "Select Teachers",
-                  color: Styles.orangeYellow,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const Divider(
-                height: 2,
-                color: Styles.orangeYellow,
-              ),
-              controller.getAllTeachersModel.data == null
-                  ? const SizedBox()
-                  : Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
-                      child: ListView.separated(
+          return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Column(
+                children: [
+                  controller.getListPropsalModel.data == null
+                      ? const SizedBox()
+                      : ListView.separated(
                           separatorBuilder: (context, index) {
                             return const SizedBox(
                               height: 20,
@@ -70,15 +53,10 @@ class ShareFriendDetailScreen extends GetView<CreateTaskController> {
                           },
                           shrinkWrap: true,
                           itemCount:
-                              controller.preRequestModel.data!.teachers!.length,
+                              controller.getListPropsalModel.data!.length,
                           itemBuilder: (context, index) {
                             return Row(
                               children: [
-                                Image.asset(
-                                  "assets/images/teacher_icon.png",
-                                  height: 79,
-                                  width: 79,
-                                ),
                                 const SizedBox(
                                   width: 10,
                                 ),
@@ -88,17 +66,18 @@ class ShareFriendDetailScreen extends GetView<CreateTaskController> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       CustomTextWidget(
-                                        text: controller.getAllTeachersModel
-                                                .data![index].name ??
+                                        text: controller.getListPropsalModel
+                                                .data![index].user!.name ??
                                             "",
                                         color: Styles.white,
+                                        fontSize: 14,
                                       ),
                                       CustomTextWidget(
-                                        text: controller.getAllTeachersModel
-                                                .data![index].aboutMe ??
+                                        text: controller.getListPropsalModel
+                                                .data![index].task!.title ??
                                             "",
                                         color: Styles.white,
-                                        fontSize: 7,
+                                        fontSize: 10,
                                       )
                                     ],
                                   ),
@@ -106,15 +85,18 @@ class ShareFriendDetailScreen extends GetView<CreateTaskController> {
                                 const SizedBox(
                                   width: 10,
                                 ),
-
                                 GestureDetector(
                                   onTap: () async {
                                     await controller.sendRequestData({
-                                      "task_id": id,
-                                      "teacher_id": controller
-                                          .getAllTeachersModel.data![index].id
+                                      "proposal_id": controller
+                                          .getListPropsalModel.data![index].id
+                                          .toString(),
+                                      "task_id": controller.getListPropsalModel
+                                          .data![index].taskId
                                           .toString()
-                                    });
+                                    }, "proposal/accept",
+                                        user: controller.getListPropsalModel
+                                            .data![index].user);
                                   },
                                   behavior: HitTestBehavior.opaque,
                                   child: Container(
@@ -125,38 +107,33 @@ class ShareFriendDetailScreen extends GetView<CreateTaskController> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(20))),
                                     child: const CustomTextWidget(
-                                      text: "Send",
+                                      text: "Accpet",
                                       fontSize: 10,
                                     ),
                                   ),
                                 ),
-                                // const SizedBox(
-                                //   width: 5,
-                                // ),
-                                // const CustomTextWidget(
-                                //   text: "Ignore",
-                                //   color: Color(0xffACACAC),
-                                // )
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                GestureDetector(
+                                  onTap: () async {
+                                    await controller.sendRequestData({
+                                      "proposal_id": controller
+                                          .getListPropsalModel.data![index].id
+                                          .toString(),
+                                    }, "proposal/deny");
+                                  },
+                                  behavior: HitTestBehavior.opaque,
+                                  child: const CustomTextWidget(
+                                    text: "Ignore",
+                                    color: Color(0xffACACAC),
+                                  ),
+                                )
                               ],
                             );
-                          }),
-                    ),
-              GestureDetector(
-                onTap: () => Get.to(() => const PreviewTaskDetail()),
-                child: Container(
-                  height: 55,
-                  decoration: const BoxDecoration(color: Styles.orangeYellow),
-                  width: Get.width,
-                  alignment: Alignment.center,
-                  child: const CustomTextWidget(
-                    text: "Continue",
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              )
-            ],
-          );
+                          })
+                ],
+              ));
         },
       ),
     );

@@ -17,6 +17,10 @@ class TaskAPI implements APIRequestRepresentable {
       : this._(type: TaskType.deleteTask, id: id, paths: paths);
   TaskAPI.fromPostData(Map<String, dynamic> data, String apiPath)
       : this._(type: TaskType.fromPostData, paths: apiPath, data: data);
+  TaskAPI.getAllPropsal(
+    String apiPath,
+    Map<String, dynamic> data,
+  ) : this._(type: TaskType.getAllPropsal, paths: apiPath, data: data);
   TaskAPI.getAllRequestTask(String apiPath, String id)
       : this._(type: TaskType.getAllTask, id: id, paths: apiPath);
   TaskAPI.getListTask(String id) : this._(type: TaskType.getListTask, id: id);
@@ -51,13 +55,13 @@ class TaskAPI implements APIRequestRepresentable {
       case TaskType.getListTask:
         return {
           'Authorization':
-              'Bearer ${Get.find<LocalStorageService>().loginModel!.token}'
+              'Bearer ${Get.find<LocalStorageService>().loginModel!.data!.token}'
         };
 
       default:
         return {
           'Authorization':
-              'Bearer ${Get.find<LocalStorageService>().loginModel!.token}'
+              'Bearer ${Get.find<LocalStorageService>().loginModel!.data!.token}'
         };
     }
   }
@@ -69,11 +73,15 @@ class TaskAPI implements APIRequestRepresentable {
         return HTTPMethod.get;
       case TaskType.getAllTask:
         return HTTPMethod.get;
+      case TaskType.getAllPropsal:
+        return HTTPMethod.get;
       case TaskType.deleteTask:
         return HTTPMethod.delete;
       case TaskType.postData:
         return HTTPMethod.post;
       case TaskType.fromPostData:
+        return HTTPMethod.memberFormMethod;
+      case TaskType.createTask:
         return HTTPMethod.memberFormMethod;
 
       default:
@@ -88,6 +96,8 @@ class TaskAPI implements APIRequestRepresentable {
         return APIEndpoint.middlewareURl + id!;
       case TaskType.getAllTask:
         return APIEndpoint.middlewareURl + paths!;
+      case TaskType.getAllPropsal:
+        return APIEndpoint.middlewareURl + paths!;
       case TaskType.uploadTask:
         return "${APIEndpoint.middlewareURl}${APIEndpoint.createProposal}/$id";
       case TaskType.deleteTask:
@@ -95,9 +105,9 @@ class TaskAPI implements APIRequestRepresentable {
       case TaskType.createTask:
         return "${APIEndpoint.middlewareURl}$id";
       case TaskType.postData:
-        return "${APIEndpoint.middlewareURl}$path";
+        return "${APIEndpoint.middlewareURl}$paths";
       case TaskType.fromPostData:
-        return "${APIEndpoint.middlewareURl}$path";
+        return "${APIEndpoint.middlewareURl}$paths";
       default:
         return "";
     }
@@ -111,7 +121,10 @@ class TaskAPI implements APIRequestRepresentable {
     switch (type) {
       case TaskType.getAllTask:
         return {'teacher_id': id};
-
+      case TaskType.getListTask:
+        return {'filter': "public"};
+      case TaskType.getAllPropsal:
+        return data;
       default:
         return {};
     }
@@ -128,6 +141,7 @@ enum TaskType {
   deleteTask,
   getListTask,
   getAllTask,
+  getAllPropsal,
   postData,
   fromPostData,
   detailTask,

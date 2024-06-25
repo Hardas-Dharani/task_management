@@ -5,7 +5,6 @@ import 'package:task_management/components/custom_text_component.dart';
 import 'package:task_management/routes/app_routes.dart';
 import 'package:task_management/utils/styles.dart';
 
-import '../../../app/services/local_storage.dart';
 import '../../../components/main_scaffold_component.dart';
 import 'controller/teacher_home_controller.dart';
 import 'widget/custom_task.dart';
@@ -23,39 +22,31 @@ class TeacherHomeScreen extends GetView<TeacherHomeController> {
       appBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: CustomAppBar(
-          title: "Projects",
+          title: "Home",
           titleColor: Styles.white,
           bgColor: Styles.black,
-          trailing: IconButton(
-              onPressed: () {
-                Get.toNamed(Routes.requestDetail);
-              },
-              icon: const Icon(
-                Icons.person_add_alt,
-                color: Styles.white,
-              )
-              //  Image.asset(
-              //   "assets/images/icons/menu_icon.png",
-              //   width: 20,
-              //   height: 20,
-              //   color: Styles.white,
-              // )
-              ),
+          // trailing: IconButton(
+          //     onPressed: () {
+          //       Get.toNamed(Routes.requestDetail);
+          //     },
+          //     icon: const Icon(
+          //       Icons.person_add_alt,
+          //       color: Styles.white,
+          //     )
+          //     //  Image.asset(
+          //     //   "assets/images/icons/menu_icon.png",
+          //     //   width: 20,
+          //     //   height: 20,
+          //     //   color: Styles.white,
+          //     // )
+          //     ),
           leadingWidget: GestureDetector(
             onTap: () {
               controller.globalKey.currentState!.openDrawer();
             },
             child: Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: CircleAvatar(
-                radius: 20,
-                backgroundImage: NetworkImage(Get.find<LocalStorageService>()
-                        .loginModel!
-                        .user!
-                        .imageUrl ??
-                    "https://upload.wikimedia.org/wikipedia/commons/b/bc/Unknown_person.jpg"),
-              ),
-            ),
+                padding: const EdgeInsets.only(left: 10),
+                child: Image.asset("assets/images/person_image.png")),
           ),
         ),
       ),

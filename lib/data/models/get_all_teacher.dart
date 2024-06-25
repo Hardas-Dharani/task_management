@@ -42,8 +42,8 @@ class GetAllTeacherData {
   Null gender;
   int? isActive;
   String? imageUrl;
-  Country? country;
-  Role? role;
+  // Country? country;
+  // Role? role;
   Null reviews;
   Image? image;
 
@@ -66,8 +66,8 @@ class GetAllTeacherData {
       this.gender,
       this.isActive,
       this.imageUrl,
-      this.country,
-      this.role,
+      // this.country,
+      // this.role,
       this.reviews,
       this.image});
 
@@ -90,9 +90,9 @@ class GetAllTeacherData {
     gender = json['gender'];
     isActive = json['is_active'];
     imageUrl = json['image_url'];
-    country =
-        json['country'] != null ? Country.fromJson(json['country']) : null;
-    role = json['role'] != null ? Role.fromJson(json['role']) : null;
+    // country =
+    //     json['country'] != null ? Country.fromJson(json['country']) : null;
+    // role = json['role'] != null ? Role.fromJson(json['role']) : null;
     reviews = json['reviews'];
     image = json['image'] != null ? Image.fromJson(json['image']) : null;
   }
@@ -117,12 +117,12 @@ class GetAllTeacherData {
     data['gender'] = gender;
     data['is_active'] = isActive;
     data['image_url'] = imageUrl;
-    if (country != null) {
-      data['country'] = country!.toJson();
-    }
-    if (role != null) {
-      data['role'] = role!.toJson();
-    }
+    // if (country != null) {
+    //   data['country'] = country!.toJson();
+    // }
+    // if (role != null) {
+    //   data['role'] = role!.toJson();
+    // }
     data['reviews'] = reviews;
     if (image != null) {
       data['image'] = image!.toJson();

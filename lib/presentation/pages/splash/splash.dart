@@ -16,7 +16,8 @@ class SplashScreen extends StatelessWidget {
         if (Get.find<LocalStorageService>().loginModel == null) {
           Get.offNamed(Routes.welcomeScreen);
         } else {
-          if (Get.find<LocalStorageService>().loginModel!.user!.roleId == 1) {
+          if (Get.find<LocalStorageService>().loginModel!.data!.user!.roleId ==
+              2) {
             Get.offNamed(Routes.home);
           } else {
             Get.offNamed(Routes.teacherHome);

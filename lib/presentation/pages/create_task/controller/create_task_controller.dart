@@ -1,15 +1,18 @@
 // ignore_for_file: unused_field
 
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:task_management/data/models/login_model.dart';
 import 'package:task_management/presentation/pages/create_task/widget/share_user.dart';
 
 import '../../../../app/services/local_storage.dart';
 import '../../../../app/services/shared_preferance_constants.dart';
 import '../../../../data/models/get_all_teacher.dart';
+import '../../../../data/models/pre_request_model.dart';
 import '../../../../data/repositories/task_repository.dart';
 import '../../../../utils/custom_snack_bar.dart';
 import '../../../../utils/loader.dart';
@@ -47,7 +50,7 @@ class CreateTaskController extends GetxController {
 
   final String _password = '';
 
-  Country country = Country();
+  // Country country = Country();
 
   // // Country picker
   // Country? selectedCountryInfo;
@@ -63,6 +66,10 @@ class CreateTaskController extends GetxController {
 
   GetAllTeacher getAllTeachersModel = GetAllTeacher();
 
+  List<File> listFileSelected = [];
+
+  PreRequestModel preRequestModel = PreRequestModel();
+  Types preRequestModelTypes = Types();
   String get email => _email;
 
   String get password => _password;
@@ -83,12 +90,13 @@ class CreateTaskController extends GetxController {
       final result = await TaskRepositoryIml().createTask({
         "title": titleTextEditingController.text,
         "word_count": wordCountText.text,
-        "end_date": endDateTextEditingController.text,
-        "start_date": startDateTextEditingController.text,
+        "deadline": startDateTextEditingController.text,
         "description": descriptionTextEditingController.text,
+        "files": listFileSelected,
+        "type": preRequestModelTypes.id
       });
 
-      if (result['data'] != null) {
+      if (result['status']) {
         ToastComponent().showToast("Task Createed");
         LoadingDialog.hide();
         Get.to(const ShareFriendDetailScreen());
@@ -135,16 +143,21 @@ class CreateTaskController extends GetxController {
     update();
   }
 
-  Future<void> sendRequestData(Map<String,dynamic> data) async {
+  bool getPasswordVisiblity() {
+    return _passwordVisible;
+  }
+
+  Future<void> getTaskList() async {
     try {
       LoadingDialog.show();
-      final result =
-          await TaskRepositoryIml().postData(data, "task-request");
+      final result = await TaskRepositoryIml().getTaskList("task/pre-req");
 
-      if (result['data'] != null) {
-        // ToastComponent().showToast("Task Createed");
+      if (result['status'] != null) {
+        preRequestModel = PreRequestModel.fromJson(result);
+        if (preRequestModel.data != null) {
+          preRequestModelTypes = preRequestModel.data!.types!.first;
+        }
         LoadingDialog.hide();
-        getAllTeachersModel = GetAllTeacher.fromJson(result);
       } else {
         ToastComponent().showToast(result['message']);
         LoadingDialog.hide();
@@ -155,10 +168,6 @@ class CreateTaskController extends GetxController {
       LoadingDialog.hide();
     }
     update();
-  }
-
-  bool getPasswordVisiblity() {
-    return _passwordVisible;
   }
 
   @override
@@ -178,6 +187,7 @@ class CreateTaskController extends GetxController {
     //
     //TODO: implement onInit
     super.onInit();
+    getTaskList();
   }
 
   removeRememberMe() {
@@ -211,6 +221,39 @@ class CreateTaskController extends GetxController {
     if (picked != null && picked != selectedDate) {
       selectedDate = picked;
       startDateTextEditingController.text = _dateFormat.format(selectedDate!);
+    }
+    update();
+  }
+
+  Future<void> selectFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      listFileSelected.add(file);
+    } else {
+      // User canceled the picker
+    }
+    update();
+  }
+
+  Future<void> sendRequestData(Map<String, dynamic> data) async {
+    try {
+      LoadingDialog.show();
+      final result = await TaskRepositoryIml().postData(data, "task-request");
+
+      if (result['data'] != null) {
+        // ToastComponent().showToast("Task Createed");
+        LoadingDialog.hide();
+        getAllTeachersModel = GetAllTeacher.fromJson(result);
+      } else {
+        ToastComponent().showToast(result['message']);
+        LoadingDialog.hide();
+      }
+    } catch (e) {
+      print(e.toString());
+      ToastComponent().showToast("Sign in getting server error");
+      LoadingDialog.hide();
     }
     update();
   }

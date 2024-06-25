@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
+import 'package:task_management/app/services/local_storage.dart';
 
 import '../../../../components/custom_text_component.dart';
 import '../../../../data/models/user_firebase.dart';
@@ -24,7 +25,7 @@ class MessageWidgetScreen extends GetView<ChatController> {
       }, builder: (_) {
         return Scaffold(
           extendBody: true,
-          backgroundColor: const Color(0xffEFEFEF),
+          backgroundColor: Styles.black,
           body: GestureDetector(
             onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
             child: Column(
@@ -146,81 +147,6 @@ class MessageWidgetScreen extends GetView<ChatController> {
                             ),
                           ),
                           const Spacer(),
-                          GestureDetector(
-                            // Get.find<CustomTxtController>().isNotificationReceived ? null :
-                            onTap: () async {
-                              String chatId = controller.generateChatId(
-                                "2",
-                                userFireBaseModel!.id.toString(),
-                              );
-                              controller.sendMessage(
-                                  "2",
-                                  userFireBaseModel!.id,
-                                  controller.chatMessage.text,
-                                  null,
-                                  MessageType.VideoCalling,
-                                  userFireBaseModel!);
-                              // "VideoCall"
-
-                              // CallingRepo.onJoin("VideoCall", false, chatId,
-                              //     userFireBaseModel!.id, userFireBaseModel!);
-                            },
-                            child: Container(
-                                height: 31,
-                                width: 31,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Styles.white.withOpacity(0.4)),
-                                child: Image.asset(
-                                  "assets/images/icons/camera_icon.png",
-                                  width: 6,
-                                  height: 7,
-                                )),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          GestureDetector(
-                            // Get.find<CustomTxtController>().isNotificationReceived ? null :
-                            onTap: () async {
-                              try {
-                                String chatId = controller.generateChatId(
-                                  "2",
-                                  userFireBaseModel!.id.toString(),
-                                );
-                              } catch (e) {
-                                print("AudioCall 0 $e");
-                              }
-
-                              try {
-                                controller.sendMessage(
-                                    "2",
-                                    userFireBaseModel!.id,
-                                    controller.chatMessage.text,
-                                    null,
-                                    MessageType.VoiceCalling,
-                                    userFireBaseModel!);
-                                print("message sended ");
-                              } catch (e) {
-                                print("AudioCall 1 $e");
-                              }
-                              try {
-                                print("message sended ");
-                              } catch (e) {
-                                print("AudioCall 2 $e");
-                              }
-                              // CallingRepo.onJoin("AudioCall", false, chatId,
-                              //     userFireBaseModel!.id, userFireBaseModel!);
-                            },
-                            child: Container(
-                                height: 31,
-                                width: 31,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Styles.white.withOpacity(0.4)),
-                                child: Image.asset(
-                                    "assets/images/icons/voice_call_icon.png")),
-                          ),
                         ],
                       ),
                     )),
@@ -236,7 +162,12 @@ class MessageWidgetScreen extends GetView<ChatController> {
                         children: [
                           StreamBuilder<List<ChatMessage>>(
                             stream: controller.loadChatMessages(
-                                "2", userFireBaseModel!.id),
+                                Get.find<LocalStorageService>()
+                                    .loginModel!.data!
+                                    .user!
+                                    .id
+                                    .toString(),
+                                userFireBaseModel!.id),
                             builder: (context, snapshot) {
                               if (!snapshot.hasData || snapshot.data!.isEmpty) {
                                 return Container();
@@ -283,186 +214,186 @@ class MessageWidgetScreen extends GetView<ChatController> {
                                                     : CrossAxisAlignment.start,
                                                 children: [
                                                   // const SizedBox(height: 4.3),
-                                                  if (message.type ==
-                                                      MessageType.VideoCalling)
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                        color: Styles.white,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                      ),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                horizontal: 20,
-                                                                vertical: 15),
-                                                        child: Column(
-                                                          crossAxisAlignment: isSent
-                                                              ? CrossAxisAlignment
-                                                                  .end
-                                                              : CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            if (!isSent)
-                                                              CustomTextWidget(
-                                                                // textAlign:
-                                                                //     TextAlign
-                                                                //         .start,
-                                                                text:
-                                                                    userFireBaseModel!
-                                                                        .name
-                                                                        .trim()
-                                                                        .split(
-                                                                            ' ')
-                                                                        .first,
-                                                                fontSize: 13,
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .start,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                color: Styles
-                                                                    .black,
-                                                              ),
-                                                            if (isSent)
-                                                              const CustomTextWidget(
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .start,
-                                                                text: "You",
-                                                                fontSize: 13,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                color: Styles
-                                                                    .black,
-                                                              ),
-                                                            const SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            SizedBox(
-                                                              width: 120,
-                                                              child: Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                children: [
-                                                                  Image.asset(
-                                                                    Styles.getIconImage(
-                                                                        "video_calling.png"),
-                                                                    width: 35,
-                                                                  ),
-                                                                  const CustomTextWidget(
-                                                                    text:
-                                                                        "Video Calling",
-                                                                    fontSize:
-                                                                        13,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    color: Styles
-                                                                        .black,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  if (message.type ==
-                                                      MessageType.VoiceCalling)
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                        color: Styles.white,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                      ),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                horizontal: 20,
-                                                                vertical: 15),
-                                                        child: Column(
-                                                          crossAxisAlignment: isSent
-                                                              ? CrossAxisAlignment
-                                                                  .end
-                                                              : CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            if (!isSent)
-                                                              CustomTextWidget(
-                                                                // textAlign:
-                                                                //     TextAlign
-                                                                //         .start,
-                                                                text:
-                                                                    userFireBaseModel!
-                                                                        .name
-                                                                        .trim()
-                                                                        .split(
-                                                                            ' ')
-                                                                        .first,
-                                                                fontSize: 13,
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .start,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                color: Styles
-                                                                    .black,
-                                                              ),
-                                                            if (isSent)
-                                                              const CustomTextWidget(
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .start,
-                                                                text: "You",
-                                                                fontSize: 13,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                color: Styles
-                                                                    .black,
-                                                              ),
-                                                            const SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            SizedBox(
-                                                              width: 120,
-                                                              child: Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                children: [
-                                                                  Image.asset(
-                                                                    Styles.getIconImage(
-                                                                        "voice_calling.png"),
-                                                                    height: 25,
-                                                                  ),
-                                                                  const CustomTextWidget(
-                                                                    text:
-                                                                        "Voice Calling",
-                                                                    fontSize:
-                                                                        13,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                    color: Styles
-                                                                        .black,
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
+                                                  // if (message.type ==
+                                                  //     MessageType.VideoCalling)
+                                                  //   Container(
+                                                  //     decoration: BoxDecoration(
+                                                  //       color: Styles.white,
+                                                  //       borderRadius:
+                                                  //           BorderRadius
+                                                  //               .circular(8),
+                                                  //     ),
+                                                  //     child: Padding(
+                                                  //       padding:
+                                                  //           const EdgeInsets
+                                                  //               .symmetric(
+                                                  //               horizontal: 20,
+                                                  //               vertical: 15),
+                                                  //       child: Column(
+                                                  //         crossAxisAlignment: isSent
+                                                  //             ? CrossAxisAlignment
+                                                  //                 .end
+                                                  //             : CrossAxisAlignment
+                                                  //                 .start,
+                                                  //         children: [
+                                                  //           if (!isSent)
+                                                  //             CustomTextWidget(
+                                                  //               // textAlign:
+                                                  //               //     TextAlign
+                                                  //               //         .start,
+                                                  //               text:
+                                                  //                   userFireBaseModel!
+                                                  //                       .name
+                                                  //                       .trim()
+                                                  //                       .split(
+                                                  //                           ' ')
+                                                  //                       .first,
+                                                  //               fontSize: 13,
+                                                  //               textAlign:
+                                                  //                   TextAlign
+                                                  //                       .start,
+                                                  //               fontWeight:
+                                                  //                   FontWeight
+                                                  //                       .w600,
+                                                  //               color: Styles
+                                                  //                   .black,
+                                                  //             ),
+                                                  //           if (isSent)
+                                                  //             const CustomTextWidget(
+                                                  //               textAlign:
+                                                  //                   TextAlign
+                                                  //                       .start,
+                                                  //               text: "You",
+                                                  //               fontSize: 13,
+                                                  //               fontWeight:
+                                                  //                   FontWeight
+                                                  //                       .w600,
+                                                  //               color: Styles
+                                                  //                   .black,
+                                                  //             ),
+                                                  //           const SizedBox(
+                                                  //             height: 5,
+                                                  //           ),
+                                                  //           SizedBox(
+                                                  //             width: 120,
+                                                  //             child: Row(
+                                                  //               mainAxisAlignment:
+                                                  //                   MainAxisAlignment
+                                                  //                       .spaceBetween,
+                                                  //               children: [
+                                                  //                 Image.asset(
+                                                  //                   Styles.getIconImage(
+                                                  //                       "video_calling.png"),
+                                                  //                   width: 35,
+                                                  //                 ),
+                                                  //                 const CustomTextWidget(
+                                                  //                   text:
+                                                  //                       "Video Calling",
+                                                  //                   fontSize:
+                                                  //                       13,
+                                                  //                   fontWeight:
+                                                  //                       FontWeight
+                                                  //                           .w500,
+                                                  //                   color: Styles
+                                                  //                       .black,
+                                                  //                 ),
+                                                  //               ],
+                                                  //             ),
+                                                  //           ),
+                                                  //         ],
+                                                  //       ),
+                                                  //     ),
+                                                  //   ),
+                                                  // if (message.type ==
+                                                  //     MessageType.VoiceCalling)
+                                                  //   Container(
+                                                  //     decoration: BoxDecoration(
+                                                  //       color: Styles.white,
+                                                  //       borderRadius:
+                                                  //           BorderRadius
+                                                  //               .circular(8),
+                                                  //     ),
+                                                  //     child: Padding(
+                                                  //       padding:
+                                                  //           const EdgeInsets
+                                                  //               .symmetric(
+                                                  //               horizontal: 20,
+                                                  //               vertical: 15),
+                                                  //       child: Column(
+                                                  //         crossAxisAlignment: isSent
+                                                  //             ? CrossAxisAlignment
+                                                  //                 .end
+                                                  //             : CrossAxisAlignment
+                                                  //                 .start,
+                                                  //         children: [
+                                                  //           if (!isSent)
+                                                  //             CustomTextWidget(
+                                                  //               // textAlign:
+                                                  //               //     TextAlign
+                                                  //               //         .start,
+                                                  //               text:
+                                                  //                   userFireBaseModel!
+                                                  //                       .name
+                                                  //                       .trim()
+                                                  //                       .split(
+                                                  //                           ' ')
+                                                  //                       .first,
+                                                  //               fontSize: 13,
+                                                  //               textAlign:
+                                                  //                   TextAlign
+                                                  //                       .start,
+                                                  //               fontWeight:
+                                                  //                   FontWeight
+                                                  //                       .w600,
+                                                  //               color: Styles
+                                                  //                   .black,
+                                                  //             ),
+                                                  //           if (isSent)
+                                                  //             const CustomTextWidget(
+                                                  //               textAlign:
+                                                  //                   TextAlign
+                                                  //                       .start,
+                                                  //               text: "You",
+                                                  //               fontSize: 13,
+                                                  //               fontWeight:
+                                                  //                   FontWeight
+                                                  //                       .w600,
+                                                  //               color: Styles
+                                                  //                   .black,
+                                                  //             ),
+                                                  //           const SizedBox(
+                                                  //             height: 5,
+                                                  //           ),
+                                                  //           SizedBox(
+                                                  //             width: 120,
+                                                  //             child: Row(
+                                                  //               mainAxisAlignment:
+                                                  //                   MainAxisAlignment
+                                                  //                       .spaceBetween,
+                                                  //               children: [
+                                                  //                 Image.asset(
+                                                  //                   Styles.getIconImage(
+                                                  //                       "voice_calling.png"),
+                                                  //                   height: 25,
+                                                  //                 ),
+                                                  //                 const CustomTextWidget(
+                                                  //                   text:
+                                                  //                       "Voice Calling",
+                                                  //                   fontSize:
+                                                  //                       13,
+                                                  //                   fontWeight:
+                                                  //                       FontWeight
+                                                  //                           .w500,
+                                                  //                   color: Styles
+                                                  //                       .black,
+                                                  //                 ),
+                                                  //               ],
+                                                  //             ),
+                                                  //           ),
+                                                  //         ],
+                                                  //       ),
+                                                  //     ),
+                                                  //   ),
 
                                                   if (message.type ==
                                                       MessageType.Text)
@@ -700,7 +631,12 @@ class MessageWidgetScreen extends GetView<ChatController> {
                                               onPressed: () {
                                                 Get.back();
                                                 controller.galleryPick(
-                                                    "2",
+                                                    Get.find<
+                                                            LocalStorageService>()
+                                                        .loginModel!.data!
+                                                        .user!
+                                                        .id
+                                                        .toString(),
                                                     userFireBaseModel!.id,
                                                     userFireBaseModel!);
                                               },
@@ -721,7 +657,11 @@ class MessageWidgetScreen extends GetView<ChatController> {
                                         Get.back();
                                         // Navigator.of(context).pop();
                                         controller.camPick(
-                                            "2",
+                                            Get.find<LocalStorageService>()
+                                                .loginModel!.data!
+                                                .user!
+                                                .id
+                                                .toString(),
                                             userFireBaseModel!.id,
                                             userFireBaseModel!);
                                       },
@@ -741,7 +681,12 @@ class MessageWidgetScreen extends GetView<ChatController> {
                                               onPressed: () {
                                                 Get.back();
                                                 controller.camPick(
-                                                    "2",
+                                                    Get.find<
+                                                            LocalStorageService>()
+                                                        .loginModel!.data!
+                                                        .user!
+                                                        .id
+                                                        .toString(),
                                                     userFireBaseModel!.id,
                                                     userFireBaseModel!);
                                               },
@@ -816,7 +761,11 @@ class MessageWidgetScreen extends GetView<ChatController> {
                           onTap: () {
                             if (controller.chatMessage.text.trim().isNotEmpty) {
                               controller.sendMessage(
-                                  "2",
+                                  Get.find<LocalStorageService>()
+                                      .loginModel!.data!
+                                      .user!
+                                      .id
+                                      .toString(),
                                   userFireBaseModel!.id,
                                   controller.chatMessage.text,
                                   null,
@@ -833,8 +782,10 @@ class MessageWidgetScreen extends GetView<ChatController> {
                             decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Styles.primaryColor),
-                            child: Image.asset(
-                                "assets/images/icons/send_message_icon.png"),
+                            child: const Icon(
+                              Icons.send,
+                              color: Styles.white,
+                            ),
                           ),
                         )
                       ],

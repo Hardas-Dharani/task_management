@@ -8,7 +8,9 @@ import 'package:task_management/data/models/login_model.dart';
 
 import '../../../../app/services/local_storage.dart';
 import '../../../../app/services/shared_preferance_constants.dart';
+import '../../../../data/models/user_firebase.dart';
 import '../../../../data/repositories/auth_repository.dart';
+import '../../../../data/repositories/user_repository_impl.dart';
 import '../../../../routes/app_routes.dart';
 import '../../../../utils/loader.dart';
 import '../../../../utils/toast_component.dart';
@@ -30,7 +32,9 @@ class SigninController extends GetxController {
   final String _password = '';
 
   LoginModel loginModel = LoginModel();
+  final UserRepository _userRepository = UserRepository();
   String get email => _email;
+
   String get password => _password;
 
   bool getPasswordVisiblity() {
@@ -120,12 +124,19 @@ class SigninController extends GetxController {
       if (result['token'] != null) {
         loginModel = LoginModel.fromJson(result);
         Get.find<LocalStorageService>().loginModel = loginModel;
+        UserFireBaseModel userFireBaseModel = UserFireBaseModel(
+            id: loginModel.data!.user!.id.toString(),
+            name: loginModel.data!.user!.name.toString(),
+            isOnline: true,
+            profilePictureUrl: loginModel.data!.user!.imageUrl.toString(),
+            lastSeen: {});
+        await _userRepository.addUser(userFireBaseModel);
         LoadingDialog.hide();
-        if (loginModel.user!.roleId == 2) {
-          Get.offAllNamed(Routes.teacherHome);
+        if (loginModel.data!.user!.roleId == 2) {
+          Get.offAllNamed(Routes.home);
           // Get.toNamed(Routes.home);
         } else {
-          Get.offAllNamed(Routes.home);
+          Get.offAllNamed(Routes.teacherHome);
         }
       } else {
         ToastComponent().showToast(result['message']);

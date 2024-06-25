@@ -48,7 +48,7 @@ class CreateProfileController extends GetxController {
 
   final String _password = '';
 
-  Country country = Country();
+  // Country country = Country();
 
   ProfileModel profileModelData = ProfileModel();
 
@@ -82,7 +82,7 @@ class CreateProfileController extends GetxController {
       final result = await AuthenticationRepositoryIml().getCountry();
 
       if (result['data'] != null) {
-        country = Country.fromJson(result);
+        // country = Country.fromJson(result);
 
         LoadingDialog.hide();
       } else {
@@ -207,7 +207,7 @@ class CreateProfileController extends GetxController {
       });
 
       if (result['data'] != null) {
-        country = Country.fromJson(result);
+        // country = Country.fromJson(result);
 
         LoadingDialog.hide();
       } else {

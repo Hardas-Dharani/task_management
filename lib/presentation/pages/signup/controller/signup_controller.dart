@@ -9,7 +9,9 @@ import '../../../../app/services/local_storage.dart';
 import '../../../../app/services/shared_preferance_constants.dart';
 import '../../../../data/models/country_model.dart';
 import '../../../../data/models/login_model.dart';
+import '../../../../data/models/user_firebase.dart';
 import '../../../../data/repositories/auth_repository.dart';
+import '../../../../data/repositories/user_repository_impl.dart';
 import '../../../../routes/app_routes.dart';
 import '../../../../utils/custom_snack_bar.dart';
 import '../../../../utils/loader.dart';
@@ -26,6 +28,8 @@ class SignupController extends GetxController {
   String? selectedCountryCode;
   TextEditingController cPasswordTextEditingController =
       TextEditingController();
+  late ImagePicker picker;
+  late XFile? image;
   final signupFormKey = GlobalKey<FormState>();
   List<String> selectedLanguage = [];
   bool buttonClicked = true;
@@ -51,6 +55,8 @@ class SignupController extends GetxController {
   CountryModels country = CountryModels();
 
   LoginModel loginModel = LoginModel();
+
+  final UserRepository _userRepository = UserRepository();
 
   String get email => _email;
 
@@ -161,7 +167,7 @@ class SignupController extends GetxController {
     focusCpassword.addListener(() {
       update();
     });
-    getCountry();
+    // getCountry();
     //
     //TODO: implement onInit
     super.onInit();
@@ -171,24 +177,28 @@ class SignupController extends GetxController {
     try {
       LoadingDialog.show();
       final result = await AuthenticationRepositoryIml().registerUser({
-        "name": nameTextEditingController.text,
-        "username": userNameTextEditingController.text,
+        "name": userNameTextEditingController.text,
         "password": passwordTextEditingController.text,
         "email": emailTextEditingController.text,
-        "role_id": buttonClicked ? "3" : "2",
-        "country_id": countryModelData.id.toString(),
-        "phone": phoneTextEditingController.text,
+        "type": buttonClicked ? "student" : "teacher",
       });
 
-      if (result['token'] != null) {
+      if (result['status']) {
         loginModel = LoginModel.fromJson(result);
         Get.find<LocalStorageService>().loginModel = loginModel;
+        UserFireBaseModel userFireBaseModel = UserFireBaseModel(
+            id: loginModel.data!.user!.id.toString(),
+            name: loginModel.data!.user!.name.toString(),
+            isOnline: true,
+            profilePictureUrl: loginModel.data!.user!.imageUrl.toString(),
+            lastSeen: {});
+        await _userRepository.addUser(userFireBaseModel);
         LoadingDialog.hide();
-        if (loginModel.user!.roleId == 2) {
-          Get.offAllNamed(Routes.teacherHome);
+        if (loginModel.data!.user!.roleId == 2) {
+          Get.offAllNamed(Routes.home);
           // Get.toNamed(Routes.home);
         } else {
-          Get.offAllNamed(Routes.home);
+          Get.offAllNamed(Routes.teacherHome);
         }
       } else {
         ToastComponent().showToast(result['message']);

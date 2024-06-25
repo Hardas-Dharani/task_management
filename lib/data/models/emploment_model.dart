@@ -37,7 +37,7 @@ class EmploymentModelData {
   int? isWorking;
   String? createdAt;
   String? updatedAt;
-  UserModel? user;
+  User? user;
   CountryModels? country;
 
   EmploymentModelData(
@@ -69,7 +69,7 @@ class EmploymentModelData {
     isWorking = json['is_working'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    user = json['user'] != null ? UserModel.fromJson(json['user']) : null;
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
     country = json['country'] != null
         ? CountryModels.fromJson(json['country'])
         : null;

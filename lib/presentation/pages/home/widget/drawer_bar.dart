@@ -19,18 +19,18 @@ class CustomDrawer extends StatelessWidget {
           children: [
             UserAccountsDrawerHeader(
               accountName: CustomTextWidget(
-                text: Get.find<LocalStorageService>().loginModel!.user!.name ??
+                text: Get.find<LocalStorageService>().loginModel!.data!.user!.name ??
                     "",
                 color: Styles.white,
               ),
               accountEmail: CustomTextWidget(
-                text: Get.find<LocalStorageService>().loginModel!.user!.email ??
+                text: Get.find<LocalStorageService>().loginModel!.data!.user!.email ??
                     "",
                 color: Styles.white,
               ),
               currentAccountPicture: CircleAvatar(
                 backgroundImage: NetworkImage(Get.find<LocalStorageService>()
-                        .loginModel!
+                        .loginModel!.data!
                         .user!
                         .imageUrl ??
                     "https://upload.wikimedia.org/wikipedia/commons/b/bc/Unknown_person.jpg"),
@@ -89,19 +89,19 @@ class CustomDrawer extends StatelessWidget {
                 // Handle item 1 tap
               },
             ),
-            ListTile(
-              leading: const Icon(
-                Icons.contact_page_outlined,
-                color: Styles.orangeYellow,
-              ),
-              title: const CustomTextWidget(
-                text: "Help",
-                color: Styles.white,
-              ),
-              onTap: () {
-                // Handle item 1 tap
-              },
-            ),
+            // ListTile(
+            //   leading: const Icon(
+            //     Icons.contact_page_outlined,
+            //     color: Styles.orangeYellow,
+            //   ),
+            //   title: const CustomTextWidget(
+            //     text: "Help",
+            //     color: Styles.white,
+            //   ),
+            //   onTap: () {
+            //     // Handle item 1 tap
+            //   },
+            // ),
             ListTile(
               leading: const Icon(
                 Icons.logout,
