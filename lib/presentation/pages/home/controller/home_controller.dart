@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:task_management/data/models/user_firebase.dart';
 
 import '../../../../data/models/proposal_lst.dart';
 import '../../../../data/models/task_list_model.dart';
 import '../../../../data/repositories/task_repository.dart';
 import '../../../../utils/loader.dart';
 import '../../../../utils/toast_component.dart';
-import '../../chat/widget/message.dart';
 
 class HomeController extends GetxController {
   TextEditingController searchTextEditingController = TextEditingController();
@@ -75,7 +73,7 @@ class HomeController extends GetxController {
       LoadingDialog.show();
       final result = await TaskRepositoryIml().getTaskList("task/all");
 
-      if (result['data'] != null) {
+      if (result['status'] != null) {
         taskModel = TaskListModel.fromJson(result);
 
         LoadingDialog.hide();
@@ -101,34 +99,34 @@ class HomeController extends GetxController {
     super.onInit();
   }
 
-  Future<void> sendRequestData(Map<String, dynamic> data, String apiPath,
-      {User? user}) async {
-    try {
-      LoadingDialog.show();
-      final result = await TaskRepositoryIml().postData(data, apiPath);
+  // Future<void> sendRequestData(Map<String, dynamic> data, String apiPath,
+  //     {User? user}) async {
+  //   try {
+  //     LoadingDialog.show();
+  //     final result = await TaskRepositoryIml().postData(data, apiPath);
 
-      if (result['message'] != null) {
-        // ToastComponent().showToast("Task Createed");
-        if (apiPath == "proposal/accept") {
-          LoadingDialog.hide();
-          UserFireBaseModel userFireBaseModel = UserFireBaseModel(
-              id: user!.id.toString(),
-              name: user.name!,
-              isOnline: true,
-              profilePictureUrl: user.imageUrl.toString(),
-              lastSeen: {});
-          Get.to(
-              () => MessageWidgetScreen(userFireBaseModel: userFireBaseModel));
-        }
-      } else {
-        ToastComponent().showToast(result['message']);
-        LoadingDialog.hide();
-      }
-    } catch (e) {
-      print(e.toString());
-      LoadingDialog.hide();
-      ToastComponent().showToast("Sign in getting server error");
-    }
-    update();
-  }
+  //     if (result['message'] != null) {
+  //       // ToastComponent().showToast("Task Createed");
+  //       if (apiPath == "proposal/accept") {
+  //         LoadingDialog.hide();
+  //         UserFireBaseModel userFireBaseModel = UserFireBaseModel(
+  //             id: user!.id.toString(),
+  //             name: user.name!,
+  //             isOnline: true,
+  //             profilePictureUrl: user.imageUrl.toString(),
+  //             lastSeen: {});
+  //         Get.to(
+  //             () => MessageWidgetScreen(userFireBaseModel: userFireBaseModel));
+  //       }
+  //     } else {
+  //       ToastComponent().showToast(result['message']);
+  //       LoadingDialog.hide();
+  //     }
+  //   } catch (e) {
+  //     print(e.toString());
+  //     LoadingDialog.hide();
+  //     ToastComponent().showToast("Sign in getting server error");
+  //   }
+  //   update();
+  // }
 }

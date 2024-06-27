@@ -33,23 +33,24 @@ class GetListPropsalModelData {
   String? createdAt;
   String? updatedAt;
   int? status;
-  User? user;
-  TaskListModelData? task;
-  List<ProjectCover>? proposalImages;
+  // User? user;
+  TaskData? task;
+  // List<ProjectCover>? proposalImages;
 
-  GetListPropsalModelData(
-      {this.id,
-      this.duration,
-      this.amount,
-      this.cover,
-      this.userId,
-      this.taskId,
-      this.createdAt,
-      this.updatedAt,
-      this.status,
-      this.user,
-      this.task,
-      this.proposalImages});
+  GetListPropsalModelData({
+    this.id,
+    this.duration,
+    this.amount,
+    this.cover,
+    this.userId,
+    this.taskId,
+    this.createdAt,
+    this.updatedAt,
+    this.status,
+    // this.user,
+    this.task,
+    // this.proposalImages
+  });
 
   GetListPropsalModelData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -61,15 +62,15 @@ class GetListPropsalModelData {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     status = json['status'];
-    user = json['user'] != null ? User.fromJson(json['user']) : null;
-    task =
-        json['task'] != null ? TaskListModelData.fromJson(json['task']) : null;
-    if (json['proposal_images'] != null) {
-      proposalImages = <ProjectCover>[];
-      json['proposal_images'].forEach((v) {
-        proposalImages!.add(ProjectCover.fromJson(v));
-      });
-    }
+    // user = json['user'] != null ? User.fromJson(json['user']) : null;
+    // task =
+    //     json['task'] != null ? TaskListModelData.fromJson(json['task']) : null;
+    // if (json['proposal_images'] != null) {
+    //   proposalImages = <ProjectCover>[];
+    //   json['proposal_images'].forEach((v) {
+    //     proposalImages!.add(ProjectCover.fromJson(v));
+    //   });
+    // }
   }
 
   Map<String, dynamic> toJson() {
@@ -83,15 +84,15 @@ class GetListPropsalModelData {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     data['status'] = status;
-    if (user != null) {
-      data['user'] = user!.toJson();
-    }
-    if (task != null) {
-      data['task'] = task!.toJson();
-    }
-    if (proposalImages != null) {
-      data['proposal_images'] = proposalImages!.map((v) => v.toJson()).toList();
-    }
+    // if (user != null) {
+    //   data['user'] = user!.toJson();
+    // }
+    // if (task != null) {
+    //   data['task'] = task!.toJson();
+    // }
+    // if (proposalImages != null) {
+    //   data['proposal_images'] = proposalImages!.map((v) => v.toJson()).toList();
+    // }
     return data;
   }
 }

@@ -18,7 +18,7 @@ class TaskDetailController extends GetxController {
     'Content Book',
     'Ebook',
   ];
-  TaskListModelData taskListModelData = TaskListModelData();
+  TaskData taskListModelData = TaskData();
   String selectedList = "All Project";
   @override
   void onInit() {

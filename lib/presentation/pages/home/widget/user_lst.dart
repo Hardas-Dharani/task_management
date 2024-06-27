@@ -67,7 +67,7 @@ class SharePropsalListDetailScreen extends GetView<HomeController> {
                                     children: [
                                       CustomTextWidget(
                                         text: controller.getListPropsalModel
-                                                .data![index].user!.name ??
+                                                .data![index].amount ??
                                             "",
                                         color: Styles.white,
                                         fontSize: 14,
@@ -87,16 +87,16 @@ class SharePropsalListDetailScreen extends GetView<HomeController> {
                                 ),
                                 GestureDetector(
                                   onTap: () async {
-                                    await controller.sendRequestData({
-                                      "proposal_id": controller
-                                          .getListPropsalModel.data![index].id
-                                          .toString(),
-                                      "task_id": controller.getListPropsalModel
-                                          .data![index].taskId
-                                          .toString()
-                                    }, "proposal/accept",
-                                        user: controller.getListPropsalModel
-                                            .data![index].user);
+                                    // await controller.sendRequestData({
+                                    //   "proposal_id": controller
+                                    //       .getListPropsalModel.data![index].id
+                                    //       .toString(),
+                                    //   "task_id": controller.getListPropsalModel
+                                    //       .data![index].taskId
+                                    //       .toString()
+                                    // }, "proposal/accept",
+                                    //     user: controller.getListPropsalModel
+                                    //         .data![index].user);
                                   },
                                   behavior: HitTestBehavior.opaque,
                                   child: Container(
@@ -117,11 +117,11 @@ class SharePropsalListDetailScreen extends GetView<HomeController> {
                                 ),
                                 GestureDetector(
                                   onTap: () async {
-                                    await controller.sendRequestData({
-                                      "proposal_id": controller
-                                          .getListPropsalModel.data![index].id
-                                          .toString(),
-                                    }, "proposal/deny");
+                                    // await controller.sendRequestData({
+                                    //   "proposal_id": controller
+                                    //       .getListPropsalModel.data![index].id
+                                    //       .toString(),
+                                    // }, "proposal/deny");
                                   },
                                   behavior: HitTestBehavior.opaque,
                                   child: const CustomTextWidget(

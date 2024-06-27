@@ -54,7 +54,7 @@ class SignUpScreen extends GetView<SignupController> {
                           children: [
                             const SizedBox(height: 65),
                             const CustomTextWidget(
-                              text: "Sign Up to Task'M",
+                              text: "Sign Up to SmartWay",
                               fontSize: 24,
                               color: Styles.white,
                               fontWeight: FontWeight.bold,

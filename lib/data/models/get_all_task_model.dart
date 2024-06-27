@@ -30,7 +30,7 @@ class GetAllTaskRequestData {
   int? status;
   String? createdAt;
   String? updatedAt;
-  TaskListModelData? task;
+  TaskData? task;
 
   GetAllTaskRequestData(
       {this.id,
@@ -48,8 +48,7 @@ class GetAllTaskRequestData {
     status = json['status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    task =
-        json['task'] != null ? TaskListModelData.fromJson(json['task']) : null;
+    task = json['task'] != null ? TaskData.fromJson(json['task']) : null;
   }
 
   Map<String, dynamic> toJson() {

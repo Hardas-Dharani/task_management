@@ -23,7 +23,7 @@ class RequestDetailController extends GetxController {
     'Content Book',
     'Ebook',
   ];
-  TaskListModelData taskListModelData = TaskListModelData();
+  // TaskListModelData taskListModelData = TaskListModelData();
   String selectedList = "All Project";
   GetAllTaskRequest getAllTaskRequestModel = GetAllTaskRequest();
 
@@ -52,7 +52,7 @@ class RequestDetailController extends GetxController {
   @override
   void onInit() {
     if (Get.arguments != null) {
-      taskListModelData = Get.arguments["taskDetail"];
+      // taskListModelData = Get.arguments["taskDetail"];
     }
     super.onInit();
   }

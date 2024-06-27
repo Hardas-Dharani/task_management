@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:task_management/components/custom_appbar_component.dart';
-import 'package:task_management/components/custom_text_component.dart';
 import 'package:task_management/routes/app_routes.dart';
 import 'package:task_management/utils/styles.dart';
 
@@ -58,17 +57,56 @@ class TeacherHomeScreen extends GetView<TeacherHomeController> {
             child: SizedBox(
               height: Get.height,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
                     height: 30,
                   ),
-                  CustomTextWidget(
-                      text: 'Most Recent',
-                      fontWeight: controller.selectedIndex == 1
-                          ? FontWeight.w700
-                          : FontWeight.w400,
-                      fontSize: 16,
-                      color: Styles.orangeYellow),
+                  SizedBox(
+                    height: 40,
+                    child: ListView.separated(
+                        shrinkWrap: true,
+                        // padding: const EdgeInsets.only(left: 20, top: 0),
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              controller.selectedList =
+                                  controller.sortList[index];
+                              controller.update();
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 3),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(7),
+                                  border: Border.all(
+                                      color: controller.selectedList ==
+                                              controller.sortList[index]
+                                          ? Colors.transparent
+                                          : const Color(0xff858585)),
+                                  color: controller.selectedList ==
+                                          controller.sortList[index]
+                                      ? Styles.orangeYellow
+                                      : Colors.transparent),
+                              child: Text(
+                                controller.sortList[index],
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: controller.selectedList ==
+                                            controller.sortList[index]
+                                        ? Styles.black
+                                        : const Color(0xff858585)),
+                              ),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) => const SizedBox(
+                              width: 10,
+                            ),
+                        itemCount: controller.sortList.length),
+                  ),
                   const SizedBox(
                     height: 30,
                   ),

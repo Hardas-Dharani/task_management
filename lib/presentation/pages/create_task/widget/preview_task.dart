@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:task_management/components/custom_text_component.dart';
+import 'package:task_management/data/models/pre_request_model.dart';
 
 import '../../../../components/custom_appbar_component.dart';
 import '../../../../components/main_scaffold_component.dart';
@@ -106,24 +107,27 @@ class PreviewTaskDetail extends GetView<CreateTaskController> {
                   const SizedBox(
                     height: 25,
                   ),
-                  const Row(
-                    children: [
-                      CustomTextWidget(
-                        text: "Selected Teachers:",
-                        color: Styles.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      )
-                    ],
-                  ),
+                  controller.selectedIdTeacher.isEmpty
+                      ? const SizedBox.shrink()
+                      : const Row(
+                          children: [
+                            CustomTextWidget(
+                              text: "Selected Teachers:",
+                              color: Styles.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            )
+                          ],
+                        ),
                   const SizedBox(
                     height: 15,
                   ),
                   ListView.builder(
                     shrinkWrap: true,
-                    itemCount: 3,
+                    itemCount: controller.selectedIdTeacher.length,
                     itemBuilder: (context, index) {
-                      return selectedTeacher();
+                      return selectedTeacher(
+                          controller.selectedIdTeacher[index]);
                     },
                   ),
                   const SizedBox(
@@ -159,7 +163,7 @@ class PreviewTaskDetail extends GetView<CreateTaskController> {
     );
   }
 
-  Widget selectedTeacher() {
+  Widget selectedTeacher(Teachers teachers) {
     return Row(
       children: [
         Image.asset(
@@ -170,17 +174,16 @@ class PreviewTaskDetail extends GetView<CreateTaskController> {
         const SizedBox(
           width: 10,
         ),
-        const Expanded(
+        Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomTextWidget(
-                text: "Gayle",
+                text: teachers.name ?? "",
                 color: Styles.white,
               ),
               CustomTextWidget(
-                text:
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                text: teachers.gender ?? '',
                 color: Styles.white,
                 fontSize: 9,
               )

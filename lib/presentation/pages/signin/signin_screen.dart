@@ -57,12 +57,53 @@ class SignInScreen extends GetView<SigninController> {
                               children: [
                                 const SizedBox(height: 65),
                                 const CustomTextWidget(
-                                  text: "Log in to Task'M",
+                                  text: "Log in to SmartWay",
                                   fontSize: 24,
                                   color: Styles.white,
                                   fontWeight: FontWeight.bold,
                                 ),
+                                const SizedBox(height: 20),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: CustomButton(
+                                        bgColor: Styles.black,
+                                        onTap: () {
+                                          controller.buttonClicked = true;
+                                          controller.update();
+                                        },
+                                        title: "Student",
+                                        fontColor: Styles.white,
+                                        radius: 8,
+                                        borderColor: !controller.buttonClicked
+                                            ? Styles.orangeYellow
+                                                .withOpacity(0.3)
+                                            : Styles.orangeYellow,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    Expanded(
+                                      child: CustomButton(
+                                        radius: 8,
+                                        onTap: () {
+                                          controller.buttonClicked = false;
+                                          controller.update();
+                                        },
+                                        bgColor: Styles.black,
+                                        fontColor: Styles.white,
+                                        title: "Teacher",
+                                        borderColor: controller.buttonClicked
+                                            ? Styles.orangeYellow
+                                                .withOpacity(0.3)
+                                            : Styles.orangeYellow,
+                                      ),
+                                    )
+                                  ],
+                                ),
                                 const SizedBox(height: 33),
+                            
                                 CustomTextField(
                                   textFieldColor: controller.focusEmail.hasFocus
                                       ? Styles.black

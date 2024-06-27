@@ -5,9 +5,9 @@ import '../../../../components/custom_text_component.dart';
 import '../../../../utils/styles.dart';
 
 class CustomTaskWidget extends StatelessWidget {
-  final TaskListModelData taskModel;
+  final TaskData taskModel;
 
-  const CustomTaskWidget({Key? key, required this.taskModel}) : super(key: key);
+  const CustomTaskWidget({super.key, required this.taskModel});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class CustomTaskWidget extends StatelessWidget {
             height: 5,
           ),
           CustomTextWidget(
-            text: 'Client: ${taskModel.user!.name}', // Display the client name
+            text: 'Client: ${taskModel.teacher}', // Display the client name
             fontSize: 12, color: Styles.white,
             fontWeight: FontWeight.normal,
           ),

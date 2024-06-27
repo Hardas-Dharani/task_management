@@ -40,7 +40,7 @@ class SubmitProposalController extends GetxController {
 
   String selectedList = "All Project";
   File? file;
-  TaskListModelData taskListModelData = TaskListModelData();
+  TaskData taskListModelData = TaskData();
   // applyProposal
   Future<void> applyTask() async {
     try {

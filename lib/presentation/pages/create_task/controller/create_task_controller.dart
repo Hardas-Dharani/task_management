@@ -67,7 +67,7 @@ class CreateTaskController extends GetxController {
   GetAllTeacher getAllTeachersModel = GetAllTeacher();
 
   List<File> listFileSelected = [];
-
+  List<Teachers> selectedIdTeacher = [];
   PreRequestModel preRequestModel = PreRequestModel();
   Types preRequestModelTypes = Types();
   String get email => _email;
@@ -87,12 +87,20 @@ class CreateTaskController extends GetxController {
   Future<void> createTask() async {
     try {
       LoadingDialog.show();
+      List<String> ids = [];
+      for (var element in selectedIdTeacher) {
+        ids.add(element.id!.toString());
+      }
+      // selectedIdTeacher.asMap((e) => ids.add(e.id!));
+      // ids.add(value)
       final result = await TaskRepositoryIml().createTask({
         "title": titleTextEditingController.text,
-        "word_count": wordCountText.text,
+        "word_count":
+            "${int.parse(wordCountText.text)} - ${int.parse(wordCountText.text) + 100}",
         "deadline": startDateTextEditingController.text,
         "description": descriptionTextEditingController.text,
         "files": listFileSelected,
+        "teachers[0]": ids.first,
         "type": preRequestModelTypes.id
       });
 

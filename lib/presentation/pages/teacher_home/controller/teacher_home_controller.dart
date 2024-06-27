@@ -83,7 +83,7 @@ class TeacherHomeController extends GetxController
   Future<void> getMostRecenTaskList() async {
     try {
       LoadingDialog.show();
-      final result = await TaskRepositoryIml().getRecentTaskList();
+      final result = await TaskRepositoryIml().getTaskList("task/all");
 
       if (result['data'] != null) {
         mostRecentTaskModel = TaskListModel.fromJson(result);

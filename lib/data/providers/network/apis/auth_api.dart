@@ -24,6 +24,7 @@ class AuthAPI implements APIRequestRepresentable {
   String? refreshToken;
   String? newPassword;
   String? confirmNewPassword;
+  String? typeUser;
   Map<String, dynamic>? data;
 
   // String accessToken = Get.find<LocalStorageService>().getBearerToken();
@@ -33,8 +34,12 @@ class AuthAPI implements APIRequestRepresentable {
       : this._(
           type: AuthType.getCountry,
         );
-  AuthAPI.login(String username, String password)
-      : this._(type: AuthType.login, password: password, username: username);
+  AuthAPI.login(String username, String password, String typeUser)
+      : this._(
+            type: AuthType.login,
+            password: password,
+            username: username,
+            typeUser: typeUser);
   AuthAPI.logout()
       : this._(
           type: AuthType.logout,
@@ -62,6 +67,7 @@ class AuthAPI implements APIRequestRepresentable {
     this.email,
     this.qId,
     this.data,
+    this.typeUser,
     this.uId,
     this.provider,
     this.qAnswer,
@@ -80,7 +86,7 @@ class AuthAPI implements APIRequestRepresentable {
   get body {
     switch (type) {
       case AuthType.login:
-        return {"email": username, "password": password};
+        return {"email": username, "password": password, "type": typeUser};
       case AuthType.socialLogin:
         return {
           "uid": uId,

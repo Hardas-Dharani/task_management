@@ -57,7 +57,7 @@ class ShareFriendDetailScreen extends GetView<CreateTaskController> {
                 height: 2,
                 color: Styles.orangeYellow,
               ),
-              controller.getAllTeachersModel.data == null
+              controller.preRequestModel.data == null
                   ? const SizedBox()
                   : Padding(
                       padding: const EdgeInsets.symmetric(
@@ -88,14 +88,14 @@ class ShareFriendDetailScreen extends GetView<CreateTaskController> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       CustomTextWidget(
-                                        text: controller.getAllTeachersModel
-                                                .data![index].name ??
+                                        text: controller.preRequestModel.data!
+                                                .teachers![index].name ??
                                             "",
                                         color: Styles.white,
                                       ),
                                       CustomTextWidget(
-                                        text: controller.getAllTeachersModel
-                                                .data![index].aboutMe ??
+                                        text: controller.preRequestModel.data!
+                                                .teachers![index].gender ??
                                             "",
                                         color: Styles.white,
                                         fontSize: 7,
@@ -109,24 +109,51 @@ class ShareFriendDetailScreen extends GetView<CreateTaskController> {
 
                                 GestureDetector(
                                   onTap: () async {
-                                    await controller.sendRequestData({
-                                      "task_id": id,
-                                      "teacher_id": controller
-                                          .getAllTeachersModel.data![index].id
-                                          .toString()
-                                    });
+                                    controller.preRequestModel.data!
+                                            .teachers![index].selected =
+                                        !controller.preRequestModel.data!
+                                            .teachers![index].selected!;
+                                    if (controller.preRequestModel.data!
+                                        .teachers![index].selected!) {
+                                      controller.selectedIdTeacher.add(
+                                          controller.preRequestModel.data!
+                                              .teachers![index]);
+                                    } else {
+                                      controller.selectedIdTeacher.removeWhere(
+                                          (element) =>
+                                              element.id ==
+                                              controller.preRequestModel.data!
+                                                  .teachers![index].id!);
+                                    }
+                                    controller.update();
+                                    // await controller.sendRequestData({
+                                    //   "task_id": id,
+                                    //   "teacher_id": controller
+                                    //       .getAllTeachersModel.data![index].id
+                                    //       .toString()
+                                    // });
                                   },
                                   behavior: HitTestBehavior.opaque,
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10, vertical: 3),
-                                    decoration: const BoxDecoration(
-                                        color: Styles.orangeYellow,
-                                        borderRadius: BorderRadius.all(
+                                    decoration: BoxDecoration(
+                                        color: controller.preRequestModel.data!
+                                                .teachers![index].selected!
+                                            ? Styles.orangeYellow
+                                            : Colors.transparent,
+                                        borderRadius: const BorderRadius.all(
                                             Radius.circular(20))),
-                                    child: const CustomTextWidget(
-                                      text: "Send",
+                                    child: CustomTextWidget(
+                                      text: controller.preRequestModel.data!
+                                              .teachers![index].selected!
+                                          ? "Selected"
+                                          : "Select",
                                       fontSize: 10,
+                                      color: controller.preRequestModel.data!
+                                              .teachers![index].selected!
+                                          ? Styles.black
+                                          : Styles.white,
                                     ),
                                   ),
                                 ),

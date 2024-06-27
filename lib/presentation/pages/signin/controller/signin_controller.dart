@@ -19,6 +19,7 @@ class SigninController extends GetxController {
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
   final signinFormKey = GlobalKey<FormState>();
+  bool buttonClicked = true;
   // Social Login
   // final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -118,10 +119,10 @@ class SigninController extends GetxController {
   Future<void> signIn({email, password}) async {
     try {
       LoadingDialog.show();
-      final result =
-          await AuthenticationRepositoryIml().signIn(email, password);
+      final result = await AuthenticationRepositoryIml()
+          .signIn(email, password, buttonClicked ? "student" : "teacher");
 
-      if (result['token'] != null) {
+      if (result['status']) {
         loginModel = LoginModel.fromJson(result);
         Get.find<LocalStorageService>().loginModel = loginModel;
         UserFireBaseModel userFireBaseModel = UserFireBaseModel(
