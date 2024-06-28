@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:task_management/data/models/task_list_model.dart';
 
+import '../../../../data/models/pre_request_model.dart';
+
 class TaskDetailController extends GetxController {
   TextEditingController searchTextEditingController = TextEditingController();
   final forgotPasswordFormKey = GlobalKey<FormState>();
@@ -18,6 +20,7 @@ class TaskDetailController extends GetxController {
     'Content Book',
     'Ebook',
   ];
+  List<Teachers> selectedIdTeacher = [];
   TaskData taskListModelData = TaskData();
   String selectedList = "All Project";
   @override

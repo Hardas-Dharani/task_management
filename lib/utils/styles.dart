@@ -14,7 +14,7 @@ class Styles {
   static const orangeActive = Color(0xFFF99B0D);
 
   static const orange = Color(0xFFF68115);
-  static const orangeYellow = Color(0xFFF4951D);
+  static const orangeYellow = Color(0xFFF7971E);
   static const solidOrange = Color(0xFFD49255);
   static const orangeBorder = Color(0xFFD39554);
   static const lightOrange = Color(0xFFD49255);

@@ -28,12 +28,12 @@ class HomeScreen extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return MainScaffold(
       backgroundColor: Styles.black,
-      floatActiveButton: FloatingActionButton(
-        onPressed: () {
-          Get.toNamed(Routes.createTask);
-        },
-        child: const Icon(Icons.add),
-      ),
+      // floatActiveButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Get.to(const BankDetailScreen());
+      //   },
+      //   child: const Icon(Icons.add),
+      // ),
       keyGlobal: controller.globalKey,
       drawarBar: const CustomDrawer(),
       appBar: Padding(
@@ -92,6 +92,17 @@ class HomeScreen extends GetView<HomeController> {
                             onTap: () {
                               controller.selectedList =
                                   controller.sortList[index];
+                              if (controller.sortList[index] == "Pending") {
+                                controller.getTaskList("pending");
+                              } else if (controller.sortList[index] ==
+                                  "In Progress") {
+                                controller.getTaskList("in_progress");
+                              } else if (controller.sortList[index] ==
+                                  "All Tasks") {
+                                controller.getTaskList("");
+                              } else {
+                                controller.getTaskList("archive");
+                              }
                               controller.update();
                             },
                             child: Container(

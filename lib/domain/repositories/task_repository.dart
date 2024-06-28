@@ -18,7 +18,7 @@ abstract class TaskRepository {
   Future<Map<String, dynamic>> getEduactionList();
   Future<Map<String, dynamic>> getEmploymentList();
   Future<Map<String, dynamic>> getRecentTaskList();
-  Future<Map<String, dynamic>> getTaskList(String path);
+  Future<Map<String, dynamic>> getTaskList(String path, String fitler);
   Future<Map<String, dynamic>> postData(
       Map<String, dynamic> data, String apiPath);
 }

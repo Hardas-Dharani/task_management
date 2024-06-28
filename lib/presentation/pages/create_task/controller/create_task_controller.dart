@@ -7,13 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:task_management/presentation/pages/create_task/widget/share_user.dart';
 
 import '../../../../app/services/local_storage.dart';
 import '../../../../app/services/shared_preferance_constants.dart';
 import '../../../../data/models/get_all_teacher.dart';
 import '../../../../data/models/pre_request_model.dart';
 import '../../../../data/repositories/task_repository.dart';
+import '../../../../routes/app_routes.dart';
 import '../../../../utils/custom_snack_bar.dart';
 import '../../../../utils/loader.dart';
 import '../../../../utils/toast_component.dart';
@@ -47,6 +47,7 @@ class CreateTaskController extends GetxController {
   String? selectedFile;
 
   final String _email = '';
+  File? image;
 
   final String _password = '';
 
@@ -67,13 +68,12 @@ class CreateTaskController extends GetxController {
   GetAllTeacher getAllTeachersModel = GetAllTeacher();
 
   List<File> listFileSelected = [];
+
   List<Teachers> selectedIdTeacher = [];
   PreRequestModel preRequestModel = PreRequestModel();
   Types preRequestModelTypes = Types();
   String get email => _email;
-
   String get password => _password;
-
   Future<void> camPick() async {
     final result = await ImagePicker().pickImage(source: ImageSource.camera);
     if (result != null) {
@@ -88,26 +88,35 @@ class CreateTaskController extends GetxController {
     try {
       LoadingDialog.show();
       List<String> ids = [];
-      for (var element in selectedIdTeacher) {
-        ids.add(element.id!.toString());
+      Map<String, int> teacher = {};
+
+      // Populate the map with values from the list
+      for (int i = 0; i < selectedIdTeacher.length; i++) {
+        teacher["teachers[$i]"] = selectedIdTeacher[i].id!;
       }
-      // selectedIdTeacher.asMap((e) => ids.add(e.id!));
-      // ids.add(value)
-      final result = await TaskRepositoryIml().createTask({
+
+      Map<String, dynamic> taskData = {
         "title": titleTextEditingController.text,
         "word_count":
             "${int.parse(wordCountText.text)} - ${int.parse(wordCountText.text) + 100}",
         "deadline": startDateTextEditingController.text,
         "description": descriptionTextEditingController.text,
         "files": listFileSelected,
-        "teachers[0]": ids.first,
         "type": preRequestModelTypes.id
+      };
+
+      // Add the teacher data to the task data
+      teacher.forEach((key, value) {
+        taskData[key] = value;
       });
+      // selectedIdTeacher.asMap((e) => ids.add(e.id!));
+      // ids.add(value)
+      final result = await TaskRepositoryIml().createTask(taskData);
 
       if (result['status']) {
         ToastComponent().showToast("Task Createed");
         LoadingDialog.hide();
-        Get.to(const ShareFriendDetailScreen());
+        Get.offNamed(Routes.home);
       } else {
         ToastComponent().showToast(result['message']);
         LoadingDialog.hide();
@@ -151,14 +160,37 @@ class CreateTaskController extends GetxController {
     update();
   }
 
+  double getFeeBasedOnWordCount(String wordCount) {
+    final max = int.parse(wordCount.trim());
+
+    if (max <= 800) {
+      return 30.0;
+    } else if (max <= 1200) {
+      return 35.0;
+    } else if (max <= 1600) {
+      return 39.99;
+    } else if (max <= 2000) {
+      return 49.99;
+    } else if (max <= 3000) {
+      return 64.99;
+    } else if (max <= 4000) {
+      return 80.0;
+    } else if (max <= 6000) {
+      return 100.0;
+    } else {
+      return 0.0;
+    }
+  }
+
   bool getPasswordVisiblity() {
     return _passwordVisible;
   }
 
-  Future<void> getTaskList() async {
+  Future<void> getTaskList(String filter) async {
     try {
       LoadingDialog.show();
-      final result = await TaskRepositoryIml().getTaskList("task/pre-req");
+      final result =
+          await TaskRepositoryIml().getTaskList("task/pre-req", filter);
 
       if (result['status'] != null) {
         preRequestModel = PreRequestModel.fromJson(result);
@@ -195,7 +227,17 @@ class CreateTaskController extends GetxController {
     //
     //TODO: implement onInit
     super.onInit();
-    getTaskList();
+    getTaskList("public");
+  }
+
+  Future<void> pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      image = File(pickedFile.path);
+    }
+    update();
   }
 
   removeRememberMe() {

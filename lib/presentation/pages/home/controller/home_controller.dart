@@ -16,24 +16,22 @@ class HomeController extends GetxController {
   FocusNode focusSearch = FocusNode();
   var currentIndex = 0.obs;
   String selectedSort = '';
-
   List<String> sortList = [
-    'All Project',
+    'All Tasks',
     'In Progress',
+    'Pending',
     'Complete',
-    'Deleted',
   ];
-  String selectedList = "All Project";
+  String selectedList = "All Tasks";
   TaskListModel taskModel = TaskListModel();
   GetListPropsalModel getListPropsalModel = GetListPropsalModel();
-
   Future<void> deleteTask(String id) async {
     try {
       LoadingDialog.show();
       final result = await TaskRepositoryIml().deleteTask(id);
 
       if (result['status_code'] == 200) {
-        await getTaskList();
+        await getTaskList("public");
         LoadingDialog.hide();
       } else {
         ToastComponent().showToast(result['message']);
@@ -68,10 +66,30 @@ class HomeController extends GetxController {
     update();
   }
 
-  Future<void> getTaskList() async {
+  double getFeeBasedOnWordCount(int max) {
+    if (max <= 800) {
+      return 30.0;
+    } else if (max <= 1200) {
+      return 35.0;
+    } else if (max <= 1600) {
+      return 39.99;
+    } else if (max <= 2000) {
+      return 49.99;
+    } else if (max <= 3000) {
+      return 64.99;
+    } else if (max <= 4000) {
+      return 80.0;
+    } else if (max <= 6000) {
+      return 100.0;
+    } else {
+      return 0.0;
+    }
+  }
+
+  Future<void> getTaskList(String filter) async {
     try {
       LoadingDialog.show();
-      final result = await TaskRepositoryIml().getTaskList("task/all");
+      final result = await TaskRepositoryIml().getTaskList("task/all", filter);
 
       if (result['status'] != null) {
         taskModel = TaskListModel.fromJson(result);
@@ -95,7 +113,7 @@ class HomeController extends GetxController {
       print("errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
       title = Get.arguments["title"];
     }
-    getTaskList();
+    getTaskList('');
     super.onInit();
   }
 

@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 
 import '../../../../components/custom_text_component.dart';
 import '../../../../data/models/task_list_model.dart';
+import '../../../../routes/app_routes.dart';
 import '../../../../utils/styles.dart';
-import 'task_detail.dart';
 
 class ContainerTabTask extends StatelessWidget {
   final TaskData? taskData;
@@ -13,7 +13,9 @@ class ContainerTabTask extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(const TaskDetailPage());
+        Get.toNamed(
+          Routes.taskDetail,
+        );
       },
       child: Container(
         decoration: BoxDecoration(

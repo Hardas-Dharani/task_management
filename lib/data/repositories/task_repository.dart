@@ -131,7 +131,7 @@ class TaskRepositoryIml extends TaskRepository {
   @override
   Future<Map<String, dynamic>> getAllTeacher(String apiPath) async {
     try {
-      final response = await TaskAPI.getListTask(apiPath).request();
+      final response = await TaskAPI.getListTask(apiPath,"").request();
 
       final result = json.decode(response);
 
@@ -144,7 +144,7 @@ class TaskRepositoryIml extends TaskRepository {
   @override
   Future<Map<String, dynamic>> getBestMatchTaskList() async {
     try {
-      final response = await TaskAPI.getListTask("best-match").request();
+      final response = await TaskAPI.getListTask("best-match","").request();
 
       final result = json.decode(response);
 
@@ -157,7 +157,7 @@ class TaskRepositoryIml extends TaskRepository {
   @override
   Future<Map<String, dynamic>> getEduactionList() async {
     try {
-      final response = await TaskAPI.getListTask("education").request();
+      final response = await TaskAPI.getListTask("education","").request();
 
       final result = json.decode(response);
 
@@ -170,7 +170,7 @@ class TaskRepositoryIml extends TaskRepository {
   @override
   Future<Map<String, dynamic>> getEmploymentList() async {
     try {
-      final response = await TaskAPI.getListTask("employement").request();
+      final response = await TaskAPI.getListTask("employement","").request();
 
       final result = json.decode(response);
 
@@ -183,7 +183,7 @@ class TaskRepositoryIml extends TaskRepository {
   @override
   Future<Map<String, dynamic>> getRecentTaskList() async {
     try {
-      final response = await TaskAPI.getListTask("most-recent").request();
+      final response = await TaskAPI.getListTask("most-recent","").request();
 
       final result = json.decode(response);
 
@@ -194,9 +194,9 @@ class TaskRepositoryIml extends TaskRepository {
   }
 
   @override
-  Future<Map<String, dynamic>> getTaskList(String path) async {
+  Future<Map<String, dynamic>> getTaskList(String path,String filter) async {
     try {
-      final response = await TaskAPI.getListTask(path).request();
+      final response = await TaskAPI.getListTask(path,filter).request();
 
       final result = json.decode(response);
 

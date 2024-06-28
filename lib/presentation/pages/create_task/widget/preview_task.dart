@@ -15,6 +15,28 @@ class PreviewTaskDetail extends GetView<CreateTaskController> {
   Widget build(BuildContext context) {
     return MainScaffold(
       backgroundColor: Styles.black,
+      bottomNavigationBar: Container(
+        height: 90,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: GestureDetector(
+          onTap: () {
+            controller.createTask();
+          },
+          child: Container(
+            height: 55,
+            decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+                color: Styles.orangeYellow),
+            width: Get.width,
+            alignment: Alignment.center,
+            child: const CustomTextWidget(
+              text: "Create Task",
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ),
       // bottomNavigationBar: const SizedBox(),
       appBar: CustomAppBar(
         bgColor: Styles.black,
@@ -84,26 +106,35 @@ class PreviewTaskDetail extends GetView<CreateTaskController> {
                       controller.startDateTextEditingController.text),
                   titleAndSubTitle("Type of assignment",
                       controller.preRequestModelTypes.title),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Divider(
-                    color: Styles.white,
-                  ),
-                  const Center(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      child: CustomTextWidget(
-                        text: "\$30.00",
-                        fontSize: 35,
-                        fontWeight: FontWeight.w600,
-                        color: Styles.orangeYellow,
-                      ),
-                    ),
-                  ),
-                  const Divider(
-                    color: Styles.white,
-                  ),
+                  controller.preRequestModelTypes.id != 1
+                      ? const SizedBox.shrink()
+                      : const SizedBox(
+                          height: 10,
+                        ),
+                  controller.preRequestModelTypes.id != 1
+                      ? const SizedBox.shrink()
+                      : const Divider(
+                          color: Styles.white,
+                        ),
+                  controller.preRequestModelTypes.id != 1
+                      ? const SizedBox.shrink()
+                      : Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: CustomTextWidget(
+                              text:
+                                  "\$${controller.getFeeBasedOnWordCount(controller.wordCountText.text).toString()}",
+                              fontSize: 35,
+                              fontWeight: FontWeight.w600,
+                              color: Styles.orangeYellow,
+                            ),
+                          ),
+                        ),
+                  controller.preRequestModelTypes.id != 1
+                      ? const SizedBox.shrink()
+                      : const Divider(
+                          color: Styles.white,
+                        ),
                   const SizedBox(
                     height: 25,
                   ),
@@ -130,27 +161,28 @@ class PreviewTaskDetail extends GetView<CreateTaskController> {
                           controller.selectedIdTeacher[index]);
                     },
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      controller.createTask();
-                    },
-                    child: Container(
-                      height: 55,
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
-                          color: Styles.orangeYellow),
-                      width: Get.width,
-                      alignment: Alignment.center,
-                      child: const CustomTextWidget(
-                        text: "Create Task",
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
+                  // const SizedBox(
+                  //   height: 15,
+                  // ),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     controller.createTask();
+                  //   },
+                  //   child: Container(
+                  //     height: 55,
+                  //     decoration: const BoxDecoration(
+                  //         borderRadius: BorderRadius.all(Radius.circular(5)),
+                  //         color: Styles.orangeYellow),
+                  //     width: Get.width,
+                  //     alignment: Alignment.center,
+                  //     child: const CustomTextWidget(
+                  //       text: "Create Task",
+                  //       fontSize: 20,
+                  //       fontWeight: FontWeight.w500,
+                  //     ),
+                  //   ),
+                  // ),
+
                   const SizedBox(
                     height: 25,
                   ),
