@@ -26,6 +26,8 @@ class TaskAPI implements APIRequestRepresentable {
       : this._(type: TaskType.getAllTask, id: id, paths: apiPath);
   TaskAPI.getListTask(String id, String filter)
       : this._(type: TaskType.getListTask, id: id, filter: filter);
+  TaskAPI.getListTeacherTask(String path, String filter)
+      : this._(type: TaskType.getListTeacherTask, paths: path, filter: filter);
   TaskAPI.postData(Map<String, dynamic> data, String apiPath)
       : this._(type: TaskType.postData, paths: apiPath, data: data);
   TaskAPI.uploadTask(Map<String, dynamic> data, String? id)
@@ -73,6 +75,8 @@ class TaskAPI implements APIRequestRepresentable {
     switch (type) {
       case TaskType.getListTask:
         return HTTPMethod.get;
+      case TaskType.getListTeacherTask:
+        return HTTPMethod.get;
       case TaskType.getAllTask:
         return HTTPMethod.get;
       case TaskType.getAllPropsal:
@@ -96,6 +100,8 @@ class TaskAPI implements APIRequestRepresentable {
     switch (type) {
       case TaskType.getListTask:
         return APIEndpoint.middlewareURl + id!;
+      case TaskType.getListTeacherTask:
+        return APIEndpoint.middlewareURl + paths!;
       case TaskType.getAllTask:
         return APIEndpoint.middlewareURl + paths!;
       case TaskType.getAllPropsal:
@@ -125,6 +131,8 @@ class TaskAPI implements APIRequestRepresentable {
         return {'teacher_id': id};
       case TaskType.getListTask:
         return {if (filter != "") 'status': filter};
+      case TaskType.getListTeacherTask:
+        return {if (filter != "") 'filter': filter};
       case TaskType.getAllPropsal:
         return data;
       default:
@@ -142,6 +150,7 @@ enum TaskType {
   createTask,
   deleteTask,
   getListTask,
+  getListTeacherTask,
   getAllTask,
   getAllPropsal,
   postData,

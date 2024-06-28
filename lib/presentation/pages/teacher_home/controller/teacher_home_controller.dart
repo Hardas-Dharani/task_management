@@ -39,10 +39,12 @@ class TeacherHomeController extends GetxController
   var currentIndex = 0.obs;
   String selectedSort = '';
   List<String> sortList = [
-    'All Project',
+    'Public Tasks',
+    'Shared With Me',
+    'My Tasks',
     'In Progress',
+    'Pending',
     'Complete',
-    'Deleted',
   ];
   final List<TaskModel> taskModels = [
     TaskModel(
@@ -78,12 +80,13 @@ class TeacherHomeController extends GetxController
   TaskListModel taskModel = TaskListModel();
   TaskListModel mostRecentTaskModel = TaskListModel();
 
-  String selectedList = "All Project";
+  String selectedList = "Public Tasks";
 
   Future<void> getMostRecenTaskList(String filter) async {
     try {
       LoadingDialog.show();
-      final result = await TaskRepositoryIml().getTaskList("task/all", filter);
+      final result =
+          await TaskRepositoryIml().getRecentTaskList("task/all", filter);
 
       if (result['data'] != null) {
         mostRecentTaskModel = TaskListModel.fromJson(result);
@@ -129,7 +132,7 @@ class TeacherHomeController extends GetxController
       title = Get.arguments["title"];
     }
     // getTaskList();
-    getMostRecenTaskList("approved");
+    getMostRecenTaskList("");
     tabController = TabController(length: 2, vsync: this);
     super.onInit();
   }

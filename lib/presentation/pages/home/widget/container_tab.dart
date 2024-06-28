@@ -13,9 +13,7 @@ class ContainerTabTask extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(
-          Routes.taskDetail,
-        );
+        Get.toNamed(Routes.taskDetail, arguments: {"id": taskData!.id});
       },
       child: Container(
         decoration: BoxDecoration(

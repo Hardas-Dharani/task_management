@@ -73,6 +73,20 @@ class TeacherHomeScreen extends GetView<TeacherHomeController> {
                             onTap: () {
                               controller.selectedList =
                                   controller.sortList[index];
+                              if (controller.sortList[index] == "Pending") {
+                                controller.getMostRecenTaskList("pending");
+                              } else if (controller.sortList[index] ==
+                                  "In Progress") {
+                                controller.getMostRecenTaskList("in_progress");
+                              } else if (controller.sortList[index] ==
+                                  "Public Tasks") {
+                                controller.getMostRecenTaskList("public");
+                              } else if (controller.sortList[index] ==
+                                  "Shared With Me") {
+                                controller.getMostRecenTaskList("shared_me");
+                              } else {
+                                controller.getMostRecenTaskList("archive");
+                              }
                               controller.update();
                             },
                             child: Container(

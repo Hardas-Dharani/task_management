@@ -181,9 +181,10 @@ class TaskRepositoryIml extends TaskRepository {
   }
 
   @override
-  Future<Map<String, dynamic>> getRecentTaskList() async {
+  Future<Map<String, dynamic>> getRecentTaskList(
+      String path, String fitler) async {
     try {
-      final response = await TaskAPI.getListTask("most-recent","").request();
+      final response = await TaskAPI.getListTeacherTask( path,  fitler).request();
 
       final result = json.decode(response);
 
