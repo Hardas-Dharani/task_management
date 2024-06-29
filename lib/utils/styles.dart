@@ -9,11 +9,10 @@ enum ImageSize { oneX, twoX, threeX }
 
 class Styles {
   static const mainScaffoldColor = Color(0xFFF4F5F6);
-
   static const white = Color(0xFFFFFFFF);
   static const orangeActive = Color(0xFFF99B0D);
-
   static const orange = Color(0xFFF68115);
+
   static const orangeYellow = Color(0xFFF7971E);
   static const solidOrange = Color(0xFFD49255);
   static const orangeBorder = Color(0xFFD39554);
@@ -48,8 +47,8 @@ class Styles {
   static const grey = Color(0xFF6E7B87);
   static const starColor = Color(0xFFFFB800);
   static const homeTextField = Color(0xFF010102);
-
   static const black = Color(0xFF000000);
+
   static const black2 = Color(0xFF222F3E);
   static const metal = Color(0xFF23303F);
   static const metalColor3 = Color(0xFF222F3E);
@@ -64,8 +63,8 @@ class Styles {
     // metal
   ];
   static const green = Color(0xFF8CCE21);
-
   static const greenActive2 = Color(0xFF19ECB9);
+
   static const lightGreen = Color(0xFF8DCE21);
   static const greenActive = Color(0xFF75F90D);
   static const solidGreen = Color(0xFF28B446);
@@ -73,14 +72,13 @@ class Styles {
   static const sky = Color(0xFF27B0FB);
   static const solidRed = Color(0xFFEB001B);
   static const blue = Color(0xFF4894EB);
-
   static const blueLight = Color(0xFF0084FF);
-  static const red = Color(0xFFE42B2B);
 
+  static const red = Color(0xFFE42B2B);
   static const redDark = Color(0xFFFF4141);
+
   static const redNormal = Color(0xFFE33C3C);
   static const yellow = Color(0xFFF8A912);
-
   static LinearGradient linearOrange = LinearGradient(
     colors: [
       const Color(0xFFFFC188).withOpacity(0.5),
@@ -121,6 +119,7 @@ class Styles {
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
   );
+
   static BoxDecoration boxDecoration = BoxDecoration(
     color: Styles.white,
     boxShadow: [
@@ -132,7 +131,6 @@ class Styles {
       ),
     ],
   );
-
   static BoxDecoration boxDecoration2 = BoxDecoration(
     borderRadius: BorderRadius.circular(12),
     color: Styles.white,
@@ -147,6 +145,7 @@ class Styles {
       ),
     ],
   );
+
   static BoxDecoration boxDecoration3 = BoxDecoration(
     color: Styles.white,
     borderRadius: BorderRadius.circular(15),
@@ -161,7 +160,6 @@ class Styles {
       ),
     ],
   );
-
   static BoxDecoration blackDecoration = BoxDecoration(
     color: Styles.metal,
     boxShadow: [
@@ -173,12 +171,12 @@ class Styles {
       )
     ],
   );
+
   static LinearGradient linearMetal = LinearGradient(
     colors: Styles.metalGradientColor,
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
   );
-
   static LinearGradient linearMetal2 = const LinearGradient(
     colors: [
       Color(0xFF222F3E),
@@ -209,6 +207,28 @@ class Styles {
       // If more than a week, display the actual date
       return 'posted on ${DateFormat('MMMM dd, yyyy').format(postTime)}';
     }
+  }
+
+  String formatTimestamp(String timestamp) {
+    final dateTime = DateTime.parse(timestamp);
+    final now = DateTime.now();
+    final difference = now.difference(dateTime);
+
+    if (difference.inMinutes < 60) {
+      return '${difference.inMinutes} minutes ago';
+    } else if (difference.inHours < 24) {
+      return '${difference.inHours} hours ago';
+    } else if (difference.inDays < 3) {
+      return '${difference.inDays} days ago';
+    } else {
+      return DateFormat('MM/dd/yyyy').format(dateTime);
+    }
+  }
+   String StringConvertDateTime(String timestamp) {
+    final dateTime = DateTime.parse(timestamp);
+   
+      return DateFormat('MM/dd/yyyy').format(dateTime);
+    
   }
 
   static int calculateTimeDifference(DateTime dateTime) {

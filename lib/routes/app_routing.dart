@@ -8,11 +8,15 @@ import 'package:task_management/presentation/pages/create_profile/binding/signup
 import 'package:task_management/presentation/pages/create_profile/create_profile_screen.dart';
 import 'package:task_management/presentation/pages/create_task/binding/create_task_binding.dart';
 import 'package:task_management/presentation/pages/create_task/create_task_screen.dart';
+import 'package:task_management/presentation/pages/payment_proof/binding/payment_proof_binding.dart';
+import 'package:task_management/presentation/pages/payment_proof/payment_screen.dart';
 import 'package:task_management/presentation/pages/request_detail/binding/request_detail_binding.dart';
 import 'package:task_management/presentation/pages/submit_proposal/binding/submit_proposal_binding.dart';
 import 'package:task_management/presentation/pages/submit_proposal/submit_proposal_screen.dart';
 import 'package:task_management/presentation/pages/task_detail/binding/task_detail_binding.dart';
 import 'package:task_management/presentation/pages/task_detail/task_detail_screen.dart';
+import 'package:task_management/presentation/pages/task_detail/widget/create_revision.dart';
+import 'package:task_management/presentation/pages/task_detail/widget/task_preview.dart';
 import 'package:task_management/presentation/pages/teacher_home/binding/home_binding.dart';
 import 'package:task_management/presentation/pages/teacher_profile/binding/teacher_profile_binding.dart';
 import 'package:task_management/presentation/pages/teacher_profile/teacher_profile_screen.dart';
@@ -21,6 +25,8 @@ import 'package:task_management/presentation/pages/users_list/user_list_screen.d
 import 'package:task_management/presentation/pages/welcome_page/binding/welcome_binding.dart';
 import 'package:task_management/presentation/pages/welcome_page/welcome_screen.dart';
 
+import '../presentation/pages/bank_detail/bank_detail_screen.dart';
+import '../presentation/pages/bank_detail/binding/bank_detail_binding.dart';
 import '../presentation/pages/bottom_nav_bar/binding/bottom_nav_bar_binding.dart';
 import '../presentation/pages/bottom_nav_bar/bottom_nav_bar_page.dart';
 import '../presentation/pages/change_password/binding/change_pass_binding.dart';
@@ -47,6 +53,7 @@ import '../presentation/pages/signin/binding/signin_binding.dart';
 import '../presentation/pages/signin/signin_screen.dart';
 import '../presentation/pages/signup/binding/signup_binding.dart';
 import '../presentation/pages/signup/signup_screen.dart';
+import '../presentation/pages/task_detail/binding/task_revision_binding.dart';
 import '../presentation/pages/teacher_home/teacher_home_screen.dart';
 import 'app_routes.dart';
 
@@ -72,6 +79,16 @@ class RoutingModule {
       name: Routes.taskDetail,
       page: () => const TaskDetailScreen(),
       binding: TaskDetailBinding(),
+    ),
+    GetPage(
+      name: Routes.taskPreview,
+      page: () => const TaskPreviewScreen(),
+      binding: TaskDetailBinding(),
+    ),
+    GetPage(
+      name: Routes.revisionCreate,
+      page: () => const CreateRevision(),
+      binding: TaskRevisionBinding(),
     ),
     GetPage(
       name: Routes.createTask,
@@ -179,6 +196,16 @@ class RoutingModule {
       name: Routes.chatting,
       page: () => const ChattingScreen(),
       binding: ChattingBinding(),
+    ),
+    GetPage(
+      name: Routes.paymentProof,
+      page: () => const PaymentScreenDetail(),
+      binding: PaymentProofBinding(),
+    ),
+    GetPage(
+      name: Routes.bankDetail,
+      page: () => const BankDetailScreen(),
+      binding: BankDetailBinding(),
     ),
     GetPage(
       name: Routes.notifications,

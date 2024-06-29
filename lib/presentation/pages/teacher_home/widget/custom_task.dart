@@ -31,75 +31,29 @@ class CustomTaskWidget extends StatelessWidget {
             ],
           ),
           const SizedBox(
-            height: 5,
+            height: 15,
           ),
-          CustomTextWidget(
-            text: 'Client: ${taskModel.teacher}', // Display the client name
-            fontSize: 12, color: Styles.white,
-            fontWeight: FontWeight.normal,
-          ),
+          taskModel.typeId == 1
+              ? CustomTextWidget(
+                  text: "${taskModel.type!.title} (${taskModel.wordCount})",
+                  fontSize: 12,
+                  color: Styles.white,
+                  fontWeight: FontWeight.w400,
+                )
+              : CustomTextWidget(
+                  text: "${taskModel.type!.title}",
+                  fontSize: 12,
+                  color: Styles.white,
+                  fontWeight: FontWeight.w400,
+                ),
           const SizedBox(
-            height: 5,
-          ),
-          // CustomTextWidget(
-          //   text:
-          //       'Category: ${taskModel.user!.college}', // Display the category
-          //   fontSize: 12,
-          //   fontWeight: FontWeight.normal,
-          // ),
-          const SizedBox(
-            height: 5,
+            height: 15,
           ),
           CustomTextWidget(
             text: Styles().formatRelativeTime(taskModel.createdAt.toString()),
             fontSize: 12,
             color: Styles.white,
             fontWeight: FontWeight.normal,
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            children: [
-              // RichTextWidget(
-              //   text: "${taskModel.budget}",
-              //   textFontSize: 16,
-              //   textFontWeight: FontWeight.bold,
-              //   color: Styles.orangeYellow,
-              //   onTapColor: Styles.white,
-              //   onTapText: " Price",
-              //   onTapFontSize: 12,
-              // ),
-              // const Spacer(),
-              Image.asset(
-                "assets/images/icons/verify_icon.png",
-                width: 15,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              const CustomTextWidget(
-                text: "Payment Verified",
-                fontSize: 12,
-                color: Styles.white,
-                fontWeight: FontWeight.w500,
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Divider(
-            color: Styles.orangeYellow.withOpacity(0.5),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          CustomTextWidget(
-            text: taskModel.description ?? "",
-            fontSize: 12,
-            color: Styles.white,
-            fontWeight: FontWeight.w400,
           ),
         ],
       ),

@@ -68,6 +68,8 @@ class Routes {
   static String get language => '/language';
 
   static String get menu => '/menu';
+  static String get bankDetail => '/bankDetail';
+  static String get paymentProof => '/paymentProof';
   static String get menuPro => '/menuPro';
 
   static String get myActivity => '/myActivity';
@@ -142,6 +144,8 @@ class Routes {
   static String get subscriptionSuccessful => '/subscriptionSuccessful';
 
   static String get taskDetail => '/taskDetail';
+  static String get taskPreview => '/taskPreview';
+  static String get revisionCreate => '/revisionCreate';
 
   static String get teacherHome => '/teacherHome';
 

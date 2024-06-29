@@ -5,9 +5,10 @@ import 'package:task_management/components/custom_text_component.dart';
 import '../../../../components/custom_appbar_component.dart';
 import '../../../../components/main_scaffold_component.dart';
 import '../../../../utils/styles.dart';
-import '../controller/create_task_controller.dart';
+import '../../../data/models/bank_detail_model.dart';
+import 'controller/bank_detail_controller.dart';
 
-class BankDetailScreen extends GetView<CreateTaskController> {
+class BankDetailScreen extends GetView<BankDetailController> {
   const BankDetailScreen({super.key});
 
   @override
@@ -38,34 +39,44 @@ class BankDetailScreen extends GetView<CreateTaskController> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ListView.separated(
-                    separatorBuilder: (context, index) => const SizedBox(
-                      height: 15,
+            GetBuilder<BankDetailController>(builder: (_) {
+              return Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 20,
                     ),
-                    shrinkWrap: true,
-                    itemCount: 2,
-                    itemBuilder: (context, index) {
-                      return selectedBank();
-                    },
-                  ),
-                ],
-              ),
-            )
+                    controller.bankDetailModel.data != null &&
+                            controller.bankDetailModel.data!.paymentMethods !=
+                                null
+                        ? ListView.separated(
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(
+                              height: 15,
+                            ),
+                            shrinkWrap: true,
+                            itemCount: controller
+                                .bankDetailModel.data!.paymentMethods!.length,
+                            itemBuilder: (context, index) {
+                              return selectedBank(controller.bankDetailModel
+                                  .data!.paymentMethods![index]);
+                            },
+                          )
+                        : const SizedBox.shrink(),
+                  ],
+                ),
+              );
+            })
           ],
         ),
       ),
     );
   }
 
-  Widget selectedBank() {
+  Widget selectedBank(PaymentMethods paymentMethods) {
     return Row(
       children: [
         Image.asset(
@@ -76,35 +87,35 @@ class BankDetailScreen extends GetView<CreateTaskController> {
         const SizedBox(
           width: 10,
         ),
-        const Expanded(
+        Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
-                  CustomTextWidget(
+                  const CustomTextWidget(
                     text: "Account Title: ",
                     color: Styles.white,
                     fontSize: 16,
                   ),
                   CustomTextWidget(
-                    text: "fdsjnfkjasdnf",
+                    text: paymentMethods.name ?? "",
                     fontSize: 14,
-                    color: Color(0xffB5B5B5),
+                    color: const Color(0xffB5B5B5),
                   ),
                 ],
               ),
               Row(
                 children: [
-                  CustomTextWidget(
+                  const CustomTextWidget(
                     text: "Account No: ",
                     color: Styles.white,
                     fontSize: 16,
                   ),
                   CustomTextWidget(
-                    text: "fdsjnfkjasdnf",
+                    text: paymentMethods.number ?? "",
                     fontSize: 14,
-                    color: Color(0xffB5B5B5),
+                    color: const Color(0xffB5B5B5),
                   ),
                 ],
               )

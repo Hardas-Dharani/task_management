@@ -83,7 +83,7 @@ class TeacherHomeScreen extends GetView<TeacherHomeController> {
                                 controller.getMostRecenTaskList("public");
                               } else if (controller.sortList[index] ==
                                   "Shared With Me") {
-                                controller.getMostRecenTaskList("shared_me");
+                                controller.getMostRecenTaskList("shared_to_me");
                               } else {
                                 controller.getMostRecenTaskList("archive");
                               }
@@ -133,10 +133,19 @@ class TeacherHomeScreen extends GetView<TeacherHomeController> {
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: () {
-                                  Get.toNamed(Routes.taskDetail, arguments: {
-                                    "taskDetail": controller
-                                        .mostRecentTaskModel.data![index]
-                                  });
+                                  if (controller.mostRecentTaskModel
+                                          .data![index].teacherId !=
+                                      null) {
+                                    Get.toNamed(Routes.taskDetail, arguments: {
+                                      "id": controller
+                                          .mostRecentTaskModel.data![index].id
+                                    });
+                                  } else {
+                                    Get.toNamed(Routes.taskPreview, arguments: {
+                                      "id": controller
+                                          .mostRecentTaskModel.data![index].id
+                                    });
+                                  }
                                 },
                                 child: CustomTaskWidget(
                                   taskModel: controller

@@ -83,7 +83,7 @@ class Task {
   int? id;
   int? typeId;
   int? studentId;
-  Null teacherId;
+  int? teacherId;
   String? title;
   String? description;
   String? deadline;
@@ -96,7 +96,7 @@ class Task {
   String? updatedAt;
   String? eId;
   Student? student;
-  Null teacher;
+  Student? teacher;
   List<dynamic>? files;
 
   Task(
@@ -137,9 +137,10 @@ class Task {
     eId = json['e_id'];
     student =
         json['student'] != null ? Student.fromJson(json['student']) : null;
-    teacher = json['teacher'];
+    teacher =
+        json['teacher'] != null ? Student.fromJson(json['teacher']) : null;
     if (json['files'] != null) {
-      files = <dynamic>[];
+      files = <Null>[];
       json['files'].forEach((v) {
         files!.add(v);
       });
@@ -166,7 +167,9 @@ class Task {
     if (student != null) {
       data['student'] = student!.toJson();
     }
-    data['teacher'] = teacher;
+    if (teacher != null) {
+      data['teacher'] = teacher!.toJson();
+    }
     if (files != null) {
       data['files'] = files!.map((v) => v.toJson()).toList();
     }

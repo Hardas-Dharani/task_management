@@ -88,7 +88,7 @@ class ContainerTabTask extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomTextWidget(
-                  text: taskData!.deadline ?? "",
+                  text: Styles().StringConvertDateTime(taskData!.deadline!),
                   fontWeight: FontWeight.w600,
                   color: Styles.white,
                   fontSize: 14,

@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:task_management/components/custom_button_component.dart';
+import 'package:task_management/components/custom_text_component.dart';
+import 'package:task_management/routes/app_routes.dart';
+import 'package:task_management/utils/styles.dart';
 
+import '../../../../app/services/local_storage.dart';
 import '../../../../data/models/pre_request_model.dart';
+import '../../../../data/models/revision_list_model.dart';
 import '../../../../data/models/task_detail_model.dart';
 import '../../../../data/repositories/task_repository.dart';
 import '../../../../utils/loader.dart';
@@ -11,7 +17,10 @@ class TaskDetailController extends GetxController {
   TextEditingController searchTextEditingController = TextEditingController();
   final forgotPasswordFormKey = GlobalKey<FormState>();
   String title = "";
+  String reply = "";
+
   bool isFromQuote = false;
+  bool isDecline = false;
   final globalKey = GlobalKey<ScaffoldState>();
   FocusNode focusSearch = FocusNode();
   var currentIndex = 0.obs;
@@ -25,16 +34,18 @@ class TaskDetailController extends GetxController {
   ];
   List<Teachers> selectedIdTeacher = [];
   TaskDetailModel taskDetailModel = TaskDetailModel();
+  RevisionListModel revisionListModel = RevisionListModel();
+  RevisionDetailModel revisionDetailModel = RevisionDetailModel();
   int? taskID;
   String selectedList = "All Project";
-  Future<void> getTaskDetail(String id) async {
+  Future<void> getAllRevis(String id) async {
     try {
       LoadingDialog.show();
       final result =
-          await TaskRepositoryIml().getTaskList("task/detail/$id", "");
+          await TaskRepositoryIml().getTaskList("revision/all/$id", "");
 
       if (result['status'] != null) {
-        taskDetailModel = TaskDetailModel.fromJson(result);
+        revisionListModel = RevisionListModel.fromJson(result);
         LoadingDialog.hide();
       } else {
         ToastComponent().showToast(result['message']);
@@ -48,12 +59,199 @@ class TaskDetailController extends GetxController {
     update();
   }
 
+  Future<void> getAllRevisDetail(String id) async {
+    try {
+      LoadingDialog.show();
+      final result =
+          await TaskRepositoryIml().getTaskList("revision/detail/$id", "");
+
+      if (result['status'] != null) {
+        revisionDetailModel = RevisionDetailModel.fromJson(result);
+        LoadingDialog.hide();
+      } else {
+        ToastComponent().showToast(result['message']);
+        LoadingDialog.hide();
+      }
+    } catch (e) {
+      print(e.toString());
+      ToastComponent().showToast("Sign in getting server error");
+      LoadingDialog.hide();
+    }
+    update();
+  }
+
+  Future<void> getTaskDetail(String id) async {
+    try {
+      LoadingDialog.show();
+      final result =
+          await TaskRepositoryIml().getTaskList("task/detail/$id", "");
+      LoadingDialog.hide();
+      if (result['status'] != null) {
+        await getAllRevis(taskID.toString());
+        taskDetailModel = TaskDetailModel.fromJson(result);
+        if (taskDetailModel.data!.task!.quotationStatus == "not_required") {
+          if (taskDetailModel.data!.task!.paymentStatus == "approved") {
+          } else {
+            if (Get.find<LocalStorageService>()
+                    .loginModel!
+                    .data!
+                    .user!
+                    .roleId ==
+                2) {
+              _showPaymentCustomDialog(
+                  taskDetailModel.data!.task!.id!.toString());
+            }
+          }
+        } else {
+          _showQuotationCustomDialog();
+        }
+      } else {
+        ToastComponent().showToast(result['message']);
+      }
+    } catch (e) {
+      print(e.toString());
+      ToastComponent().showToast("Sign in getting server error");
+      LoadingDialog.hide();
+    }
+    update();
+  }
+
   @override
   void onInit() {
     if (Get.arguments != null) {
-      taskID = Get.arguments["id"];
+      if (Get.arguments["id"] != null) {
+        taskID = Get.arguments["id"];
+        getTaskDetail(taskID.toString());
+      }
     }
-    getTaskDetail(taskID.toString());
+
     super.onInit();
+  }
+
+  Future<void> replyRevision(String values) async {
+    try {
+      Map<String, dynamic> taskData = {
+        "revision_id": revisionDetailModel.data!.revision!.id!.toString(),
+        "reply": reply,
+        "approved": values
+      };
+
+      final result =
+          await TaskRepositoryIml().postData(taskData, "revision/update");
+
+      LoadingDialog.hide();
+      if (result['status']) {
+      } else {
+        ToastComponent().showToast(result['message']);
+      }
+    } catch (e) {
+      print(e.toString());
+      ToastComponent().showToast("Sign in getting server error");
+      LoadingDialog.hide();
+    }
+    update();
+  }
+
+  void _showPaymentCustomDialog(String id) {
+    Get.defaultDialog(
+      backgroundColor: Styles.black,
+      title: '',
+      content: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        child: Column(
+          // mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Image.asset(
+              "assets/images/dollar_icon.png",
+              height: 66,
+              width: 66,
+            ),
+            const SizedBox(height: 20.0),
+            const CustomTextWidget(
+              text:
+                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+              fontSize: 13,
+              textAlign: TextAlign.center,
+              color: Styles.white,
+              fontWeight: FontWeight.w300,
+            ),
+            const SizedBox(height: 20.0),
+            Row(
+              children: [
+                Expanded(
+                  child: CustomButton(
+                    onTap: () {
+                      Get.back();
+                      Get.offAndToNamed(Routes.paymentProof,
+                          arguments: {"taskID": id});
+                    },
+                    radius: 10,
+                    title: "Paid",
+                    bgColor: Styles.black,
+                    borderColor: Styles.orangeYellow,
+                    fontColor: Styles.orangeYellow,
+                  ),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                Expanded(
+                  child: CustomButton(
+                    onTap: () {
+                      Get.back();
+
+                      Get.offAndToNamed(Routes.bankDetail);
+                    },
+                    radius: 10,
+                    title: "Pay Now",
+                    bgColor: Styles.orangeYellow,
+                    fontColor: Styles.black,
+                    borderColor: Styles.orangeYellow,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showQuotationCustomDialog() {
+    Get.defaultDialog(
+      backgroundColor: Styles.black,
+      title: '',
+      content: Column(
+        // mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Image.asset(
+            "assets/images/quatation.png",
+            height: 66,
+            width: 66,
+          ),
+          const SizedBox(height: 20.0),
+          const CustomTextWidget(
+            text:
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+            fontSize: 13,
+            textAlign: TextAlign.center,
+            color: Styles.white,
+            fontWeight: FontWeight.w300,
+          ),
+          const SizedBox(height: 20.0),
+          CustomButton(
+            width: 180,
+            onTap: () {
+              Get.back();
+            },
+            radius: 10,
+            title: "Okay",
+            bgColor: Styles.orangeYellow,
+          ),
+        ],
+      ),
+    );
   }
 }

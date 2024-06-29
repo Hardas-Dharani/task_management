@@ -2,89 +2,137 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:task_management/components/custom_text_component.dart';
 
-import '../../../../data/models/pre_request_model.dart';
 import '../../../../utils/styles.dart';
+import '../../../app/services/local_storage.dart';
+import '../../../data/models/task_detail_model.dart';
+import '../../../routes/app_routes.dart';
 import 'controller/task_detail_controller.dart';
 import 'widget/revisions_screen.dart';
 
 class RevisionTab extends GetView<TaskDetailController> {
   const RevisionTab({super.key});
-
+//  floatingActionButton:
+//           Get.find<LocalStorageService>().loginModel!.data!.user!.roleId != 2
+//               ? FloatingActionButton(
+//                   backgroundColor: Styles.orangeYellow,
+//                   onPressed: () {
+//                     Get.offAndToNamed(Routes.revisionCreate, arguments: {
+//                       "taskDetail": controller.taskDetailModel.data!.task
+//                     });
+//                   },
+//                   child: const Icon(Icons.add),
+//                 )
+//               : const SizedBox.shrink(),
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(
-          height: 30,
-        ),
-        ListView.separated(
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () {
-                  Get.to(const RevisionsScreen());
+    return Scaffold(
+      floatingActionButton:
+          Get.find<LocalStorageService>().loginModel!.data!.user!.roleId != 2
+              ? FloatingActionButton(
+                  backgroundColor: Styles.orangeYellow,
+                  onPressed: () {
+                    Get.offAndToNamed(Routes.revisionCreate, arguments: {
+                      "taskDetail": controller.taskDetailModel.data!.task
+                    });
+                  },
+                  child: const Icon(Icons.add),
+                )
+              : const SizedBox.shrink(),
+      backgroundColor: Styles.black,
+      body: GetBuilder<TaskDetailController>(builder: (_) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 30,
+            ),
+            ListView.separated(
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      if (controller.revisionListModel.data != null) {
+                        Get.to(RevisionsScreen(
+                          id: controller
+                              .revisionListModel.data!.revisions![index].id,
+                        ));
+                      }
+                    },
+                    child: controller.revisionListModel.data == null
+                        ? const SizedBox.shrink()
+                        : Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 25),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Styles.black,
+                                  border:
+                                      Border.all(color: Styles.orangeYellow),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(15))),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 25, vertical: 17),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CustomTextWidget(
+                                    text: controller.revisionListModel.data!
+                                            .revisions![index].subject ??
+                                        "",
+                                    fontSize: 15,
+                                    color: Styles.white,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  CustomTextWidget(
+                                    text: controller.revisionListModel.data!
+                                            .revisions![index].description ??
+                                        "",
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: Styles.white.withOpacity(.6),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      controller.revisionListModel.data!
+                                              .revisions![index].files!.isEmpty
+                                          ? const SizedBox.shrink()
+                                          : CustomTextWidget(
+                                              text:
+                                                  "${controller.revisionListModel.data!.revisions![index].files!.length} Files",
+                                              color: Styles.white,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      CustomTextWidget(
+                                        text: Styles().formatRelativeTime(
+                                            controller.revisionListModel.data!
+                                                .revisions![index].createdAt!),
+                                        color: Styles.orangeYellow,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                  );
                 },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Styles.black,
-                        border: Border.all(color: Styles.orangeYellow),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(15))),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 25, vertical: 17),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const CustomTextWidget(
-                          text: "Revisions Detail",
-                          fontSize: 15,
-                          color: Styles.white,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        CustomTextWidget(
-                          text:
-                              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: Styles.white.withOpacity(.6),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CustomTextWidget(
-                              text: "2 Files",
-                              color: Styles.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            CustomTextWidget(
-                              text: "01/31/2000",
-                              color: Styles.orangeYellow,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ],
-                        )
-                      ],
+                separatorBuilder: (context, index) => const SizedBox(
+                      height: 20,
                     ),
-                  ),
-                ),
-              );
-            },
-            separatorBuilder: (context, index) => const SizedBox(
-                  height: 20,
-                ),
-            itemCount: 3)
-      ],
+                itemCount: controller.revisionListModel.data!.revisions!.length)
+          ],
+        );
+      }),
     );
   }
 }
@@ -99,7 +147,7 @@ class TaskDetailScreen extends GetView<TaskDetailController> {
       child: Scaffold(
         backgroundColor: Styles.black,
         appBar: AppBar(
-          backgroundColor: Styles.black,
+          backgroundColor: const Color.fromARGB(255, 45, 27, 27),
           title: const CustomTextWidget(
             text: 'Task Detail',
             color: Styles.white,
@@ -146,106 +194,190 @@ class TaskTab extends GetView<TaskDetailController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Row(
-                  children: [
-                    CustomTextWidget(
-                      text: "Task Details:",
-                      color: Styles.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    )
-                  ],
-                ),
-                titleAndSubTitle("Enter your project title", ""),
-                titleAndSubTitle("What needs to be done?", ""),
-                const Padding(
-                  padding: EdgeInsets.only(top: 25),
-                  child: CustomTextWidget(
-                    text: "Upload your project file",
-                    color: Styles.orangeYellow,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Wrap(
-                  spacing: 10.0, // gap between adjacent items
-                  runSpacing: 10.0, // gap between lines
-                  children: List.generate(
-                    2, // number of icons to display
-                    (index) => const Icon(
-                      Icons.star,
-                      size: 50.0,
-                      color: Colors.blue,
+          GetBuilder<TaskDetailController>(builder: (_) {
+            return controller.taskDetailModel.data == null
+                ? const SizedBox.shrink()
+                : Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Row(
+                          children: [
+                            CustomTextWidget(
+                              text: "Task Details:",
+                              color: Styles.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            )
+                          ],
+                        ),
+                        titleAndSubTitle("Enter your project title",
+                            controller.taskDetailModel.data!.task!.title ?? ""),
+                        titleAndSubTitle(
+                            "What needs to be done?",
+                            controller
+                                    .taskDetailModel.data!.task!.description ??
+                                ""),
+                        controller.taskDetailModel.data!.task!.files!.isEmpty
+                            ? const SizedBox.shrink()
+                            : const Padding(
+                                padding: EdgeInsets.only(top: 25),
+                                child: CustomTextWidget(
+                                  text: "Upload your project file",
+                                  color: Styles.orangeYellow,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                        Wrap(
+                          spacing: 10.0, // gap between adjacent items
+                          runSpacing: 10.0, // gap between lines
+                          children: List.generate(
+                            controller.taskDetailModel.data!.task!.files!
+                                .length, // number of icons to display
+                            (index) => const Icon(
+                              Icons.star,
+                              size: 50.0,
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
+                        titleAndSubTitle(
+                            "When should it be done?",
+                            Styles().StringConvertDateTime(controller
+                                .taskDetailModel.data!.task!.deadline!)),
+                        titleAndSubTitle(
+                            "Type of assignment",
+                            controller.taskDetailModel.data!.task!.typeId == 1
+                                ? "Essay"
+                                : "Essay"),
+                        Get.find<LocalStorageService>()
+                                    .loginModel!
+                                    .data!
+                                    .user!
+                                    .roleId !=
+                                2
+                            ? controller.taskDetailModel.data!.task!.typeId != 1
+                                ? const SizedBox.shrink()
+                                : titleAndSubTitle(
+                                    "How many words?",
+                                    controller
+                                        .taskDetailModel.data!.task!.wordCount)
+                            : const SizedBox.shrink(),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Get.find<LocalStorageService>()
+                                    .loginModel!
+                                    .data!
+                                    .user!
+                                    .roleId !=
+                                2
+                            ? const SizedBox.shrink()
+                            : const Divider(
+                                color: Styles.white,
+                              ),
+                        Get.find<LocalStorageService>()
+                                    .loginModel!
+                                    .data!
+                                    .user!
+                                    .roleId !=
+                                2
+                            ? const SizedBox.shrink()
+                            : Center(
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  child: CustomTextWidget(
+                                    text:
+                                        "\$${controller.taskDetailModel.data!.task!.fee.toString()}",
+                                    fontSize: 35,
+                                    fontWeight: FontWeight.w600,
+                                    color: Styles.orangeYellow,
+                                  ),
+                                ),
+                              ),
+                        Get.find<LocalStorageService>()
+                                    .loginModel!
+                                    .data!
+                                    .user!
+                                    .roleId !=
+                                2
+                            ? const SizedBox.shrink()
+                            : const Divider(
+                                color: Styles.white,
+                              ),
+                        Get.find<LocalStorageService>()
+                                    .loginModel!
+                                    .data!
+                                    .user!
+                                    .roleId !=
+                                2
+                            ? const SizedBox.shrink()
+                            : const SizedBox(
+                                height: 25,
+                              ),
+                        Get.find<LocalStorageService>()
+                                    .loginModel!
+                                    .data!
+                                    .user!
+                                    .roleId !=
+                                2
+                            ? const SizedBox.shrink()
+                            : controller.taskDetailModel.data!.task!.teacher ==
+                                    null
+                                ? const SizedBox.shrink()
+                                : const Row(
+                                    children: [
+                                      CustomTextWidget(
+                                        text: "Selected Teachers:",
+                                        color: Styles.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                      )
+                                    ],
+                                  ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Get.find<LocalStorageService>()
+                                    .loginModel!
+                                    .data!
+                                    .user!
+                                    .roleId !=
+                                2
+                            ? const SizedBox.shrink()
+                            : controller.taskDetailModel.data!.task!.teacher ==
+                                    null
+                                ? const SizedBox.shrink()
+                                : selectedTeacher(controller
+                                    .taskDetailModel.data!.task!.teacher!),
+                        //  ListView.builder(
+                        //     shrinkWrap: true,
+                        //     itemCount: controller.selectedIdTeacher.length,
+                        //     itemBuilder: (context, index) {
+                        //       return selectedTeacher(
+                        //           controller.selectedIdTeacher[index]);
+                        //     },
+                        //   ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        const SizedBox(
+                          height: 25,
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-                titleAndSubTitle("When should it be done?", ""),
-                titleAndSubTitle("Type of assignment", ""),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Divider(
-                  color: Styles.white,
-                ),
-                const Center(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    child: CustomTextWidget(
-                      text: "\$30.00",
-                      fontSize: 35,
-                      fontWeight: FontWeight.w600,
-                      color: Styles.orangeYellow,
-                    ),
-                  ),
-                ),
-                const Divider(
-                  color: Styles.white,
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-                controller.selectedIdTeacher.isEmpty
-                    ? const SizedBox.shrink()
-                    : const Row(
-                        children: [
-                          CustomTextWidget(
-                            text: "Selected Teachers:",
-                            color: Styles.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                          )
-                        ],
-                      ),
-                const SizedBox(
-                  height: 15,
-                ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: controller.selectedIdTeacher.length,
-                  itemBuilder: (context, index) {
-                    return selectedTeacher(controller.selectedIdTeacher[index]);
-                  },
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-              ],
-            ),
-          )
+                  );
+          })
         ],
       ),
     );
   }
 
-  Widget selectedTeacher(Teachers teachers) {
+  Widget selectedTeacher(Student teachers) {
     return Row(
       children: [
         Image.asset(
