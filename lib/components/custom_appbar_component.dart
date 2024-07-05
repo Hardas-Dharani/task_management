@@ -19,12 +19,13 @@ class CustomAppBar extends StatelessWidget {
   Widget? leadingWidget;
   Widget? titleWidget;
   IconThemeData? iconThemeData;
-
+  TabBar? bottom;
   CustomAppBar(
-      {Key? key,
+      {super.key,
       this.title,
       this.centerTitle = true,
       this.onLeadingPress,
+      this.bottom,
       this.leading = false,
       this.titleWidget,
       this.bgColor = Styles.white,
@@ -33,8 +34,7 @@ class CustomAppBar extends StatelessWidget {
       this.trailing,
       this.leadingWidget,
       this.backButtonColor,
-      this.iconThemeData})
-      : super(key: key);
+      this.iconThemeData});
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +44,7 @@ class CustomAppBar extends StatelessWidget {
       automaticallyImplyLeading: false,
       centerTitle: centerTitle,
       iconTheme: iconThemeData,
+      bottom: bottom,
       title: title != null
           ? Padding(
               padding: EdgeInsets.only(

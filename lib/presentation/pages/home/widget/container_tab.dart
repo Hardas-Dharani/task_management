@@ -31,12 +31,14 @@ class ContainerTabTask extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
                 const Spacer(),
-                CustomTextWidget(
-                  text: "\$ ${taskData!.fee ?? ""}",
-                  fontWeight: FontWeight.w600,
-                  color: Styles.orangeYellow,
-                  fontSize: 22,
-                )
+                taskData!.fee == null
+                    ? const SizedBox.square()
+                    : CustomTextWidget(
+                        text: "\$ ${taskData!.fee ?? ""}",
+                        fontWeight: FontWeight.w600,
+                        color: Styles.orangeYellow,
+                        fontSize: 22,
+                      )
               ],
             ),
             const SizedBox(
@@ -52,12 +54,14 @@ class ContainerTabTask extends StatelessWidget {
                   color: Styles.white,
                   fontSize: 14,
                 ),
-                CustomTextWidget(
-                  text: " (${taskData!.wordCount} words)",
-                  fontWeight: FontWeight.w600,
-                  color: const Color(0xff858585),
-                  fontSize: 14,
-                )
+                taskData!.wordCount == null
+                    ? const SizedBox.shrink()
+                    : CustomTextWidget(
+                        text: " (${taskData!.wordCount} words)",
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xff858585),
+                        fontSize: 14,
+                      )
               ],
             ),
             const SizedBox(

@@ -138,11 +138,8 @@ class CreateRevision extends GetView<TaskRevisionController> {
               children: List.generate(
                 controller
                     .listFileSelected.length, // number of icons to display
-                (index) => const Icon(
-                  Icons.star,
-                  size: 50.0,
-                  color: Colors.blue,
-                ),
+                (index) =>  Styles().checkWhichFile(
+                                        controller.listFileSelected[index].path),
               ),
             ),
             const SizedBox(height: 20),

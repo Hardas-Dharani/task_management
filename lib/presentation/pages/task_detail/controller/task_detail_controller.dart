@@ -103,7 +103,11 @@ class TaskDetailController extends GetxController {
             }
           }
         } else {
-          _showQuotationCustomDialog();
+          if (taskDetailModel.data!.task!.quotationStatus ==
+              "approval_pending") {
+          } else {
+            _showQuotationCustomDialog();
+          }
         }
       } else {
         ToastComponent().showToast(result['message']);

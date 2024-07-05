@@ -231,17 +231,21 @@ class TaskTab extends GetView<TaskDetailController> {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         Wrap(
                           spacing: 10.0, // gap between adjacent items
                           runSpacing: 10.0, // gap between lines
                           children: List.generate(
                             controller.taskDetailModel.data!.task!.files!
                                 .length, // number of icons to display
-                            (index) => const Icon(
-                              Icons.star,
-                              size: 50.0,
-                              color: Colors.blue,
-                            ),
+                            (index) => Styles().checkWhichFile(controller
+                                .taskDetailModel
+                                .data!
+                                .task!
+                                .files![index]
+                                .source!),
                           ),
                         ),
                         titleAndSubTitle(
@@ -250,9 +254,9 @@ class TaskTab extends GetView<TaskDetailController> {
                                 .taskDetailModel.data!.task!.deadline!)),
                         titleAndSubTitle(
                             "Type of assignment",
-                            controller.taskDetailModel.data!.task!.typeId == 1
-                                ? "Essay"
-                                : "Essay"),
+                            controller
+                                    .taskDetailModel.data!.task!.type!.title ??
+                                ""),
                         Get.find<LocalStorageService>()
                                     .loginModel!
                                     .data!
@@ -276,29 +280,11 @@ class TaskTab extends GetView<TaskDetailController> {
                                     .roleId !=
                                 2
                             ? const SizedBox.shrink()
-                            : const Divider(
-                                color: Styles.white,
-                              ),
-                        Get.find<LocalStorageService>()
-                                    .loginModel!
-                                    .data!
-                                    .user!
-                                    .roleId !=
-                                2
-                            ? const SizedBox.shrink()
-                            : Center(
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  child: CustomTextWidget(
-                                    text:
-                                        "\$${controller.taskDetailModel.data!.task!.fee.toString()}",
-                                    fontSize: 35,
-                                    fontWeight: FontWeight.w600,
-                                    color: Styles.orangeYellow,
+                            : controller.taskDetailModel.data!.task!.fee == null
+                                ? const SizedBox.shrink()
+                                : const Divider(
+                                    color: Styles.white,
                                   ),
-                                ),
-                              ),
                         Get.find<LocalStorageService>()
                                     .loginModel!
                                     .data!
@@ -306,9 +292,33 @@ class TaskTab extends GetView<TaskDetailController> {
                                     .roleId !=
                                 2
                             ? const SizedBox.shrink()
-                            : const Divider(
-                                color: Styles.white,
-                              ),
+                            : controller.taskDetailModel.data!.task!.fee == null
+                                ? const SizedBox.shrink()
+                                : Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10),
+                                      child: CustomTextWidget(
+                                        text:
+                                            "\$${controller.taskDetailModel.data!.task!.fee.toString()}",
+                                        fontSize: 35,
+                                        fontWeight: FontWeight.w600,
+                                        color: Styles.orangeYellow,
+                                      ),
+                                    ),
+                                  ),
+                        Get.find<LocalStorageService>()
+                                    .loginModel!
+                                    .data!
+                                    .user!
+                                    .roleId !=
+                                2
+                            ? const SizedBox.shrink()
+                            : controller.taskDetailModel.data!.task!.fee == null
+                                ? const SizedBox.shrink()
+                                : const Divider(
+                                    color: Styles.white,
+                                  ),
                         Get.find<LocalStorageService>()
                                     .loginModel!
                                     .data!

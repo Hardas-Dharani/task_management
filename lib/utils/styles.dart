@@ -188,6 +188,42 @@ class Styles {
 
   static const double screenPadding = 24;
 
+  Widget checkWhichFile(String url) {
+    if (url.endsWith('.pdf')) {
+      return Image.asset(
+        "assets/images/pdf.png",
+        height: 30,
+        width: 30,
+      );
+    } else if (url.endsWith('.doc') || url.endsWith('.docx')) {
+      return Image.asset(
+        "assets/images/docx.png",
+        height: 30,
+        width: 30,
+      );
+    } else if (url.endsWith('.jpg') ||
+        url.endsWith('.jpeg') ||
+        url.endsWith('.png')) {
+      return Image.asset(
+        "assets/images/jpg.png",
+        height: 30,
+        width: 30,
+      );
+    } else if (url.endsWith('.zip')) {
+      return Image.asset(
+        "assets/images/zip.png",
+        height: 30,
+        width: 30,
+      );
+    } else {
+      return Image.asset(
+        "assets/images/txt.png",
+        height: 30,
+        width: 30,
+      );
+    }
+  }
+
   String formatRelativeTime(String timestamp) {
     DateTime postTime = DateTime.parse(timestamp).toLocal();
     DateTime currentTime = DateTime.now();
@@ -224,11 +260,11 @@ class Styles {
       return DateFormat('MM/dd/yyyy').format(dateTime);
     }
   }
-   String StringConvertDateTime(String timestamp) {
+
+  String StringConvertDateTime(String timestamp) {
     final dateTime = DateTime.parse(timestamp);
-   
-      return DateFormat('MM/dd/yyyy').format(dateTime);
-    
+
+    return DateFormat('MM/dd/yyyy').format(dateTime);
   }
 
   static int calculateTimeDifference(DateTime dateTime) {

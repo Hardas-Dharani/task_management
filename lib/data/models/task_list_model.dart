@@ -1,3 +1,5 @@
+import 'payment_list_model.dart';
+
 class TaskData {
   int? id;
   int? typeId;
@@ -8,6 +10,7 @@ class TaskData {
   String? deadline;
   String? wordCount;
   int? fee;
+  Payment? payment;
   String? paymentStatus;
   String? quotationStatus;
   String? status;
@@ -25,6 +28,7 @@ class TaskData {
       this.title,
       this.description,
       this.deadline,
+      this.payment,
       this.wordCount,
       this.fee,
       this.paymentStatus,
@@ -45,6 +49,9 @@ class TaskData {
     description = json['description'];
     deadline = json['deadline'];
     wordCount = json['word_count'];
+    payment =
+        json['payment'] != null ? Payment.fromJson(json['payment']) : null;
+
     fee = json['fee'];
     paymentStatus = json['payment_status'];
     quotationStatus = json['quotation_status'];
@@ -65,6 +72,9 @@ class TaskData {
     data['teacher_id'] = teacherId;
     data['title'] = title;
     data['description'] = description;
+    if (payment != null) {
+      data['payment'] = payment!.toJson();
+    }
     data['deadline'] = deadline;
     data['word_count'] = wordCount;
     data['fee'] = fee;

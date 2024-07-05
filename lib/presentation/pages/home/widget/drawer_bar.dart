@@ -19,18 +19,27 @@ class CustomDrawer extends StatelessWidget {
           children: [
             UserAccountsDrawerHeader(
               accountName: CustomTextWidget(
-                text: Get.find<LocalStorageService>().loginModel!.data!.user!.name ??
+                text: Get.find<LocalStorageService>()
+                        .loginModel!
+                        .data!
+                        .user!
+                        .name ??
                     "",
                 color: Styles.white,
               ),
               accountEmail: CustomTextWidget(
-                text: Get.find<LocalStorageService>().loginModel!.data!.user!.email ??
+                text: Get.find<LocalStorageService>()
+                        .loginModel!
+                        .data!
+                        .user!
+                        .email ??
                     "",
                 color: Styles.white,
               ),
               currentAccountPicture: CircleAvatar(
                 backgroundImage: NetworkImage(Get.find<LocalStorageService>()
-                        .loginModel!.data!
+                        .loginModel!
+                        .data!
                         .user!
                         .imageUrl ??
                     "https://upload.wikimedia.org/wikipedia/commons/b/bc/Unknown_person.jpg"),
@@ -44,52 +53,52 @@ class CustomDrawer extends StatelessWidget {
                 ),
               ),
             ),
-            ListTile(
-              leading: const Icon(
-                Icons.person_2,
-                color: Styles.orangeYellow,
-              ),
-              title: const CustomTextWidget(
-                text: "Profile",
-                color: Styles.white,
-              ),
-              onTap: () {
-                Get.back();
-
-                Get.toNamed(Routes.createProfile);
-                // Handle item 1 tap
-              },
-            ),
-            ListTile(
-              leading: const Icon(
-                Icons.message_rounded,
-                color: Styles.orangeYellow,
-              ),
-              title: const CustomTextWidget(
-                text: "Message",
-                color: Styles.white,
-              ),
-              onTap: () {
-                Get.back();
-                Get.toNamed(Routes.chats);
-                // Handle item 1 tap
-              },
-            ),
-            ListTile(
-              leading: const Icon(
-                Icons.settings,
-                color: Styles.orangeYellow,
-              ),
-              title: const CustomTextWidget(
-                text: "Settings",
-                color: Styles.white,
-              ),
-              onTap: () {
-                Get.toNamed(Routes.settings);
-                // Handle item 1 tap
-              },
-            ),
             // ListTile(
+            //   leading: const Icon(
+            //     Icons.person_2,
+            //     color: Styles.orangeYellow,
+            //   ),
+            //   title: const CustomTextWidget(
+            //     text: "Profile",
+            //     color: Styles.white,
+            //   ),
+            //   onTap: () {
+            //     Get.back();
+
+            //     Get.toNamed(Routes.createProfile);
+            //     // Handle item 1 tap
+            //   },
+            // ),
+            // ListTile(
+            //   leading: const Icon(
+            //     Icons.message_rounded,
+            //     color: Styles.orangeYellow,
+            //   ),
+            //   title: const CustomTextWidget(
+            //     text: "Message",
+            //     color: Styles.white,
+            //   ),
+            //   onTap: () {
+            //     Get.back();
+            //     Get.toNamed(Routes.chats);
+            //     // Handle item 1 tap
+            //   },
+            // ),
+            // ListTile(
+            //   leading: const Icon(
+            //     Icons.settings,
+            //     color: Styles.orangeYellow,
+            //   ),
+            //   title: const CustomTextWidget(
+            //     text: "Settings",
+            //     color: Styles.white,
+            //   ),
+            //   onTap: () {
+            //     Get.toNamed(Routes.settings);
+            //     // Handle item 1 tap
+            //   },
+            // ),
+            // // ListTile(
             //   leading: const Icon(
             //     Icons.contact_page_outlined,
             //     color: Styles.orangeYellow,

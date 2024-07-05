@@ -97,11 +97,12 @@ class CreateTaskController extends GetxController {
 
       Map<String, dynamic> taskData = {
         "title": titleTextEditingController.text,
-        "word_count":
-            "${int.parse(wordCountText.text)} - ${int.parse(wordCountText.text) + 100}",
+        if (wordCountText.text != "")
+          "word_count":
+              "${int.parse(wordCountText.text)} - ${int.parse(wordCountText.text) + 100}",
         "deadline": startDateTextEditingController.text,
         "description": descriptionTextEditingController.text,
-        "files": listFileSelected,
+        "files[]": listFileSelected,
         "type": preRequestModelTypes.id
       };
 
@@ -116,7 +117,7 @@ class CreateTaskController extends GetxController {
       if (result['status']) {
         ToastComponent().showToast("Task Createed");
         LoadingDialog.hide();
-        Get.offNamed(Routes.home);
+        Get.offAllNamed(Routes.home);
       } else {
         ToastComponent().showToast(result['message']);
         LoadingDialog.hide();

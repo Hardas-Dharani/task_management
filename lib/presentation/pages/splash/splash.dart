@@ -14,8 +14,12 @@ class SplashScreen extends StatelessWidget {
       const Duration(seconds: 3),
       () {
         if (Get.find<LocalStorageService>().loginModel == null) {
+          // Get.offNamed(Routes.signInAdmin);
+
           Get.offNamed(Routes.welcomeScreen);
         } else {
+          // Get.offNamed(Routes.adminHome);
+
           if (Get.find<LocalStorageService>().loginModel!.data!.user!.roleId ==
               2) {
             Get.offNamed(Routes.home);

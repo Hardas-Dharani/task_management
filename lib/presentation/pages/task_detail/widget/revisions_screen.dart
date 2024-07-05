@@ -192,11 +192,12 @@ class RevisionsScreen extends GetView<TaskDetailController> {
                         children: List.generate(
                           controller.revisionDetailModel.data!.revision!.files!
                               .length, // number of icons to display
-                          (index) => const Icon(
-                            Icons.star,
-                            size: 50.0,
-                            color: Colors.blue,
-                          ),
+                          (index) => Styles().checkWhichFile(controller
+                              .taskDetailModel
+                              .data!
+                              .task!
+                              .files![index]
+                              .source!),
                         ),
                       ),
 

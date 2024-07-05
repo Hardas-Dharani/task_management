@@ -46,7 +46,7 @@ class CustomTextField extends GetView<CustomTxtController> {
   Color? cursorColor;
   String? counterText;
   CustomTextField({
-    Key? key,
+    super.key,
     this.hint,
     this.node,
     this.prefixIcon,
@@ -82,7 +82,7 @@ class CustomTextField extends GetView<CustomTxtController> {
     this.autoValidateMode = AutovalidateMode.disabled,
     this.cursorColor = Styles.black,
     this.counterText = '',
-  }) : super(key: key) {
+  }) {
     txtController?.addListener(onTextEdit);
     node?.addListener(() {
       controller.setFocused(node?.hasFocus);
@@ -119,7 +119,7 @@ class CustomTextField extends GetView<CustomTxtController> {
             focusNode: node,
             inputFormatters: inputFormat ?? const [],
             style: TextStyle(
-                fontSize: 13,
+                fontSize: hintFontSize,
                 color: textFieldColor,
                 fontWeight: FontWeight.normal,
                 fontFamily: "Manrope"),

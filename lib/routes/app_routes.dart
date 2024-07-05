@@ -146,8 +146,11 @@ class Routes {
   static String get taskDetail => '/taskDetail';
   static String get taskPreview => '/taskPreview';
   static String get revisionCreate => '/revisionCreate';
+  static String get signInAdmin => '/signInAdmin';
+  static String get adminHome => '/adminHome';
 
   static String get teacherHome => '/teacherHome';
+  static String get paymentProofAdmin => '/paymentProofAdmin';
 
   static String get teacherProfile => '/teacherProfile';
 

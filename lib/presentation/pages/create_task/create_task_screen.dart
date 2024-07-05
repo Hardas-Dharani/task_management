@@ -195,11 +195,9 @@ class CreateTaskScreen extends GetView<CreateTaskController> {
                                   children: List.generate(
                                     controller.listFileSelected
                                         .length, // number of icons to display
-                                    (index) => const Icon(
-                                      Icons.star,
-                                      size: 50.0,
-                                      color: Colors.blue,
-                                    ),
+                                    (index) => Styles().checkWhichFile(
+                                        controller
+                                            .listFileSelected[index].path),
                                   ),
                                 ),
                                 const SizedBox(height: 20),
@@ -453,7 +451,7 @@ class CreateTaskScreen extends GetView<CreateTaskController> {
                                 // if (controller.signupFormKey.currentState!
                                 //     .validate()) {
                                 //   // Get.to(const ShareFriendDetailScreen());
-                                  
+
                                 // }
                               },
                             ),

@@ -95,11 +95,8 @@ class PreviewTaskDetail extends GetView<CreateTaskController> {
                     children: List.generate(
                       controller.listFileSelected
                           .length, // number of icons to display
-                      (index) => const Icon(
-                        Icons.star,
-                        size: 50.0,
-                        color: Colors.blue,
-                      ),
+                      (index) => Styles().checkWhichFile(
+                          controller.listFileSelected[index].path),
                     ),
                   ),
                   titleAndSubTitle("When should it be done?",
@@ -118,18 +115,21 @@ class PreviewTaskDetail extends GetView<CreateTaskController> {
                         ),
                   controller.preRequestModelTypes.id != 1
                       ? const SizedBox.shrink()
-                      : Center(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: CustomTextWidget(
-                              text:
-                                  "\$${controller.getFeeBasedOnWordCount(controller.wordCountText.text).toString()}",
-                              fontSize: 35,
-                              fontWeight: FontWeight.w600,
-                              color: Styles.orangeYellow,
+                      : controller.wordCountText.text == ""
+                          ? const SizedBox.shrink()
+                          : Center(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                child: CustomTextWidget(
+                                  text:
+                                      "\$${controller.getFeeBasedOnWordCount(controller.wordCountText.text).toString()}",
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.w600,
+                                  color: Styles.orangeYellow,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
                   controller.preRequestModelTypes.id != 1
                       ? const SizedBox.shrink()
                       : const Divider(

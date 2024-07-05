@@ -103,7 +103,7 @@ class SignInScreen extends GetView<SigninController> {
                                   ],
                                 ),
                                 const SizedBox(height: 33),
-                            
+
                                 CustomTextField(
                                   textFieldColor: controller.focusEmail.hasFocus
                                       ? Styles.black

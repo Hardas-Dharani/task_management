@@ -1,3 +1,40 @@
+class Files {
+  int? id;
+  int? taskId;
+  String? source;
+  String? createdAt;
+  String? updatedAt;
+  String? eId;
+
+  Files(
+      {this.id,
+      this.taskId,
+      this.source,
+      this.createdAt,
+      this.updatedAt,
+      this.eId});
+
+  Files.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    taskId = json['task_id'];
+    source = json['source'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    eId = json['e_id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['task_id'] = taskId;
+    data['source'] = source;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    data['e_id'] = eId;
+    return data;
+  }
+}
+
 class Student {
   int? id;
   int? roleId;
@@ -88,7 +125,7 @@ class Task {
   String? description;
   String? deadline;
   String? wordCount;
-  int? fee;
+  num? fee;
   String? paymentStatus;
   String? quotationStatus;
   String? status;
@@ -97,7 +134,8 @@ class Task {
   String? eId;
   Student? student;
   Student? teacher;
-  List<dynamic>? files;
+  List<Files>? files;
+  Type? type;
 
   Task(
       {this.id,
@@ -117,7 +155,8 @@ class Task {
       this.eId,
       this.student,
       this.teacher,
-      this.files});
+      this.files,
+      this.type});
 
   Task.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -132,19 +171,21 @@ class Task {
     paymentStatus = json['payment_status'];
     quotationStatus = json['quotation_status'];
     status = json['status'];
+    if (json['files'] != null) {
+      files = <Files>[];
+      json['files'].forEach((v) {
+        files!.add(Files.fromJson(v));
+      });
+    }
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     eId = json['e_id'];
     student =
         json['student'] != null ? Student.fromJson(json['student']) : null;
     teacher =
-        json['teacher'] != null ? Student.fromJson(json['teacher']) : null;
-    if (json['files'] != null) {
-      files = <Null>[];
-      json['files'].forEach((v) {
-        files!.add(v);
-      });
-    }
+        json['teacher'] != null ? Student.fromJson(json['student']) : null;
+
+    type = json['type'] != null ? Type.fromJson(json['type']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -167,11 +208,12 @@ class Task {
     if (student != null) {
       data['student'] = student!.toJson();
     }
-    if (teacher != null) {
-      data['teacher'] = teacher!.toJson();
-    }
+    data['teacher'] = teacher;
     if (files != null) {
       data['files'] = files!.map((v) => v.toJson()).toList();
+    }
+    if (type != null) {
+      data['type'] = type!.toJson();
     }
     return data;
   }
@@ -220,6 +262,43 @@ class TaskDetailModelData {
     if (task != null) {
       data['task'] = task!.toJson();
     }
+    return data;
+  }
+}
+
+class Type {
+  int? id;
+  String? title;
+  int? wordCountCompatible;
+  int? status;
+  String? createdAt;
+  String? updatedAt;
+
+  Type(
+      {this.id,
+      this.title,
+      this.wordCountCompatible,
+      this.status,
+      this.createdAt,
+      this.updatedAt});
+
+  Type.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    title = json['title'];
+    wordCountCompatible = json['word_count_compatible'];
+    status = json['status'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['title'] = title;
+    data['word_count_compatible'] = wordCountCompatible;
+    data['status'] = status;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }

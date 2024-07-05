@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:task_management/presentation/pages/admin_home/admin_home_screen.dart';
+import 'package:task_management/presentation/pages/admin_home/binding/admin_home_binding.dart';
 import 'package:task_management/presentation/pages/chatting/chatting_screen.dart';
 import 'package:task_management/presentation/pages/create_education/binding/create_education_binding.dart';
 import 'package:task_management/presentation/pages/create_education/create_education_screen.dart';
@@ -10,7 +12,10 @@ import 'package:task_management/presentation/pages/create_task/binding/create_ta
 import 'package:task_management/presentation/pages/create_task/create_task_screen.dart';
 import 'package:task_management/presentation/pages/payment_proof/binding/payment_proof_binding.dart';
 import 'package:task_management/presentation/pages/payment_proof/payment_screen.dart';
+import 'package:task_management/presentation/pages/payment_proof_admin/binding/payment_proof_admin_binding.dart';
 import 'package:task_management/presentation/pages/request_detail/binding/request_detail_binding.dart';
+import 'package:task_management/presentation/pages/signin_admin/binding/signin_admin_binding.dart';
+import 'package:task_management/presentation/pages/signin_admin/signin_admin_screen.dart';
 import 'package:task_management/presentation/pages/submit_proposal/binding/submit_proposal_binding.dart';
 import 'package:task_management/presentation/pages/submit_proposal/submit_proposal_screen.dart';
 import 'package:task_management/presentation/pages/task_detail/binding/task_detail_binding.dart';
@@ -42,6 +47,7 @@ import '../presentation/pages/home/binding/home_binding.dart';
 import '../presentation/pages/home/home_screen.dart';
 import '../presentation/pages/notifications/binding/notifications_binding.dart';
 import '../presentation/pages/notifications/notifications_screen.dart';
+import '../presentation/pages/payment_proof_admin/payment_admin_screen.dart';
 import '../presentation/pages/privacy_policy/privacy_policy.dart';
 import '../presentation/pages/privacy_policy/terms.dart';
 import '../presentation/pages/request_detail/request_detail_screen.dart';
@@ -81,9 +87,24 @@ class RoutingModule {
       binding: TaskDetailBinding(),
     ),
     GetPage(
+      name: Routes.adminHome,
+      page: () => const AdminHomeScreen(),
+      binding: AdminHomeBinding(),
+    ),
+    GetPage(
       name: Routes.taskPreview,
       page: () => const TaskPreviewScreen(),
       binding: TaskDetailBinding(),
+    ),
+    GetPage(
+      name: Routes.paymentProofAdmin,
+      page: () => const PaymentScreenAdminDetail(),
+      binding: PaymentProofAdminBinding(),
+    ),
+    GetPage(
+      name: Routes.signInAdmin,
+      page: () => const SignInAdminScreen(),
+      binding: SiginAdminBinding(),
     ),
     GetPage(
       name: Routes.revisionCreate,
