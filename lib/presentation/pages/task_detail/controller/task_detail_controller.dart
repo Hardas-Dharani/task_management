@@ -38,6 +38,24 @@ class TaskDetailController extends GetxController {
   RevisionDetailModel revisionDetailModel = RevisionDetailModel();
   int? taskID;
   String selectedList = "All Project";
+  Future<void> accpetTask(String values) async {
+    try {
+      final result =
+          await TaskRepositoryIml().getAllPropsal("task/accept/$values", {});
+
+      LoadingDialog.hide();
+      if (result['status']) {
+      } else {
+        ToastComponent().showToast(result['message']);
+      }
+    } catch (e) {
+      print(e.toString());
+      ToastComponent().showToast("Sign in getting server error");
+      LoadingDialog.hide();
+    }
+    update();
+  }
+
   Future<void> getAllRevis(String id) async {
     try {
       LoadingDialog.show();

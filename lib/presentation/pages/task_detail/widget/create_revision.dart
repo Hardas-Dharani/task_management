@@ -65,6 +65,7 @@ class CreateRevision extends GetView<TaskRevisionController> {
               textInputAction: TextInputAction.next,
               node: controller.focusName,
               onTap: () {},
+              
               padding: 17,
               borderRadius: 9,
             ),
@@ -88,6 +89,7 @@ class CreateRevision extends GetView<TaskRevisionController> {
               hintColor: Styles.solidGrey,
               textInputType: TextInputType.text,
               minLines: 5,
+              maxLength: 1500,
               txtController: controller.descriptionTextEditingController,
               textInputAction: TextInputAction.next,
               node: controller.focusCpassword,
@@ -138,8 +140,8 @@ class CreateRevision extends GetView<TaskRevisionController> {
               children: List.generate(
                 controller
                     .listFileSelected.length, // number of icons to display
-                (index) =>  Styles().checkWhichFile(
-                                        controller.listFileSelected[index].path),
+                (index) => Styles()
+                    .checkWhichFile(controller.listFileSelected[index].path),
               ),
             ),
             const SizedBox(height: 20),

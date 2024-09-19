@@ -183,7 +183,7 @@ class Task {
     student =
         json['student'] != null ? Student.fromJson(json['student']) : null;
     teacher =
-        json['teacher'] != null ? Student.fromJson(json['student']) : null;
+        json['teacher'] != null ? Student.fromJson(json['teacher']) : null;
 
     type = json['type'] != null ? Type.fromJson(json['type']) : null;
   }

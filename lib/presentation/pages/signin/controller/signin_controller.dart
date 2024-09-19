@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -22,7 +22,7 @@ class SigninController extends GetxController {
   bool buttonClicked = true;
   // Social Login
   // final GoogleSignIn _googleSignIn = GoogleSignIn();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
   FocusNode focusEmail = FocusNode();
   FocusNode focusPassword = FocusNode();
   bool obsecurePass = true;

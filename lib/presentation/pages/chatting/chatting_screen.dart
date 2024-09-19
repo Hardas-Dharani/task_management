@@ -34,10 +34,10 @@ class ChattingScreen extends GetView<ChattingController> {
                 child: Stack(
                   clipBehavior: Clip.none,
                   children: [
-                    CircleAvatar(
-                      backgroundColor: Colors.orange,
-                      radius: 22,
-                      backgroundImage: NetworkImage(Get.arguments['image']),
+                    Image.asset(
+                      "assets/images/teacher_icon.png",
+                      height: 79,
+                      width: 79,
                     ),
                     Align(
                         alignment: Alignment.bottomRight,
@@ -67,22 +67,16 @@ class ChattingScreen extends GetView<ChattingController> {
                         fontWeight: FontWeight.w700,
                         color: Styles.black,
                       ),
-                      if (Get.arguments['isVerified'])
-                        const SizedBox(
-                          width: 10,
-                        ),
-                      if (Get.arguments['isVerified'])
-                        const SvgIconComponent(icon: 'verified_new.svg'),
                     ],
                   ),
                   const SizedBox(
                     height: 5,
                   ),
-                  CustomTextWidget(
-                    text: Get.arguments['role'],
-                    color: Styles.orangeBorder,
-                    fontSize: 12,
-                  ),
+                  // CustomTextWidget(
+                  //   text: Get.arguments['role'],
+                  //   color: Styles.orangeBorder,
+                  //   fontSize: 12,
+                  // ),
                 ],
               ),
             ],

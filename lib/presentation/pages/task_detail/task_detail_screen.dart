@@ -5,7 +5,9 @@ import 'package:task_management/components/custom_text_component.dart';
 import '../../../../utils/styles.dart';
 import '../../../app/services/local_storage.dart';
 import '../../../data/models/task_detail_model.dart';
+import '../../../data/models/user_firebase.dart';
 import '../../../routes/app_routes.dart';
+import '../chat/widget/message.dart';
 import 'controller/task_detail_controller.dart';
 import 'widget/revisions_screen.dart';
 
@@ -414,6 +416,18 @@ class TaskTab extends GetView<TaskDetailController> {
             ],
           ),
         ),
+        IconButton(
+            onPressed: () {
+              UserFireBaseModel userFireBaseModel = UserFireBaseModel(
+                  id: teachers.id.toString(),
+                  name: teachers.name!,
+                  isOnline: true,
+                  profilePictureUrl: teachers.imageUrl.toString(),
+                  lastSeen: {});
+              Get.to(() =>
+                  MessageWidgetScreen(userFireBaseModel: userFireBaseModel));
+            },
+            icon: Icon(Icons.messenger))
       ],
     );
   }

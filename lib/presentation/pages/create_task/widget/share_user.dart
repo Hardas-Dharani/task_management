@@ -59,114 +59,119 @@ class ShareFriendDetailScreen extends GetView<CreateTaskController> {
               ),
               controller.preRequestModel.data == null
                   ? const SizedBox()
-                  : Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
-                      child: ListView.separated(
-                          separatorBuilder: (context, index) {
-                            return const SizedBox(
-                              height: 20,
-                            );
-                          },
-                          shrinkWrap: true,
-                          itemCount:
-                              controller.preRequestModel.data!.teachers!.length,
-                          itemBuilder: (context, index) {
-                            return Row(
-                              children: [
-                                Image.asset(
-                                  "assets/images/teacher_icon.png",
-                                  height: 79,
-                                  width: 79,
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      CustomTextWidget(
-                                        text: controller.preRequestModel.data!
-                                                .teachers![index].name ??
-                                            "",
-                                        color: Styles.white,
-                                      ),
-                                      CustomTextWidget(
-                                        text: controller.preRequestModel.data!
-                                                .teachers![index].gender ??
-                                            "",
-                                        color: Styles.white,
-                                        fontSize: 7,
-                                      )
-                                    ],
+                  : Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
+                        child: ListView.separated(
+                            separatorBuilder: (context, index) {
+                              return const SizedBox(
+                                height: 20,
+                              );
+                            },
+                            shrinkWrap: true,
+                            itemCount: controller
+                                .preRequestModel.data!.teachers!.length,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/images/teacher_icon.png",
+                                    height: 79,
+                                    width: 79,
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-
-                                GestureDetector(
-                                  onTap: () async {
-                                    controller.preRequestModel.data!
-                                            .teachers![index].selected =
-                                        !controller.preRequestModel.data!
-                                            .teachers![index].selected!;
-                                    if (controller.preRequestModel.data!
-                                        .teachers![index].selected!) {
-                                      controller.selectedIdTeacher.add(
-                                          controller.preRequestModel.data!
-                                              .teachers![index]);
-                                    } else {
-                                      controller.selectedIdTeacher.removeWhere(
-                                          (element) =>
-                                              element.id ==
-                                              controller.preRequestModel.data!
-                                                  .teachers![index].id!);
-                                    }
-                                    controller.update();
-                                    // await controller.sendRequestData({
-                                    //   "task_id": id,
-                                    //   "teacher_id": controller
-                                    //       .getAllTeachersModel.data![index].id
-                                    //       .toString()
-                                    // });
-                                  },
-                                  behavior: HitTestBehavior.opaque,
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 3),
-                                    decoration: BoxDecoration(
-                                        color: controller.preRequestModel.data!
-                                                .teachers![index].selected!
-                                            ? Styles.orangeYellow
-                                            : Colors.transparent,
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(20))),
-                                    child: CustomTextWidget(
-                                      text: controller.preRequestModel.data!
-                                              .teachers![index].selected!
-                                          ? "Selected"
-                                          : "Select",
-                                      fontSize: 10,
-                                      color: controller.preRequestModel.data!
-                                              .teachers![index].selected!
-                                          ? Styles.black
-                                          : Styles.white,
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        CustomTextWidget(
+                                          text: controller.preRequestModel.data!
+                                                  .teachers![index].name ??
+                                              "",
+                                          color: Styles.white,
+                                        ),
+                                        CustomTextWidget(
+                                          text: controller.preRequestModel.data!
+                                                  .teachers![index].gender ??
+                                              "",
+                                          color: Styles.white,
+                                          fontSize: 7,
+                                        )
+                                      ],
                                     ),
                                   ),
-                                ),
-                                // const SizedBox(
-                                //   width: 5,
-                                // ),
-                                // const CustomTextWidget(
-                                //   text: "Ignore",
-                                //   color: Color(0xffACACAC),
-                                // )
-                              ],
-                            );
-                          }),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+
+                                  GestureDetector(
+                                    onTap: () async {
+                                      controller.preRequestModel.data!
+                                              .teachers![index].selected =
+                                          !controller.preRequestModel.data!
+                                              .teachers![index].selected!;
+                                      if (controller.preRequestModel.data!
+                                          .teachers![index].selected!) {
+                                        controller.selectedIdTeacher.add(
+                                            controller.preRequestModel.data!
+                                                .teachers![index]);
+                                      } else {
+                                        controller.selectedIdTeacher
+                                            .removeWhere((element) =>
+                                                element.id ==
+                                                controller.preRequestModel.data!
+                                                    .teachers![index].id!);
+                                      }
+                                      controller.update();
+                                      // await controller.sendRequestData({
+                                      //   "task_id": id,
+                                      //   "teacher_id": controller
+                                      //       .getAllTeachersModel.data![index].id
+                                      //       .toString()
+                                      // });
+                                    },
+                                    behavior: HitTestBehavior.opaque,
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 3),
+                                      decoration: BoxDecoration(
+                                          color: controller
+                                                  .preRequestModel
+                                                  .data!
+                                                  .teachers![index]
+                                                  .selected!
+                                              ? Styles.orangeYellow
+                                              : Colors.transparent,
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(20))),
+                                      child: CustomTextWidget(
+                                        text: controller.preRequestModel.data!
+                                                .teachers![index].selected!
+                                            ? "Selected"
+                                            : "Select",
+                                        fontSize: 10,
+                                        color: controller.preRequestModel.data!
+                                                .teachers![index].selected!
+                                            ? Styles.black
+                                            : Styles.white,
+                                      ),
+                                    ),
+                                  ),
+                                  // const SizedBox(
+                                  //   width: 5,
+                                  // ),
+                                  // const CustomTextWidget(
+                                  //   text: "Ignore",
+                                  //   color: Color(0xffACACAC),
+                                  // )
+                                ],
+                              );
+                            }),
+                      ),
                     ),
               GestureDetector(
                 onTap: () => Get.to(() => const PreviewTaskDetail()),

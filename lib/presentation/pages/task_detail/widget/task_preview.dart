@@ -17,7 +17,10 @@ class TaskPreviewScreen extends GetView<TaskDetailController> {
       bottomNavigationBar: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
         child: CustomButton(
-          onTap: () {},
+          onTap: () {
+            controller.accpetTask(
+                (controller.taskDetailModel.data?.task?.id ?? 0).toString());
+          },
           bgColor: Styles.orangeYellow,
           radius: 10,
           title: "Accept",
@@ -94,7 +97,11 @@ class TaskPreviewScreen extends GetView<TaskDetailController> {
                               controller.taskDetailModel.data!.task!.files!
                                   .length, // number of icons to display
                               (index) => Styles().checkWhichFile(controller
-                                  .taskDetailModel.data!.task!.files![index].source!),
+                                  .taskDetailModel
+                                  .data!
+                                  .task!
+                                  .files![index]
+                                  .source!),
                             ),
                           ),
                           titleAndSubTitle(

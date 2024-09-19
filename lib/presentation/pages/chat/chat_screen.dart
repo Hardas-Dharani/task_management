@@ -102,7 +102,8 @@ class ChatScreen extends GetView<ChatController> {
                             String id = controller.generateChatId(
                               users[index].id,
                               Get.find<LocalStorageService>()
-                                  .loginModel!.data!
+                                  .loginModel!
+                                  .data!
                                   .user!
                                   .id
                                   .toString(),

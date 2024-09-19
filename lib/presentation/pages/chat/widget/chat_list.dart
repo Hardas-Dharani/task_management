@@ -24,10 +24,17 @@ class ChatListWidget extends StatelessWidget {
         Stack(
           alignment: Alignment.bottomRight,
           children: [
-            CircleAvatar(
-              radius: 30,
-              backgroundImage: NetworkImage(image ??
-                  "https://img.freepik.com/premium-vector/red-haired-woman-with-british-flag-background_893012-35631.jpg"),
+            Container(
+              height: 45,
+              width: 45,
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  color: Colors.black, borderRadius: BorderRadius.circular(25)),
+              child: Image.asset(
+                "assets/images/teacher_icon.png",
+                height: 30,
+                width: 30,
+              ),
             ),
             messageCount == "null"
                 ? const SizedBox()

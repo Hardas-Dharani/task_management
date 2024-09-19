@@ -67,18 +67,11 @@ class MessageWidgetScreen extends GetView<ChatController> {
                                   child: Stack(
                                     clipBehavior: Clip.none,
                                     children: [
-                                      CircleAvatar(
-                                          backgroundColor: Colors.transparent,
-                                          backgroundImage: NetworkImage(controller
-                                                      .onlineUserData !=
-                                                  null
-                                              ? userFireBaseModel!
-                                                      .profilePictureUrl ??
-                                                  "https://raysensenbach.com/wp-content/uploads/2013/04/default.jpg"
-                                              : userFireBaseModel!
-                                                      .profilePictureUrl ??
-                                                  "https://raysensenbach.com/wp-content/uploads/2013/04/default.jpg"),
-                                          radius: 25),
+                                      Image.asset(
+                                        "assets/images/teacher_icon.png",
+                                        height: 79,
+                                        width: 79,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -163,7 +156,8 @@ class MessageWidgetScreen extends GetView<ChatController> {
                           StreamBuilder<List<ChatMessage>>(
                             stream: controller.loadChatMessages(
                                 Get.find<LocalStorageService>()
-                                    .loginModel!.data!
+                                    .loginModel!
+                                    .data!
                                     .user!
                                     .id
                                     .toString(),
@@ -633,7 +627,8 @@ class MessageWidgetScreen extends GetView<ChatController> {
                                                 controller.galleryPick(
                                                     Get.find<
                                                             LocalStorageService>()
-                                                        .loginModel!.data!
+                                                        .loginModel!
+                                                        .data!
                                                         .user!
                                                         .id
                                                         .toString(),
@@ -658,7 +653,8 @@ class MessageWidgetScreen extends GetView<ChatController> {
                                         // Navigator.of(context).pop();
                                         controller.camPick(
                                             Get.find<LocalStorageService>()
-                                                .loginModel!.data!
+                                                .loginModel!
+                                                .data!
                                                 .user!
                                                 .id
                                                 .toString(),
@@ -683,7 +679,8 @@ class MessageWidgetScreen extends GetView<ChatController> {
                                                 controller.camPick(
                                                     Get.find<
                                                             LocalStorageService>()
-                                                        .loginModel!.data!
+                                                        .loginModel!
+                                                        .data!
                                                         .user!
                                                         .id
                                                         .toString(),
@@ -762,7 +759,8 @@ class MessageWidgetScreen extends GetView<ChatController> {
                             if (controller.chatMessage.text.trim().isNotEmpty) {
                               controller.sendMessage(
                                   Get.find<LocalStorageService>()
-                                      .loginModel!.data!
+                                      .loginModel!
+                                      .data!
                                       .user!
                                       .id
                                       .toString(),

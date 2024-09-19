@@ -29,9 +29,9 @@ class CustomAdminDrawer extends StatelessWidget {
                 color: Styles.white,
               ),
               currentAccountPicture: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    "https://upload.wikimedia.org/wikipedia/commons/b/bc/Unknown_person.jpg"),
-                // Replace with your image
+                backgroundImage: AssetImage(
+                  "assets/images/teacher_icon.png",
+                ), // Replace with your image
                 radius: 30.0,
               ),
               decoration: BoxDecoration(

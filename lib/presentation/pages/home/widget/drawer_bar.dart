@@ -37,13 +37,9 @@ class CustomDrawer extends StatelessWidget {
                 color: Styles.white,
               ),
               currentAccountPicture: CircleAvatar(
-                backgroundImage: NetworkImage(Get.find<LocalStorageService>()
-                        .loginModel!
-                        .data!
-                        .user!
-                        .imageUrl ??
-                    "https://upload.wikimedia.org/wikipedia/commons/b/bc/Unknown_person.jpg"),
-                // Replace with your image
+                backgroundImage: AssetImage(
+                  "assets/images/teacher_icon.png",
+                ), // Replace with your image
                 radius: 30.0,
               ),
               decoration: const BoxDecoration(
@@ -69,21 +65,21 @@ class CustomDrawer extends StatelessWidget {
             //     // Handle item 1 tap
             //   },
             // ),
-            // ListTile(
-            //   leading: const Icon(
-            //     Icons.message_rounded,
-            //     color: Styles.orangeYellow,
-            //   ),
-            //   title: const CustomTextWidget(
-            //     text: "Message",
-            //     color: Styles.white,
-            //   ),
-            //   onTap: () {
-            //     Get.back();
-            //     Get.toNamed(Routes.chats);
-            //     // Handle item 1 tap
-            //   },
-            // ),
+            ListTile(
+              leading: const Icon(
+                Icons.message_rounded,
+                color: Styles.orangeYellow,
+              ),
+              title: const CustomTextWidget(
+                text: "Message",
+                color: Styles.white,
+              ),
+              onTap: () {
+                Get.back();
+                Get.toNamed(Routes.chats);
+                // Handle item 1 tap
+              },
+            ),
             // ListTile(
             //   leading: const Icon(
             //     Icons.settings,

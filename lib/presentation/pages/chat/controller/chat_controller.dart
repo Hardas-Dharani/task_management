@@ -168,7 +168,12 @@ class ChatController extends GetxController {
       _usersController.add([]);
 
       users = await _userRepository.getUsersFromChatMessages(
-          Get.find<LocalStorageService>().loginModel!.data!.user!.id.toString());
+          Get.find<LocalStorageService>()
+              .loginModel!
+              .data!
+              .user!
+              .id
+              .toString());
       try {
         users.sort((a, b) {
           return compareLastSeen(a, b);

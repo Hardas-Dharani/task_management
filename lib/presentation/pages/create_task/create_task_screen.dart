@@ -69,6 +69,7 @@ class CreateTaskScreen extends GetView<CreateTaskController> {
                                       ? Styles.black
                                       : Styles.white,
                                   maxLines: 1,
+                                  maxLength: 200,
                                   fillColor: controller.focusName.hasFocus
                                       ? Styles.white
                                       : Styles.greyLight.withOpacity(0.10),
@@ -103,6 +104,7 @@ class CreateTaskScreen extends GetView<CreateTaskController> {
                                       : Styles.white,
                                   hint: "Description",
                                   hintFontSize: 16,
+                                  maxLength: 1500,
                                   suffixIcon: IconButton(
                                       onPressed: () {
                                         controller.selectDate(context);

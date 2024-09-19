@@ -18,16 +18,15 @@ class UserRepository implements UserModelFirebaseRepository {
     try {
       // Check if the user already exists
       final existingUser = await usersCollection.doc(user.id).get();
-      // if (!existingUser.exists) {
-      // Add the user if they don't exist
-      await usersCollection
-          .doc(user.id)
-          .set(user.toMap(), SetOptions(merge: true));
-      // }
-      // else {
-      //   // Add the user if they don't exist
-      //   await usersCollection.doc(user.id).set(user.toMap());
-      // }
+      if (!existingUser.exists) {
+        // Add the user if they don't exist
+        await usersCollection
+            .doc(user.id)
+            .set(user.toMap(), SetOptions(merge: true));
+      } else {
+        // Add the user if they don't exist
+        await usersCollection.doc(user.id).set(user.toMap());
+      }
     } catch (e) {
       print('Error adding user: $e');
     }
