@@ -39,13 +39,15 @@ class TaskRevisionController extends GetxController {
       if (result['status']) {
         ToastComponent().showToast("Task Createed");
         LoadingDialog.hide();
+        Get.back();
+        Get.back();
       } else {
         ToastComponent().showToast(result['message']);
         LoadingDialog.hide();
       }
     } catch (e) {
       print(e.toString());
-      ToastComponent().showToast("Sign in getting server error");
+      ToastComponent().showToast(e.toString());
       LoadingDialog.hide();
     }
     update();

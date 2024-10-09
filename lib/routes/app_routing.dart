@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:task_management/presentation/pages/admin_earning/admin_earning_screen.dart';
 import 'package:task_management/presentation/pages/admin_home/admin_home_screen.dart';
 import 'package:task_management/presentation/pages/admin_home/binding/admin_home_binding.dart';
 import 'package:task_management/presentation/pages/chatting/chatting_screen.dart';
@@ -22,6 +23,8 @@ import 'package:task_management/presentation/pages/task_detail/binding/task_deta
 import 'package:task_management/presentation/pages/task_detail/task_detail_screen.dart';
 import 'package:task_management/presentation/pages/task_detail/widget/create_revision.dart';
 import 'package:task_management/presentation/pages/task_detail/widget/task_preview.dart';
+import 'package:task_management/presentation/pages/teacher_earning/binding/teacher_earning_binding.dart';
+import 'package:task_management/presentation/pages/teacher_earning/teacher_earning_screen.dart';
 import 'package:task_management/presentation/pages/teacher_home/binding/home_binding.dart';
 import 'package:task_management/presentation/pages/teacher_profile/binding/teacher_profile_binding.dart';
 import 'package:task_management/presentation/pages/teacher_profile/teacher_profile_screen.dart';
@@ -30,6 +33,7 @@ import 'package:task_management/presentation/pages/users_list/user_list_screen.d
 import 'package:task_management/presentation/pages/welcome_page/binding/welcome_binding.dart';
 import 'package:task_management/presentation/pages/welcome_page/welcome_screen.dart';
 
+import '../presentation/pages/admin_earning/binding/admin_earning_binding.dart';
 import '../presentation/pages/bank_detail/bank_detail_screen.dart';
 import '../presentation/pages/bank_detail/binding/bank_detail_binding.dart';
 import '../presentation/pages/bottom_nav_bar/binding/bottom_nav_bar_binding.dart';
@@ -212,6 +216,16 @@ class RoutingModule {
       name: Routes.chats,
       page: () => const ChatScreen(),
       binding: ChatBinding(),
+    ),
+    GetPage(
+      name: Routes.myEarnings,
+      page: () => const AdminEarningScreen(),
+      binding: AdminEarningBinding(),
+    ),
+    GetPage(
+      name: Routes.teacherEarning,
+      page: () => const TeacherEarningScreen(),
+      binding: TeacherEarningBinding(),
     ),
     GetPage(
       name: Routes.chatting,

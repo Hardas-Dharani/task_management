@@ -82,11 +82,11 @@ class TeacherHomeController extends GetxController
 
   String selectedList = "Public Tasks";
 
-  Future<void> getMostRecenTaskList(String filter) async {
+  Future<void> getMostRecenTaskList(String filter, {String? type}) async {
     try {
       LoadingDialog.show();
-      final result =
-          await TaskRepositoryIml().getRecentTaskList("task/all", filter);
+      final result = await TaskRepositoryIml()
+          .getRecentTaskList("task/all", filter, type: type);
 
       if (result['data'] != null) {
         mostRecentTaskModel = TaskListModel.fromJson(result);
@@ -98,7 +98,7 @@ class TeacherHomeController extends GetxController
       }
     } catch (e) {
       print(e.toString());
-      ToastComponent().showToast("Sign in getting server error");
+      ToastComponent().showToast(e.toString());
       LoadingDialog.hide();
     }
     update();
@@ -119,7 +119,7 @@ class TeacherHomeController extends GetxController
       }
     } catch (e) {
       print(e.toString());
-      ToastComponent().showToast("Sign in getting server error");
+      ToastComponent().showToast(e.toString());
       LoadingDialog.hide();
     }
     update();

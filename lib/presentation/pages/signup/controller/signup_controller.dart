@@ -97,7 +97,7 @@ class SignupController extends GetxController {
       }
     } catch (e) {
       print(e.toString());
-      ToastComponent().showToast("Sign in getting server error");
+      ToastComponent().showToast(e.toString());
       LoadingDialog.hide();
     }
     update();
@@ -185,20 +185,26 @@ class SignupController extends GetxController {
 
       if (result['status']) {
         loginModel = LoginModel.fromJson(result);
-        Get.find<LocalStorageService>().loginModel = loginModel;
-        UserFireBaseModel userFireBaseModel = UserFireBaseModel(
-            id: loginModel.data!.user!.id.toString(),
-            name: loginModel.data!.user!.name.toString(),
-            isOnline: true,
-            profilePictureUrl: loginModel.data!.user!.imageUrl.toString(),
-            lastSeen: {});
-        await _userRepository.addUser(userFireBaseModel);
-        LoadingDialog.hide();
-        if (loginModel.data!.user!.roleId == 2) {
-          Get.offAllNamed(Routes.home);
-          // Get.toNamed(Routes.home);
+        if (loginModel.data?.user?.approvalStatus != "pending") {
+          Get.find<LocalStorageService>().loginModel = loginModel;
+          UserFireBaseModel userFireBaseModel = UserFireBaseModel(
+              id: loginModel.data!.user!.id.toString(),
+              name: loginModel.data!.user!.name.toString(),
+              isOnline: true,
+              profilePictureUrl: loginModel.data!.user!.imageUrl.toString(),
+              lastSeen: {});
+          await _userRepository.addUser(userFireBaseModel);
+          LoadingDialog.hide();
+          if (loginModel.data!.user!.roleId == 2) {
+            Get.offAllNamed(Routes.home);
+            // Get.toNamed(Routes.home);
+          } else {
+            Get.offAllNamed(Routes.teacherHome);
+          }
         } else {
-          Get.offAllNamed(Routes.teacherHome);
+          LoadingDialog.hide();
+          ToastComponent().showToast(result['message'] + "Wait for approval");
+          Get.back();
         }
       } else {
         ToastComponent().showToast(result['message']);
@@ -206,7 +212,7 @@ class SignupController extends GetxController {
       }
     } catch (e) {
       print(e.toString());
-      ToastComponent().showToast("Sign in getting server error");
+      ToastComponent().showToast(e.toString());
       LoadingDialog.hide();
     }
     update();

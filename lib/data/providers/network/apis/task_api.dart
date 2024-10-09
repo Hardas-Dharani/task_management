@@ -12,6 +12,7 @@ class TaskAPI implements APIRequestRepresentable {
   String? id;
   String? filter;
   String? paths;
+  String? filterType;
   TaskAPI.createTask(Map<String, dynamic> data, String id)
       : this._(type: TaskType.createTask, data: data, id: id);
   TaskAPI.deleteTask(String id, String paths)
@@ -26,13 +27,23 @@ class TaskAPI implements APIRequestRepresentable {
       : this._(type: TaskType.getAllTask, id: id, paths: apiPath);
   TaskAPI.getListTask(String id, String filter)
       : this._(type: TaskType.getListTask, id: id, filter: filter);
-  TaskAPI.getListTeacherTask(String path, String filter)
-      : this._(type: TaskType.getListTeacherTask, paths: path, filter: filter);
+  TaskAPI.getListTeacherTask(String path, String filter, {String? type})
+      : this._(
+            type: TaskType.getListTeacherTask,
+            paths: path,
+            filter: filter,
+            filterType: type);
   TaskAPI.postData(Map<String, dynamic> data, String apiPath)
       : this._(type: TaskType.postData, paths: apiPath, data: data);
   TaskAPI.uploadTask(Map<String, dynamic> data, String? id)
       : this._(type: TaskType.uploadTask, data: data, id: id);
-  TaskAPI._({required this.type, this.data, this.id, this.paths, this.filter});
+  TaskAPI._(
+      {required this.type,
+      this.data,
+      this.filterType,
+      this.id,
+      this.paths,
+      this.filter});
 
   @override
   get body {
@@ -132,7 +143,7 @@ class TaskAPI implements APIRequestRepresentable {
       case TaskType.getListTask:
         return {if (filter != "") 'status': filter};
       case TaskType.getListTeacherTask:
-        return {if (filter != "") 'filter': filter};
+        return {if (filter != "") filterType ?? 'filter': filter};
       case TaskType.getAllPropsal:
         return data;
       default:

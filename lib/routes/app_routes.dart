@@ -5,25 +5,27 @@ class Routes {
 
   static String get addPaymentMethod => '/addPaymentMethod';
 
+  static String get adminHome => '/adminHome';
+
   static String get adScreen => '/adScreen';
 
   static String get availableSlot => '/availableSlot';
 
+  static String get bankDetail => '/bankDetail';
   static String get booking => '/booking';
 
   static String get bookingDetail => '/bookingDetail';
-  static String get userList => '/userList';
-
   static String get bookingDetailPro => '/bookingDetailPro';
   static String get bookingPro => '/bookingPro';
   static String get bottomNavBar => '/bottomNavBar';
+
   static String get bottomNavBarPro => '/bottomNavBarPro';
 
   static String get cancelOrRenew => '/cancelOrRenew';
 
   static String get categories => '/categories';
-
   static String get categoriesScreen => '/categoriesScreen';
+
   static String get changePass => '/changePass';
 
   static String get chats => '/chats';
@@ -39,8 +41,11 @@ class Routes {
   static String get consultantScheduleScreen => '/consultantScheduleScreen';
 
   static String get consultationRequests => '/consultationRequests';
-
   static String get countries => '/countries';
+
+  static String get createEducation => '/createEducation';
+
+  static String get createEmployment => '/createEmployment';
 
   static String get createProfile => '/createProfile';
 
@@ -51,10 +56,10 @@ class Routes {
   static String get editPaymentMethod => '/editPaymentMethod';
 
   static String get editProfile => '/editProfile';
-
   static String get editProfilePro => '/editProfilePro';
 
   static String get fileADispute => '/fileADispute';
+
   static String get filter => '/filter';
 
   static String get forgotPassword => '/forgotPassword';
@@ -64,25 +69,20 @@ class Routes {
   static String get helpSupp => '/helpSupp';
 
   static String get home => '/home';
-
   static String get language => '/language';
-
   static String get menu => '/menu';
-  static String get bankDetail => '/bankDetail';
-  static String get paymentProof => '/paymentProof';
   static String get menuPro => '/menuPro';
 
   static String get myActivity => '/myActivity';
-  static String get requestDetail => '/requestDetail';
+  static String get myEarning => '/myEarning';
 
   static String get myEarnings => '/myEarnings';
-
   static String get notifications => '/notifications';
-  static String get onboard => '/onboard';
-  static String get createEducation => '/createEducation';
-  static String get createEmployment => '/createEmployment';
 
+  static String get onboard => '/onboard';
   static String get paymentMethods => '/paymentMethods';
+  static String get paymentProof => '/paymentProof';
+  static String get paymentProofAdmin => '/paymentProofAdmin';
 
   static String get privacyPolicy => '/privacyPolicy';
 
@@ -96,11 +96,15 @@ class Routes {
 
   static String get reportUser => '/reportUser';
 
+  static String get requestDetail => '/requestDetail';
+
   static String get reschedule => '/reschedule';
 
   static String get resetPassword => '/resetPassword';
 
   static String get reviewAll => '/reviewAll';
+
+  static String get revisionCreate => '/revisionCreate';
 
   static String get saved => '/saved';
 
@@ -124,15 +128,17 @@ class Routes {
 
   static String get signin => '/signin';
 
+  static String get signInAdmin => '/signInAdmin';
+
   static String get signup => '/signup';
 
   static String get signupPro => '/signupPro';
 
   static String get skills => '/skills';
-
   static String get splash => '/splashScreen';
 
   static String get subCategoriesScreen => '/subCategoriesScreen';
+
   static String get submitProposal => '/submitProposal';
 
   static String get subscribed => '/subscribed';
@@ -140,18 +146,12 @@ class Routes {
   static String get subscribeToConsultant => '/subscribeToConsultant';
 
   static String get subscriptionPackages => '/subscriptionPackages';
-
   static String get subscriptionSuccessful => '/subscriptionSuccessful';
-
   static String get taskDetail => '/taskDetail';
   static String get taskPreview => '/taskPreview';
-  static String get revisionCreate => '/revisionCreate';
-  static String get signInAdmin => '/signInAdmin';
-  static String get adminHome => '/adminHome';
+  static String get teacherEarning => '/teacherEarning';
 
   static String get teacherHome => '/teacherHome';
-  static String get paymentProofAdmin => '/paymentProofAdmin';
-
   static String get teacherProfile => '/teacherProfile';
 
   static String get terms => '/terms';
@@ -167,6 +167,8 @@ class Routes {
   static String get tutorialUnlockScreen => '/tutorialUnlockScreen';
 
   static String get uploadVideoPro => '/uploadVideoPro';
+
+  static String get userList => '/userList';
 
   static String get verification => '/verification';
 

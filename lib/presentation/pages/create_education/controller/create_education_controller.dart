@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:task_management/data/models/login_model.dart';
 
 import '../../../../app/services/local_storage.dart';
 import '../../../../app/services/shared_preferance_constants.dart';
@@ -94,7 +93,7 @@ class CreateEducationController extends GetxController {
       }
     } catch (e) {
       print(e.toString());
-      ToastComponent().showToast("Sign in getting server error");
+      ToastComponent().showToast(e.toString());
       LoadingDialog.hide();
     }
     update();

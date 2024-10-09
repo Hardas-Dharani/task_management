@@ -6,7 +6,6 @@ import 'package:task_management/components/custom_text_component.dart';
 import 'package:task_management/utils/styles.dart';
 
 import '../../../components/main_scaffold_component.dart';
-import '../../../routes/app_routes.dart';
 import '../home/widget/drawer_bar.dart';
 import 'controller/request_detail_controller.dart';
 
@@ -41,14 +40,14 @@ class RequestDetailScreen extends GetView<RequestDetailController> {
       body: GetBuilder<RequestDetailController>(
         // init: RequestDetailController(),
         initState: (state) {
-          controller.getAllTaskRequest("29");
+          controller.getAllTaskRequest();
         },
         builder: (_) {
           return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
               child: Column(
                 children: [
-                  controller.getAllTaskRequestModel.data == null
+                  controller.pendingTeacherRequest.data == null
                       ? const SizedBox()
                       : ListView.separated(
                           separatorBuilder: (context, index) {
@@ -57,32 +56,39 @@ class RequestDetailScreen extends GetView<RequestDetailController> {
                             );
                           },
                           shrinkWrap: true,
-                          itemCount:
-                              controller.getAllTaskRequestModel.data!.length,
+                          itemCount: controller.pendingTeacherRequest.data!
+                                  .teachers?.length ??
+                              0,
                           itemBuilder: (context, index) {
                             return Row(
                               children: [
+                                Image.asset(
+                                  "assets/images/teacher_icon.png",
+                                  height: 39,
+                                  width: 39,
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       CustomTextWidget(
-                                        text: controller.getAllTaskRequestModel
-                                                .data![index].task!.title ??
+                                        text: controller.pendingTeacherRequest
+                                                .data!.teachers![index].name ??
                                             "",
                                         color: Styles.white,
                                       ),
-                                      CustomTextWidget(
-                                        text: controller
-                                                .getAllTaskRequestModel
-                                                .data![index]
-                                                .task!
-                                                .description ??
-                                            "",
-                                        color: Styles.white,
-                                        fontSize: 7,
-                                      )
+                                      // CustomTextWidget(
+                                      //   text:  controller.pendingTeacherRequest
+                                      //           .data!.teachers![index].
+                                      //            ??
+                                      //       "",
+                                      //   color: Styles.white,
+                                      //   fontSize: 7,
+                                      // )
                                     ],
                                   ),
                                 ),
@@ -91,13 +97,11 @@ class RequestDetailScreen extends GetView<RequestDetailController> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    Get.toNamed(Routes.submitProposal,
-                                        arguments: {
-                                          "taskDetail": controller
-                                              .getAllTaskRequestModel
-                                              .data![index]
-                                              .task!
-                                        });
+                                    controller.sendApprovalRequest(
+                                        controller.pendingTeacherRequest.data!
+                                            .teachers![index].id
+                                            .toString(),
+                                        "approved");
                                   },
                                   behavior: HitTestBehavior.opaque,
                                   child: Container(
@@ -118,12 +122,11 @@ class RequestDetailScreen extends GetView<RequestDetailController> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    controller.sendRequest(controller
-                                        .getAllTaskRequestModel
-                                        .data![index]
-                                        .task!
-                                        .id
-                                        .toString());
+                                    controller.sendApprovalRequest(
+                                        controller.pendingTeacherRequest.data!
+                                            .teachers![index].id
+                                            .toString(),
+                                        "declined");
                                   },
                                   behavior: HitTestBehavior.opaque,
                                   child: const CustomTextWidget(

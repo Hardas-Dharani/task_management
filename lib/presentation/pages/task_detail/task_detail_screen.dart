@@ -30,15 +30,17 @@ class RevisionTab extends GetView<TaskDetailController> {
     return Scaffold(
       floatingActionButton:
           Get.find<LocalStorageService>().loginModel!.data!.user!.roleId != 2
-              ? FloatingActionButton(
-                  backgroundColor: Styles.orangeYellow,
-                  onPressed: () {
-                    Get.offAndToNamed(Routes.revisionCreate, arguments: {
-                      "taskDetail": controller.taskDetailModel.data!.task
-                    });
-                  },
-                  child: const Icon(Icons.add),
-                )
+              ? controller.isCompletedTask
+                  ? const SizedBox.shrink()
+                  : FloatingActionButton(
+                      backgroundColor: Styles.orangeYellow,
+                      onPressed: () {
+                        Get.offAndToNamed(Routes.revisionCreate, arguments: {
+                          "taskDetail": controller.taskDetailModel.data!.task
+                        });
+                      },
+                      child: const Icon(Icons.add),
+                    )
               : const SizedBox.shrink(),
       backgroundColor: Styles.black,
       body: GetBuilder<TaskDetailController>(builder: (_) {
@@ -340,7 +342,16 @@ class TaskTab extends GetView<TaskDetailController> {
                             ? const SizedBox.shrink()
                             : controller.taskDetailModel.data!.task!.teacher ==
                                     null
-                                ? const SizedBox.shrink()
+                                ? const Row(
+                                    children: [
+                                      CustomTextWidget(
+                                        text: "Select any Teacher:",
+                                        color: Styles.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                      )
+                                    ],
+                                  )
                                 : const Row(
                                     children: [
                                       CustomTextWidget(
@@ -361,11 +372,30 @@ class TaskTab extends GetView<TaskDetailController> {
                                     .roleId !=
                                 2
                             ? const SizedBox.shrink()
-                            : controller.taskDetailModel.data!.task!.teacher ==
+                            : controller.taskDetailModel.data!.task!.teacher !=
                                     null
-                                ? const SizedBox.shrink()
-                                : selectedTeacher(controller
-                                    .taskDetailModel.data!.task!.teacher!),
+                                ? selectedTeacherFinal(controller
+                                    .taskDetailModel.data!.task!.teacher!)
+                                : controller.taskDetailModel.data!.task!.teachers
+                                            ?.isEmpty ==
+                                        null
+                                    ? const SizedBox.shrink()
+                                    : ListView.separated(
+                                        shrinkWrap: true,
+                                        itemBuilder: (context, index) =>
+                                            selectedTeacher(
+                                                controller.taskDetailModel.data!
+                                                    .task!.teachers![index],
+                                                controller.taskDetailModel.data!
+                                                        .task!.paymentStatus ==
+                                                    "approved"),
+                                        separatorBuilder: (context, index) =>
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                        itemCount: controller.taskDetailModel
+                                                .data!.task!.teachers?.length ??
+                                            0),
                         //  ListView.builder(
                         //     shrinkWrap: true,
                         //     itemCount: controller.selectedIdTeacher.length,
@@ -389,7 +419,81 @@ class TaskTab extends GetView<TaskDetailController> {
     );
   }
 
-  Widget selectedTeacher(Student teachers) {
+  Widget selectedTeacher(TeachersData teachers, bool paymentDone) {
+    return Row(
+      children: [
+        Image.asset(
+          "assets/images/teacher_icon.png",
+          height: 79,
+          width: 79,
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomTextWidget(
+                text: teachers.teacher?.name ?? "",
+                color: Styles.white,
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              GestureDetector(
+                onTap: () {
+                  if (paymentDone) {
+                    controller.accpetTeacher({
+                      "task_id": teachers.taskId.toString(),
+                      "teacher_id": teachers.teacherId.toString()
+                    });
+                  }
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      border: Border.all(color: const Color(0xff858585))),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+                  child: const CustomTextWidget(
+                    text: "Select",
+                    decoration: TextDecoration.underline,
+
+                    // text: teachers.name ?? "",
+                    color: Styles.orange,
+                  ),
+                ),
+              ),
+
+              // CustomTextWidget(
+              //   text: teachers.gender ?? '',
+              //   color: Styles.white,
+              //   fontSize: 9,
+              // )
+            ],
+          ),
+        ),
+        paymentDone
+            ? IconButton(
+                onPressed: () {
+                  UserFireBaseModel userFireBaseModel = UserFireBaseModel(
+                      id: teachers.teacherId.toString(),
+                      name: teachers.teacher?.name ?? "",
+                      isOnline: true,
+                      profilePictureUrl:
+                          "https://cdn-icons-png.flaticon.com/512/6185/6185659.png",
+                      lastSeen: {});
+                  Get.to(() => MessageWidgetScreen(
+                      userFireBaseModel: userFireBaseModel));
+                },
+                icon: Icon(Icons.messenger))
+            : SizedBox.shrink()
+      ],
+    );
+  }
+
+  Widget selectedTeacherFinal(Student teachers) {
     return Row(
       children: [
         Image.asset(
@@ -408,6 +512,9 @@ class TaskTab extends GetView<TaskDetailController> {
                 text: teachers.name ?? "",
                 color: Styles.white,
               ),
+              const SizedBox(
+                height: 15,
+              ),
               CustomTextWidget(
                 text: teachers.gender ?? '',
                 color: Styles.white,
@@ -420,9 +527,10 @@ class TaskTab extends GetView<TaskDetailController> {
             onPressed: () {
               UserFireBaseModel userFireBaseModel = UserFireBaseModel(
                   id: teachers.id.toString(),
-                  name: teachers.name!,
+                  name: teachers.name.toString(),
                   isOnline: true,
-                  profilePictureUrl: teachers.imageUrl.toString(),
+                  profilePictureUrl:
+                      "https://cdn-icons-png.flaticon.com/512/6185/6185659.png",
                   lastSeen: {});
               Get.to(() =>
                   MessageWidgetScreen(userFireBaseModel: userFireBaseModel));

@@ -39,14 +39,14 @@ class SettingsScreen extends GetView<SettingsController> {
             const SizedBox(
               height: 40,
             ),
-            tileWidget(
-                title: 'Change Password',
-                onTap: () {
-                  Get.toNamed(Routes.changePass);
-                }),
-            const SizedBox(
-              height: 40,
-            ),
+            // tileWidget(
+            //     title: 'Change Password',
+            //     onTap: () {
+            //       Get.toNamed(Routes.changePass);
+            //     }),
+            // const SizedBox(
+            //   height: 40,
+            // ),
             tileWidget(
                 title: 'Privacy Policy',
                 onTap: () {

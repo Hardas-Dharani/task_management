@@ -70,7 +70,7 @@ class EditProfileController extends GetxController {
       }
     } catch (e) {
       print(e.toString());
-      ToastComponent().showToast("Sign in getting server error");
+      ToastComponent().showToast(e.toString());
       LoadingDialog.hide();
     }
     update();
@@ -90,7 +90,7 @@ class EditProfileController extends GetxController {
       }
     } catch (e) {
       print(e.toString());
-      ToastComponent().showToast("Sign in getting server error");
+      ToastComponent().showToast(e.toString());
       LoadingDialog.hide();
     }
     update();
@@ -125,7 +125,7 @@ class EditProfileController extends GetxController {
     focusCountry.addListener(() {
       update();
     });
-    
+
     //
     //TODO: implement onInit
     super.onInit();

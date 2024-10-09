@@ -50,37 +50,37 @@ class CustomDrawerTeacher extends StatelessWidget {
                 ),
               ),
             ),
-            // ListTile(
-            //   leading: const Icon(
-            //     Icons.person_2,
-            //     color: Styles.orangeYellow,
-            //   ),
-            //   title: const CustomTextWidget(
-            //     text: "Profile",
-            //     color: Styles.white,
-            //   ),
-            //   onTap: () {
-            //     Get.back();
-            //     Get.to(const LineChartSample1());
-            //     // Get.toNamed(Routes.teacherProfile);
-            //     // Handle item 1 tap
-            //   },
-            // ),
             ListTile(
               leading: const Icon(
-                Icons.message_rounded,
+                Icons.monetization_on_outlined,
                 color: Styles.orangeYellow,
               ),
               title: const CustomTextWidget(
-                text: "Message",
+                text: "Teachers Earing",
                 color: Styles.white,
               ),
               onTap: () {
                 Get.back();
-                Get.toNamed(Routes.chats);
+                // Get.to(const LineChartSample1());
+                Get.toNamed(Routes.myEarnings);
                 // Handle item 1 tap
               },
             ),
+            // ListTile(
+            //   leading: const Icon(
+            //     Icons.message_rounded,
+            //     color: Styles.orangeYellow,
+            //   ),
+            //   title: const CustomTextWidget(
+            //     text: "Message",
+            //     color: Styles.white,
+            //   ),
+            //   onTap: () {
+            //     Get.back();
+            //     Get.toNamed(Routes.chats);
+            //     // Handle item 1 tap
+            //   },
+            // ),
             // ListTile(
             //   leading: const Icon(
             //     Icons.settings,
@@ -107,8 +107,8 @@ class CustomDrawerTeacher extends StatelessWidget {
               ),
               onTap: () {
                 Get.find<LocalStorageService>().loginModel = null;
-                Get.offAllNamed(Routes.signin);
-                // Get.offAllNamed(Routes.signInAdmin);
+                // Get.offAllNamed(Routes.signin);
+                Get.offAllNamed(Routes.signInAdmin);
                 // Handle item 1 tap
               },
             ),

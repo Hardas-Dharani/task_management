@@ -104,11 +104,15 @@ class ContainerTabTask extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
                   child: CustomTextWidget(
-                    text: (taskData!.status ?? "Pending")
-                        .capitalizeFirst
-                        .toString(),
+                    text: taskData?.paymentStatus != "approved"
+                        ? "Payment Pending"
+                        : ((taskData!.status ?? "Pending")
+                            .capitalizeFirst
+                            .toString()),
                     fontWeight: FontWeight.w600,
-                    color: Styles.orangeYellow,
+                    color: taskData?.paymentStatus != "approved"
+                        ? Styles.red
+                        : Styles.orangeYellow,
                     fontSize: 14,
                   ),
                 )

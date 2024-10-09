@@ -50,22 +50,22 @@ class CustomDrawerTeacher extends StatelessWidget {
                 ),
               ),
             ),
-            // ListTile(
-            //   leading: const Icon(
-            //     Icons.person_2,
-            //     color: Styles.orangeYellow,
-            //   ),
-            //   title: const CustomTextWidget(
-            //     text: "Profile",
-            //     color: Styles.white,
-            //   ),
-            //   onTap: () {
-            //     Get.back();
-            //     Get.to(const LineChartSample1());
-            //     // Get.toNamed(Routes.teacherProfile);
-            //     // Handle item 1 tap
-            //   },
-            // ),
+            ListTile(
+              leading: const Icon(
+                Icons.monetization_on_outlined,
+                color: Styles.orangeYellow,
+              ),
+              title: const CustomTextWidget(
+                text: "My Earning",
+                color: Styles.white,
+              ),
+              onTap: () {
+                Get.back();
+
+                Get.toNamed(Routes.teacherEarning);
+                // Handle item 1 tap
+              },
+            ),
             ListTile(
               leading: const Icon(
                 Icons.message_rounded,

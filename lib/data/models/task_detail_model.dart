@@ -133,6 +133,7 @@ class Task {
   String? updatedAt;
   String? eId;
   Student? student;
+  List<TeachersData>? teachers;
   Student? teacher;
   List<Files>? files;
   Type? type;
@@ -170,6 +171,12 @@ class Task {
     fee = json['fee'];
     paymentStatus = json['payment_status'];
     quotationStatus = json['quotation_status'];
+    if (json['teachers'] != null) {
+      teachers = <TeachersData>[];
+      json['teachers'].forEach((v) {
+        teachers!.add(new TeachersData.fromJson(v));
+      });
+    }
     status = json['status'];
     if (json['files'] != null) {
       files = <Files>[];
@@ -180,6 +187,7 @@ class Task {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     eId = json['e_id'];
+
     student =
         json['student'] != null ? Student.fromJson(json['student']) : null;
     teacher =
@@ -199,6 +207,9 @@ class Task {
     data['deadline'] = deadline;
     data['word_count'] = wordCount;
     data['fee'] = fee;
+    if (this.teachers != null) {
+      data['teachers'] = this.teachers!.map((v) => v.toJson()).toList();
+    }
     data['payment_status'] = paymentStatus;
     data['quotation_status'] = quotationStatus;
     data['status'] = status;
@@ -262,6 +273,53 @@ class TaskDetailModelData {
     if (task != null) {
       data['task'] = task!.toJson();
     }
+    return data;
+  }
+}
+
+class TeachersData {
+  int? id;
+  int? taskId;
+  int? teacherId;
+  int? accepted;
+  String? createdAt;
+  String? updatedAt;
+  String? eId;
+  Student? teacher;
+
+  TeachersData(
+      {this.id,
+      this.taskId,
+      this.teacherId,
+      this.accepted,
+      this.createdAt,
+      this.updatedAt,
+      this.teacher,
+      this.eId});
+
+  TeachersData.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    taskId = json['task_id'];
+    teacherId = json['teacher_id'];
+    accepted = json['accepted'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    teacher =
+        json['teacher'] != null ? Student.fromJson(json['teacher']) : null;
+
+    eId = json['e_id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['task_id'] = this.taskId;
+    data['teacher_id'] = this.teacherId;
+    data['accepted'] = this.accepted;
+    data['created_at'] = this.createdAt;
+    data['teacher'] = teacher;
+    data['updated_at'] = this.updatedAt;
+    data['e_id'] = this.eId;
     return data;
   }
 }

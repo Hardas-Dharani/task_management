@@ -3,9 +3,12 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 
+import '../../../app/services/local_storage.dart';
+import '../../../routes/app_routes.dart';
 import '../../../utils/custom_snack_bar.dart';
 import 'api_request_representable.dart';
 
@@ -66,6 +69,8 @@ class APIProvider {
     // Get.find<LocalStorageService>().uuid = null;
     // Get.delete<ProfileController>();
     // Get.offAllNamed(Routes.signIn);
+    Get.find<LocalStorageService>().loginModel = null;
+    Get.offAllNamed(Routes.signin);
   }
 
   Future<dynamic> request(APIRequestRepresentable request) async {

@@ -65,7 +65,6 @@ class CreateRevision extends GetView<TaskRevisionController> {
               textInputAction: TextInputAction.next,
               node: controller.focusName,
               onTap: () {},
-              
               padding: 17,
               borderRadius: 9,
             ),
@@ -89,7 +88,7 @@ class CreateRevision extends GetView<TaskRevisionController> {
               hintColor: Styles.solidGrey,
               textInputType: TextInputType.text,
               minLines: 5,
-              maxLength: 1500,
+              maxLength: 10000,
               txtController: controller.descriptionTextEditingController,
               textInputAction: TextInputAction.next,
               node: controller.focusCpassword,

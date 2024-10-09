@@ -27,23 +27,21 @@ class AdminHomeScreen extends GetView<AdminHomeController> {
             title: "Home",
             titleColor: Styles.white,
             bgColor: Styles.black,
-
-            // trailing: IconButton(
-            //     onPressed: () {
-            //       Get.toNamed(Routes.requestDetail);
-            //     },
-            //     icon: const Icon(
-            //       Icons.person_add_alt,
-            //       color: Styles.white,
-            //     )
-            //     //  Image.asset(
-            //     //   "assets/images/icons/menu_icon.png",
-            //     //   width: 20,
-            //     //   height: 20,
-            //     //   color: Styles.white,
-            //     // )
-            //     ),
-
+            trailing: IconButton(
+                onPressed: () {
+                  Get.toNamed(Routes.requestDetail);
+                },
+                icon: const Icon(
+                  Icons.person_add_alt,
+                  color: Styles.white,
+                )
+                //  Image.asset(
+                //   "assets/images/icons/menu_icon.png",
+                //   width: 20,
+                //   height: 20,
+                //   color: Styles.white,
+                // )
+                ),
             leadingWidget: GestureDetector(
               onTap: () {
                 controller.globalKey.currentState!.openDrawer();

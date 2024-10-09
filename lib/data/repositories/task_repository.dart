@@ -131,7 +131,7 @@ class TaskRepositoryIml extends TaskRepository {
   @override
   Future<Map<String, dynamic>> getAllTeacher(String apiPath) async {
     try {
-      final response = await TaskAPI.getListTask(apiPath,"").request();
+      final response = await TaskAPI.getListTask(apiPath, "").request();
 
       final result = json.decode(response);
 
@@ -144,7 +144,7 @@ class TaskRepositoryIml extends TaskRepository {
   @override
   Future<Map<String, dynamic>> getBestMatchTaskList() async {
     try {
-      final response = await TaskAPI.getListTask("best-match","").request();
+      final response = await TaskAPI.getListTask("best-match", "").request();
 
       final result = json.decode(response);
 
@@ -157,7 +157,7 @@ class TaskRepositoryIml extends TaskRepository {
   @override
   Future<Map<String, dynamic>> getEduactionList() async {
     try {
-      final response = await TaskAPI.getListTask("education","").request();
+      final response = await TaskAPI.getListTask("education", "").request();
 
       final result = json.decode(response);
 
@@ -170,7 +170,7 @@ class TaskRepositoryIml extends TaskRepository {
   @override
   Future<Map<String, dynamic>> getEmploymentList() async {
     try {
-      final response = await TaskAPI.getListTask("employement","").request();
+      final response = await TaskAPI.getListTask("employement", "").request();
 
       final result = json.decode(response);
 
@@ -181,10 +181,11 @@ class TaskRepositoryIml extends TaskRepository {
   }
 
   @override
-  Future<Map<String, dynamic>> getRecentTaskList(
-      String path, String fitler) async {
+  Future<Map<String, dynamic>> getRecentTaskList(String path, String fitler,
+      {String? type}) async {
     try {
-      final response = await TaskAPI.getListTeacherTask( path,  fitler).request();
+      final response =
+          await TaskAPI.getListTeacherTask(path, fitler, type: type).request();
 
       final result = json.decode(response);
 
@@ -195,9 +196,9 @@ class TaskRepositoryIml extends TaskRepository {
   }
 
   @override
-  Future<Map<String, dynamic>> getTaskList(String path,String filter) async {
+  Future<Map<String, dynamic>> getTaskList(String path, String filter) async {
     try {
-      final response = await TaskAPI.getListTask(path,filter).request();
+      final response = await TaskAPI.getListTask(path, filter).request();
 
       final result = json.decode(response);
 

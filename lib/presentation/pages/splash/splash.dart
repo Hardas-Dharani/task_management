@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:task_management/utils/styles.dart';
 
 import '../../../app/services/local_storage.dart';
+import '../../../firebase_handler.dart';
 import '../../../routes/app_routes.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -12,14 +13,14 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Future.delayed(
       const Duration(seconds: 3),
-      () {
+      () async {
         if (Get.find<LocalStorageService>().loginModel == null) {
           // Get.offNamed(Routes.signInAdmin);
 
           Get.offNamed(Routes.welcomeScreen);
         } else {
+          await FirebaseMessagingHandler().getFcmToken();
           // Get.offNamed(Routes.adminHome);
-
           if (Get.find<LocalStorageService>().loginModel!.data!.user!.roleId ==
               2) {
             Get.offNamed(Routes.home);

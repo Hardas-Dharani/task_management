@@ -1,187 +1,26 @@
 {
   "project_info": {
-    "project_number": "244858591397",
-    "project_id": "bondng",
-    "storage_bucket": "bondng.appspot.com"
+    "project_number": "285673750959",
+    "project_id": "smartway-app",
+    "storage_bucket": "smartway-app.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:244858591397:android:0496a5914affcc932a154c",
-        "android_client_info": {
-          "package_name": "com.brainwav.bonding"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "244858591397-25e8kst3niiq5003g0hupfhf4mkgc6b8.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBTKYuuLL8Lc9Uo-UUCPwd5cbsKZp-xMBs"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "244858591397-25e8kst3niiq5003g0hupfhf4mkgc6b8.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "244858591397-3kghodjnvpn3anov1cvemc070m8024vh.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.bwt.vibings.RunnerTests"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:244858591397:android:c27f96bcc7c0d9e52a154c",
-        "android_client_info": {
-          "package_name": "com.bwt.vibings"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "244858591397-25e8kst3niiq5003g0hupfhf4mkgc6b8.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBTKYuuLL8Lc9Uo-UUCPwd5cbsKZp-xMBs"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "244858591397-25e8kst3niiq5003g0hupfhf4mkgc6b8.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "244858591397-3kghodjnvpn3anov1cvemc070m8024vh.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.bwt.vibings.RunnerTests"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:244858591397:android:d834ef62f890fb022a154c",
-        "android_client_info": {
-          "package_name": "com.example.task_management"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "244858591397-25e8kst3niiq5003g0hupfhf4mkgc6b8.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBTKYuuLL8Lc9Uo-UUCPwd5cbsKZp-xMBs"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "244858591397-25e8kst3niiq5003g0hupfhf4mkgc6b8.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "244858591397-3kghodjnvpn3anov1cvemc070m8024vh.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.bwt.vibings.RunnerTests"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:244858591397:android:05f4ffb62a4201b42a154c",
+        "mobilesdk_app_id": "1:285673750959:android:db47b5d865c90129272f5a",
         "android_client_info": {
           "package_name": "com.voxtron.taskmanagement"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "244858591397-25e8kst3niiq5003g0hupfhf4mkgc6b8.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBTKYuuLL8Lc9Uo-UUCPwd5cbsKZp-xMBs"
+          "current_key": "AIzaSyDIdQk7cs9vVj2IFtODrSXCjvkefpDGUMY"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "244858591397-25e8kst3niiq5003g0hupfhf4mkgc6b8.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "244858591397-3kghodjnvpn3anov1cvemc070m8024vh.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.bwt.vibings.RunnerTests"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:244858591397:android:5025963df4c0b4432a154c",
-        "android_client_info": {
-          "package_name": "com.wueno.pel"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "244858591397-25e8kst3niiq5003g0hupfhf4mkgc6b8.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBTKYuuLL8Lc9Uo-UUCPwd5cbsKZp-xMBs"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "244858591397-25e8kst3niiq5003g0hupfhf4mkgc6b8.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "244858591397-3kghodjnvpn3anov1cvemc070m8024vh.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.bwt.vibings.RunnerTests"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

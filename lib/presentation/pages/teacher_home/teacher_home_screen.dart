@@ -74,18 +74,25 @@ class TeacherHomeScreen extends GetView<TeacherHomeController> {
                               controller.selectedList =
                                   controller.sortList[index];
                               if (controller.sortList[index] == "Pending") {
-                                controller.getMostRecenTaskList("pending");
+                                controller.getMostRecenTaskList("pending",
+                                    type: "status");
                               } else if (controller.sortList[index] ==
                                   "In Progress") {
-                                controller.getMostRecenTaskList("in_progress");
+                                controller.getMostRecenTaskList("in_progress",
+                                    type: "status");
                               } else if (controller.sortList[index] ==
                                   "Public Tasks") {
                                 controller.getMostRecenTaskList("public");
                               } else if (controller.sortList[index] ==
                                   "Shared With Me") {
                                 controller.getMostRecenTaskList("shared_to_me");
+                              } else if (controller.sortList[index] ==
+                                  "Complete") {
+                                controller.getMostRecenTaskList("complete",
+                                    type: "status");
                               } else {
-                                controller.getMostRecenTaskList("archive");
+                                controller.getMostRecenTaskList("archive",
+                                    type: "status");
                               }
                               controller.update();
                             },
@@ -138,7 +145,8 @@ class TeacherHomeScreen extends GetView<TeacherHomeController> {
                                       null) {
                                     Get.toNamed(Routes.taskDetail, arguments: {
                                       "id": controller
-                                          .mostRecentTaskModel.data![index].id
+                                          .mostRecentTaskModel.data![index].id,
+                                      "isComplete": true
                                     });
                                   } else {
                                     Get.toNamed(Routes.taskPreview, arguments: {

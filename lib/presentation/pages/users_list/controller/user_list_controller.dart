@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:task_management/data/models/login_model.dart';
 
 import '../../../../app/services/local_storage.dart';
 import '../../../../app/services/shared_preferance_constants.dart';
@@ -26,7 +25,7 @@ class UserListController extends GetxController {
       TextEditingController();
   final signupFormKey = GlobalKey<FormState>();
   List<String> selectedLanguage = [];
-   final globalKey = GlobalKey<ScaffoldState>();
+  final globalKey = GlobalKey<ScaffoldState>();
   String buttonClicked = "Male";
   FocusNode focusName = FocusNode();
   FocusNode focusEmail = FocusNode();
@@ -96,7 +95,7 @@ class UserListController extends GetxController {
       }
     } catch (e) {
       print(e.toString());
-      ToastComponent().showToast("Sign in getting server error");
+      ToastComponent().showToast(e.toString());
       LoadingDialog.hide();
     }
     update();

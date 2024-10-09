@@ -21,6 +21,7 @@ class TaskDetailController extends GetxController {
 
   bool isFromQuote = false;
   bool isDecline = false;
+  bool isCompletedTask = false;
   final globalKey = GlobalKey<ScaffoldState>();
   FocusNode focusSearch = FocusNode();
   var currentIndex = 0.obs;
@@ -50,7 +51,25 @@ class TaskDetailController extends GetxController {
       }
     } catch (e) {
       print(e.toString());
-      ToastComponent().showToast("Sign in getting server error");
+      ToastComponent().showToast(e.toString());
+      LoadingDialog.hide();
+    }
+    update();
+  }
+
+  Future<void> accpetTeacher(Map<String, dynamic> values) async {
+    try {
+      final result =
+          await TaskRepositoryIml().postData(values, "task/accept/teacher");
+
+      LoadingDialog.hide();
+      if (result['status']) {
+      } else {
+        ToastComponent().showToast(result['message']);
+      }
+    } catch (e) {
+      print(e.toString());
+      ToastComponent().showToast(e.toString());
       LoadingDialog.hide();
     }
     update();
@@ -71,7 +90,7 @@ class TaskDetailController extends GetxController {
       }
     } catch (e) {
       print(e.toString());
-      ToastComponent().showToast("Sign in getting server error");
+      ToastComponent().showToast(e.toString());
       LoadingDialog.hide();
     }
     update();
@@ -92,7 +111,7 @@ class TaskDetailController extends GetxController {
       }
     } catch (e) {
       print(e.toString());
-      ToastComponent().showToast("Sign in getting server error");
+      ToastComponent().showToast(e.toString());
       LoadingDialog.hide();
     }
     update();
@@ -132,7 +151,7 @@ class TaskDetailController extends GetxController {
       }
     } catch (e) {
       print(e.toString());
-      ToastComponent().showToast("Sign in getting server error");
+      ToastComponent().showToast(e.toString());
       LoadingDialog.hide();
     }
     update();
@@ -144,6 +163,9 @@ class TaskDetailController extends GetxController {
       if (Get.arguments["id"] != null) {
         taskID = Get.arguments["id"];
         getTaskDetail(taskID.toString());
+      }
+      if (Get.arguments['isComplete'] != null) {
+        isCompletedTask = Get.arguments['isComplete'];
       }
     }
 
@@ -168,7 +190,7 @@ class TaskDetailController extends GetxController {
       }
     } catch (e) {
       print(e.toString());
-      ToastComponent().showToast("Sign in getting server error");
+      ToastComponent().showToast(e.toString());
       LoadingDialog.hide();
     }
     update();
@@ -192,7 +214,7 @@ class TaskDetailController extends GetxController {
             const SizedBox(height: 20.0),
             const CustomTextWidget(
               text:
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                  "Proced to payment. If you have paid kindly provide a screenshot as a confirmation of payment.",
               fontSize: 13,
               textAlign: TextAlign.center,
               color: Styles.white,
@@ -255,8 +277,7 @@ class TaskDetailController extends GetxController {
           ),
           const SizedBox(height: 20.0),
           const CustomTextWidget(
-            text:
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+            text: "Please wait for get quatation fees.",
             fontSize: 13,
             textAlign: TextAlign.center,
             color: Styles.white,

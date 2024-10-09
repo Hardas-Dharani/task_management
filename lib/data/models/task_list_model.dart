@@ -9,7 +9,7 @@ class TaskData {
   String? description;
   String? deadline;
   String? wordCount;
-  int? fee;
+  double? fee;
   Payment? payment;
   String? paymentStatus;
   String? quotationStatus;
@@ -52,7 +52,7 @@ class TaskData {
     payment =
         json['payment'] != null ? Payment.fromJson(json['payment']) : null;
 
-    fee = json['fee'];
+    fee = double.parse(json['fee'].toString());
     paymentStatus = json['payment_status'];
     quotationStatus = json['quotation_status'];
     status = json['status'];

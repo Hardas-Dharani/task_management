@@ -57,7 +57,7 @@ class RevisionsScreen extends GetView<TaskDetailController> {
                                         child: CustomButton(
                                       onTap: () {
                                         controller.isDecline = false;
-                                        controller.replyRevision("0");
+                                        controller.replyRevision("1");
                                         controller.update();
                                       },
                                       bgColor: Styles.orangeYellow,

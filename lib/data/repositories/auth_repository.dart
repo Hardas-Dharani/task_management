@@ -32,9 +32,11 @@ class AuthenticationRepositoryIml extends AuthenticationRepository {
   }
 
   @override
-  Future<Map<String, dynamic>> signIn(String username, String password,String typeUser) async {
+  Future<Map<String, dynamic>> signIn(
+      String username, String password, String typeUser) async {
     try {
-      final response = await AuthAPI.login(username, password, typeUser).request();
+      final response =
+          await AuthAPI.login(username, password, typeUser).request();
 
       final result = json.decode(response);
 

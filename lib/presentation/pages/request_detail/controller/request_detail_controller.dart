@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:task_management/data/models/task_list_model.dart';
 
 import '../../../../data/models/get_all_task_model.dart';
+import '../../../../data/models/pending_all_teacher.dart';
 import '../../../../data/repositories/task_repository.dart';
 import '../../../../utils/loader.dart';
 import '../../../../utils/toast_component.dart';
@@ -26,24 +26,25 @@ class RequestDetailController extends GetxController {
   // TaskListModelData taskListModelData = TaskListModelData();
   String selectedList = "All Project";
   GetAllTaskRequest getAllTaskRequestModel = GetAllTaskRequest();
-
-  Future<void> getAllTaskRequest(String id) async {
+  PendingTeacherRequest pendingTeacherRequest = PendingTeacherRequest();
+  Future<void> getAllTaskRequest() async {
     try {
       LoadingDialog.show();
-      final result =
-          await TaskRepositoryIml().getAllRequestTask("task-request", "29");
+      final result = await TaskRepositoryIml().getAllTeacher(
+        "pending-teachers",
+      );
 
       if (result['data'] != null) {
         // ToastComponent().showToast("Task Createed");
         LoadingDialog.hide();
-        getAllTaskRequestModel = GetAllTaskRequest.fromJson(result);
+        pendingTeacherRequest = PendingTeacherRequest.fromJson(result);
       } else {
         ToastComponent().showToast(result['message']);
         LoadingDialog.hide();
       }
     } catch (e) {
       print(e.toString());
-      ToastComponent().showToast("Sign in getting server error");
+      ToastComponent().showToast(e.toString());
       LoadingDialog.hide();
     }
     update();
@@ -55,6 +56,29 @@ class RequestDetailController extends GetxController {
       // taskListModelData = Get.arguments["taskDetail"];
     }
     super.onInit();
+  }
+
+  Future<void> sendApprovalRequest(String taskId, String request) async {
+    try {
+      LoadingDialog.show();
+      final result = await TaskRepositoryIml().postData({
+        "approval_status": request,
+      }, "update-pending-teacher/$taskId");
+
+      if (result['status']) {
+        ToastComponent().showToast(result["message"]);
+        LoadingDialog.hide();
+        getAllTaskRequest();
+      } else {
+        ToastComponent().showToast(result['message']);
+        LoadingDialog.hide();
+      }
+    } catch (e) {
+      print(e.toString());
+      ToastComponent().showToast(e.toString());
+      LoadingDialog.hide();
+    }
+    update();
   }
 
   Future<void> sendRequest(String taskId) async {
@@ -73,7 +97,7 @@ class RequestDetailController extends GetxController {
       }
     } catch (e) {
       print(e.toString());
-      ToastComponent().showToast("Sign in getting server error");
+      ToastComponent().showToast(e.toString());
       LoadingDialog.hide();
     }
     update();

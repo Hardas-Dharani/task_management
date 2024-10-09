@@ -54,12 +54,14 @@ class User {
   int? id;
   String? eId;
   String? imageUrl;
+  String? approvalStatus;
 
   User(
       {this.name,
       this.roleId,
       this.phone,
       this.email,
+      this.approvalStatus,
       this.id,
       this.eId,
       this.imageUrl});
@@ -69,6 +71,7 @@ class User {
     roleId = json['role_id'];
     phone = json['phone'];
     email = json['email'];
+    approvalStatus = json['approval_status'];
     id = json['id'];
     eId = json['e_id'];
     imageUrl = json['image_url'];
@@ -83,6 +86,7 @@ class User {
     data['id'] = id;
     data['e_id'] = eId;
     data['image_url'] = imageUrl;
+    data['approval_status'] = approvalStatus;
     return data;
   }
 }

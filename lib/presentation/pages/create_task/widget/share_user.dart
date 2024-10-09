@@ -6,6 +6,7 @@ import 'package:task_management/presentation/pages/create_task/widget/preview_ta
 import 'package:task_management/utils/styles.dart';
 
 import '../../../../components/main_scaffold_component.dart';
+import '../../../../utils/toast_component.dart';
 import '../controller/create_task_controller.dart';
 
 class ShareFriendDetailScreen extends GetView<CreateTaskController> {
@@ -174,7 +175,14 @@ class ShareFriendDetailScreen extends GetView<CreateTaskController> {
                       ),
                     ),
               GestureDetector(
-                onTap: () => Get.to(() => const PreviewTaskDetail()),
+                onTap: () {
+                  if (controller.selectedIdTeacher.isNotEmpty) {
+                    Get.to(() => const PreviewTaskDetail());
+                  } else {
+                    ToastComponent()
+                        .showToast("Please select one teacher atleast");
+                  }
+                },
                 child: Container(
                   height: 55,
                   decoration: const BoxDecoration(color: Styles.orangeYellow),

@@ -67,6 +67,7 @@ class MessageWidgetScreen extends GetView<ChatController> {
                                   child: Stack(
                                     clipBehavior: Clip.none,
                                     children: [
+                              
                                       Image.asset(
                                         "assets/images/teacher_icon.png",
                                         height: 79,
